@@ -49,7 +49,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 // 标题
                 Center(
                   child: Text(
-                    '心声日记隐私政策',
+                    '心聊想伴隐私政策',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -75,7 +75,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 // 概述
                 _buildSection(
                   '概述',
-                  '心声日记深知个人信息对您的重要性，我们将按照法律法规要求，采用相应的安全保护措施，保护您的个人信息安全可控。',
+                  '心聊想伴深知个人信息对您的重要性，我们将按照法律法规要求，采用相应的安全保护措施，保护您的个人信息安全可控。',
                 ),
                 
                 // 收集信息

@@ -78,7 +78,7 @@ class AboutUsScreen extends StatelessWidget {
                     SizedBox(height: 20),
                     
                     Text(
-                      '心声日记',
+                      '心聊想伴',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -123,7 +123,7 @@ class AboutUsScreen extends StatelessWidget {
               // 应用介绍
               _buildInfoCard(
                 '应用介绍',
-                '心声日记是一款专注于心理健康的语音日记应用。我们相信每个人的内心声音都值得被记录和珍藏。通过语音记录、情感分析、心情追踪等功能，帮助用户更好地了解自己，管理情绪，提升心理健康水平。',
+                '心聊想伴是一款专注于心理健康的语音日记应用。我们相信每个人的内心声音都值得被记录和珍藏。通过语音记录、情感分析、心情追踪等功能，帮助用户更好地了解自己，管理情绪，提升心理健康水平。',
                 Icons.description_outlined,
               ),
               
@@ -202,7 +202,7 @@ class AboutUsScreen extends StatelessWidget {
                     SizedBox(height: 8),
                     
                     Text(
-                      '愿心声日记陪伴您的每一天，记录美好，治愈心灵',
+                      '愿心聊想伴陪伴您的每一天，记录美好，治愈心灵',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 14,

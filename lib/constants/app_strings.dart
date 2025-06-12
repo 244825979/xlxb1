@@ -1,6 +1,6 @@
 class AppStrings {
   // 应用名称
-  static const String appName = '心声日记';
+  static const String appName = '心聊想伴';
   
   // 底部导航
   static const String navHome = '首页';
@@ -9,7 +9,7 @@ class AppStrings {
   static const String navProfile = '我的';
   
   // 首页
-  static const String homeTitle = '心声日记';
+  static const String homeTitle = '心聊想伴';
   static const String homeGreeting = '今天过得怎么样？';
   static const String publishMood = '发布心情';
   static const String dailyQuote = '每日语录';
