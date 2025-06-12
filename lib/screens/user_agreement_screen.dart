@@ -49,7 +49,7 @@ class UserAgreementScreen extends StatelessWidget {
                 // 标题
                 Center(
                   child: Text(
-                    '心聊想伴用户服务协议',
+                    '心声日记用户服务协议',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -75,13 +75,13 @@ class UserAgreementScreen extends StatelessWidget {
                 // 前言
                 _buildSection(
                   '前言',
-                  '欢迎您使用心聊想伴！本协议是您与心聊想伴之间关于您使用心聊想伴服务所订立的协议。请您仔细阅读本协议，确保充分理解本协议中各条款。',
+                  '欢迎您使用心声日记！本协议是您与心声日记之间关于您使用心声日记服务所订立的协议。请您仔细阅读本协议，确保充分理解本协议中各条款。',
                 ),
                 
                 // 服务内容
                 _buildSection(
                   '1. 服务内容',
-                  '心聊想伴是一款专注于情感记录和心理健康的移动应用，为用户提供：\n\n'
+                  '心声日记是一款专注于情感记录和心理健康的移动应用，为用户提供：\n\n'
                   '• 语音日记记录功能\n'
                   '• 心情指数跟踪\n'
                   '• 情感分析和建议\n'

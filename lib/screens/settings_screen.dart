@@ -115,7 +115,7 @@ class SettingsScreen extends StatelessWidget {
               context,
               icon: Icons.info_outline,
               title: '关于我们',
-              subtitle: '了解心聊想伴',
+              subtitle: '了解心声日记',
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => AboutUsScreen()),
@@ -212,7 +212,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           SizedBox(height: 12),
           Text(
-            '心聊想伴',
+            '心声日记',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,

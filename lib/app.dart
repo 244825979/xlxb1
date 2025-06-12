@@ -30,7 +30,7 @@ class VoiceDiaryApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => QuotesProvider()),
       ],
       child: MaterialApp(
-        title: '心聊想伴',
+                  title: '心声日记',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,
