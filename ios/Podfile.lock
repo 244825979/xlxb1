@@ -62,6 +62,6 @@ SPEC CHECKSUMS:
   shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
   sign_in_with_apple: c5dcc141574c8c54d5ac99dd2163c0c72ad22418
 
-PODFILE CHECKSUM: 2889a3c039999343860cfdffd4d45b7ab326c86b
+PODFILE CHECKSUM: b61ab38b4375ffde9ebf11cd9f70d1808e1bfcab
 
 COCOAPODS: 1.16.2
