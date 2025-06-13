@@ -115,18 +115,34 @@ class _RechargeScreenState extends State<RechargeScreen> with TickerProviderStat
         }
       } else {
         debugPrint('RechargeScreen: Purchase service not available');
+        // 即使服务不可用，也尝试获取商品列表（使用本地价格）
+        _rechargeItems = _purchaseService.getRechargeItems();
+        _vipPackages = _purchaseService.getVipPackages();
+        
+        debugPrint('RechargeScreen: Loaded ${_rechargeItems.length} recharge items and ${_vipPackages.length} VIP packages (fallback mode)');
+        
         if (mounted) {
           setState(() => _isLoading = false);
-          // 在生产环境中才显示服务不可用的错误
+          // 显示警告但不阻止用户查看商品
           if (!kDebugMode) {
-            _showErrorSnackBar('应用内购买服务当前不可用，请稍后再试');
+            _showErrorSnackBar('内购服务连接中，价格可能不准确');
           } else {
-            _showErrorSnackBar('开发模式：应用内购买服务不可用，但可以测试模拟购买');
+            _showErrorSnackBar('开发模式：使用模拟商品数据');
           }
         }
       }
     } catch (e) {
       debugPrint('RechargeScreen: Initialize purchase service error: $e');
+      
+      // 即使出现异常，也尝试获取商品列表（使用本地价格）
+      try {
+        _rechargeItems = _purchaseService.getRechargeItems();
+        _vipPackages = _purchaseService.getVipPackages();
+        debugPrint('RechargeScreen: Loaded ${_rechargeItems.length} recharge items and ${_vipPackages.length} VIP packages (exception fallback mode)');
+      } catch (fallbackError) {
+        debugPrint('RechargeScreen: Fallback loading also failed: $fallbackError');
+      }
+      
       if (mounted) {
         setState(() => _isLoading = false);
         if (kDebugMode) {
@@ -134,7 +150,7 @@ class _RechargeScreenState extends State<RechargeScreen> with TickerProviderStat
           // 在调试模式下显示详细诊断信息
           _showDiagnosisDialog();
         } else {
-          _showErrorSnackBar('服务初始化失败，请检查网络连接后重试');
+          _showErrorSnackBar('服务初始化失败，显示默认价格');
           // 在生产模式下也显示诊断信息（用于排查问题）
           _showDiagnosisDialog();
         }
@@ -305,6 +321,45 @@ class _RechargeScreenState extends State<RechargeScreen> with TickerProviderStat
     );
   }
 
+  void _showPurchaseServiceUnavailableDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('内购服务不可用'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('当前无法连接到App Store内购服务，可能的原因：'),
+            SizedBox(height: 8),
+            Text('• 设备未登录App Store账户', style: TextStyle(fontSize: 14)),
+            Text('• 网络连接问题', style: TextStyle(fontSize: 14)),
+            Text('• App Store服务暂时不可用', style: TextStyle(fontSize: 14)),
+            Text('• 设备设置限制了内购功能', style: TextStyle(fontSize: 14)),
+            SizedBox(height: 12),
+            Text('请检查设置后重试。', style: TextStyle(fontWeight: FontWeight.w500)),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('我知道了'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _showDiagnosisDialog();
+            },
+            child: Text(
+              '查看诊断',
+              style: TextStyle(color: AppColors.primary),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _selectRechargeItem(RechargeItem item) {
     setState(() {
       _selectedRechargeItem = item;
@@ -387,6 +442,13 @@ class _RechargeScreenState extends State<RechargeScreen> with TickerProviderStat
     if (_selectedProductId == null || _isPurchasing) return;
     
     debugPrint('=== RechargeScreen: Starting purchase for $_selectedProductId ===');
+    
+    // 检查内购服务状态
+    if (!_purchaseService.isInitialized || !_purchaseService.isAvailable) {
+      debugPrint('RechargeScreen: Purchase service not available for real purchases');
+      _showPurchaseServiceUnavailableDialog();
+      return;
+    }
     
     setState(() {
       _isPurchasing = true;

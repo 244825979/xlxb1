@@ -52,6 +52,12 @@ class InAppPurchaseService {
 
   bool _isInitialized = false;
   bool _isAvailable = false;
+  
+  /// 检查服务是否已初始化
+  bool get isInitialized => _isInitialized;
+  
+  /// 检查服务是否可用
+  bool get isAvailable => _isAvailable;
   List<iap.ProductDetails> _products = [];
 
   /// 初始化内购服务
@@ -107,7 +113,21 @@ class InAppPurchaseService {
         }
 
         // 加载商品信息
-        await _loadProducts();
+        try {
+          await _loadProducts();
+          debugPrint('✅ Product loading completed successfully');
+        } catch (e) {
+          debugPrint('❌ Product loading failed: $e');
+          // 商品加载失败，但在Release模式下不应该导致整个初始化失败
+          // 继续初始化，允许显示模拟商品
+          if (kReleaseMode) {
+            debugPrint('⚠️ Release mode: Continuing with empty product list');
+            _products = [];
+          } else {
+            // 在调试模式下重新抛出错误
+            rethrow;
+          }
+        }
         
         _isInitialized = true;
         debugPrint('=== InAppPurchaseService: Real device initialization completed ===');
@@ -202,7 +222,15 @@ class InAppPurchaseService {
           }
 
           // 加载商品信息
-          await _loadProducts();
+          try {
+            await _loadProducts();
+            debugPrint('✅ Product loading completed successfully');
+          } catch (e) {
+            debugPrint('❌ Product loading failed: $e');
+            // 商品加载失败，但在Release模式下不应该导致整个初始化失败
+            debugPrint('⚠️ Production mode: Continuing with empty product list');
+            _products = [];
+          }
           
           _isInitialized = true;
           debugPrint('=== InAppPurchaseService: Production initialization completed ===');
@@ -267,6 +295,8 @@ class InAppPurchaseService {
         }
       } else {
         debugPrint('⚠️ No products were found in App Store');
+        // 如果没有找到任何商品，抛出异常
+        throw Exception('No products found in App Store. Please check App Store Connect configuration.');
       }
       
     } catch (e) {
@@ -277,6 +307,9 @@ class InAppPurchaseService {
       if (kDebugMode) {
         debugPrint('Debug mode: Will use mock products for purchase');
       }
+      
+      // 重新抛出异常，让上层处理
+      rethrow;
     }
     debugPrint('=== Product loading completed ===');
   }
@@ -308,8 +341,10 @@ class InAppPurchaseService {
       }).toList();
     }
 
-    // 生产模式下，优先使用真实商品信息
+    // 生产模式下，即使没有真实商品信息也返回商品列表（用本地价格）
+    debugPrint('Creating recharge items: ${_products.length} real products available');
     return rechargeData.map((data) {
+      // 尝试使用真实商品信息，如果没有则使用默认价格
       final product = _products.firstWhere(
         (p) => p.id == data['productId'],
         orElse: () => _createMockProduct(data['productId'] as String, data['price'] as double),
@@ -320,7 +355,9 @@ class InAppPurchaseService {
         title: '${data['coins']}金币',
         price: data['price'] as double,
         coins: data['coins'] as int,
-        priceText: '￥${(data['price'] as double).toStringAsFixed(0)}',
+        priceText: _products.isNotEmpty && _products.any((p) => p.id == data['productId'])
+            ? product.price  // 使用App Store的真实价格
+            : '￥${(data['price'] as double).toStringAsFixed(0)}',  // 使用本地默认价格
         isPopular: false,
       );
     }).toList();
@@ -353,8 +390,10 @@ class InAppPurchaseService {
       }).toList();
     }
 
-    // 生产模式下，优先使用真实商品信息
+    // 生产模式下，即使没有真实商品信息也返回商品列表（用本地价格）
+    debugPrint('Creating VIP packages: ${_products.length} real products available');
     return vipData.map((data) {
+      // 尝试使用真实商品信息，如果没有则使用默认价格
       final product = _products.firstWhere(
         (p) => p.id == data['productId'],
         orElse: () => _createMockProduct(data['productId'] as String, data['price'] as double),
@@ -365,7 +404,9 @@ class InAppPurchaseService {
         title: 'VIP会员',
         price: data['price'] as double,
         duration: data['duration'] as String,
-        priceText: '￥${(data['price'] as double).toStringAsFixed(0)}',
+        priceText: _products.isNotEmpty && _products.any((p) => p.id == data['productId'])
+            ? product.price  // 使用App Store的真实价格
+            : '￥${(data['price'] as double).toStringAsFixed(0)}',  // 使用本地默认价格
         isPopular: false,
         benefits: [
           '无限制与AI助手对话',
