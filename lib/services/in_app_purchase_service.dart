@@ -364,9 +364,10 @@ class InAppPurchaseService {
 
   /// 获取充值商品列表
   List<RechargeItem> getRechargeItems() {
-    debugPrint('🛍️ === getRechargeItems called ===');
-    debugPrint('Service state: isInitialized=$_isInitialized, isAvailable=$_isAvailable, products=${_products.length}');
-    debugPrint('kDebugMode: $kDebugMode, kReleaseMode: $kReleaseMode');
+    try {
+      debugPrint('🛍️ === getRechargeItems called ===');
+      debugPrint('Service state: isInitialized=$_isInitialized, isAvailable=$_isAvailable, products=${_products.length}');
+      debugPrint('kDebugMode: $kDebugMode, kReleaseMode: $kReleaseMode');
     
     final rechargeData = [
       {'productId': 'xin_coin_ios_12', 'price': 12.0, 'coins': 840},
@@ -406,14 +407,22 @@ class InAppPurchaseService {
     }
     
     return items;
-
-
+    
+    } catch (e) {
+      debugPrint('❌ getRechargeItems failed: $e');
+      debugPrint('❌ Error type: ${e.runtimeType}');
+      debugPrint('🛡️ Using emergency fallback to create basic recharge items');
+      
+      // 紧急备用方案：直接创建最基础的商品列表
+      return _createEmergencyRechargeItems();
+    }
   }
 
   /// 获取VIP套餐列表
   List<VipPackage> getVipPackages() {
-    debugPrint('👑 === getVipPackages called ===');
-    debugPrint('Service state: isInitialized=$_isInitialized, isAvailable=$_isAvailable, products=${_products.length}');
+    try {
+      debugPrint('👑 === getVipPackages called ===');
+      debugPrint('Service state: isInitialized=$_isInitialized, isAvailable=$_isAvailable, products=${_products.length}');
     
     final vipData = [
       {'productId': 'xin_vip_68', 'price': 68.0, 'duration': '1个月'},
@@ -453,6 +462,15 @@ class InAppPurchaseService {
     }
     
     return items;
+    
+    } catch (e) {
+      debugPrint('❌ getVipPackages failed: $e');
+      debugPrint('❌ Error type: ${e.runtimeType}');
+      debugPrint('🛡️ Using emergency fallback to create basic VIP packages');
+      
+      // 紧急备用方案：直接创建最基础的VIP列表
+      return _createEmergencyVipPackages();
+    }
   }
 
   /// 创建模拟商品（用于测试）
@@ -465,6 +483,114 @@ class InAppPurchaseService {
       rawPrice: price,
       currencyCode: 'CNY',
     );
+  }
+
+  /// 紧急备用：创建基础充值商品列表
+  List<RechargeItem> _createEmergencyRechargeItems() {
+    debugPrint('🛡️ Creating emergency recharge items');
+    
+    return [
+      RechargeItem(
+        productId: 'xin_coin_ios_12',
+        title: '840金币',
+        price: 12.0,
+        coins: 840,
+        priceText: '￥12',
+        isPopular: false,
+      ),
+      RechargeItem(
+        productId: 'xin_coin_ios_38',
+        title: '2660金币',
+        price: 38.0,
+        coins: 2660,
+        priceText: '￥38',
+        isPopular: false,
+      ),
+      RechargeItem(
+        productId: 'xin_coin_ios_68',
+        title: '4760金币',
+        price: 68.0,
+        coins: 4760,
+        priceText: '￥68',
+        isPopular: true,
+      ),
+      RechargeItem(
+        productId: 'xin_coin_ios_98',
+        title: '6860金币',
+        price: 98.0,
+        coins: 6860,
+        priceText: '￥98',
+        isPopular: false,
+      ),
+      RechargeItem(
+        productId: 'xin_coin_ios_198',
+        title: '13860金币',
+        price: 198.0,
+        coins: 13860,
+        priceText: '￥198',
+        isPopular: false,
+      ),
+      RechargeItem(
+        productId: 'xin_coin_ios_298',
+        title: '20860金币',
+        price: 298.0,
+        coins: 20860,
+        priceText: '￥298',
+        isPopular: false,
+      ),
+      RechargeItem(
+        productId: 'xin_coin_ios_598',
+        title: '41860金币',
+        price: 598.0,
+        coins: 41860,
+        priceText: '￥598',
+        isPopular: false,
+      ),
+    ];
+  }
+
+  /// 紧急备用：创建基础VIP套餐列表
+  List<VipPackage> _createEmergencyVipPackages() {
+    debugPrint('🛡️ Creating emergency VIP packages');
+    
+    return [
+      VipPackage(
+        productId: 'xin_vip_68',
+        title: 'VIP会员',
+        price: 68.0,
+        duration: '1个月',
+        priceText: '￥68',
+        isPopular: false,
+        benefits: [
+          '无限制与AI助手对话',
+          '高级情感分析',
+        ],
+      ),
+      VipPackage(
+        productId: 'xin_vip_168',
+        title: 'VIP会员',
+        price: 168.0,
+        duration: '3个月',
+        priceText: '￥168',
+        isPopular: true,
+        benefits: [
+          '无限制与AI助手对话',
+          '高级情感分析',
+        ],
+      ),
+      VipPackage(
+        productId: 'xin_vip_399',
+        title: 'VIP会员',
+        price: 399.0,
+        duration: '12个月',
+        priceText: '￥399',
+        isPopular: false,
+        benefits: [
+          '无限制与AI助手对话',
+          '高级情感分析',
+        ],
+      ),
+    ];
   }
 
   /// 购买商品
