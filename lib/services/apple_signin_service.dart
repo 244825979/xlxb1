@@ -136,6 +136,47 @@ class AppleSignInService {
     }
   }
 
+  // 注销账户（删除所有用户数据）
+  static Future<Map<String, dynamic>> deleteAccount() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      
+      // 获取当前用户标识符
+      final userInfo = await getCurrentUser();
+      final userIdentifier = userInfo?['userIdentifier'] as String?;
+      
+      if (userIdentifier != null) {
+        // 删除用户相关的所有数据
+        await prefs.remove('user_coins_$userIdentifier');
+        await prefs.remove('user_vip_status_$userIdentifier');
+        await prefs.remove('user_vip_start_time_$userIdentifier');
+        await prefs.remove('user_vip_expire_time_$userIdentifier');
+        await prefs.remove('user_vip_package_$userIdentifier');
+        
+        debugPrint('Deleted user data for: $userIdentifier');
+      }
+      
+      // 删除Apple登录信息
+      await prefs.remove(_appleUserKey);
+      await prefs.remove(_appleAuthKey);
+      
+      // 清除内存中的用户信息
+      _currentUser = null;
+
+      return {
+        'success': true,
+        'message': '账户注销成功',
+      };
+    } catch (e) {
+      debugPrint('Delete account error: $e');
+      return {
+        'success': false,
+        'message': '注销账户失败',
+        'error': e.toString(),
+      };
+    }
+  }
+
   // 获取用户显示名称
   static String getUserDisplayName(Map<String, dynamic>? userInfo) {
     if (userInfo == null) return '';
