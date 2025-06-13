@@ -158,10 +158,26 @@ class InAppPurchaseService {
         
       } else {
         // 生产环境的正常初始化
-        _isAvailable = await _inAppPurchase.isAvailable();
-        debugPrint('In-app purchase available: $_isAvailable');
+        debugPrint('=== Production mode initialization ===');
         
-        if (_isAvailable) {
+        try {
+          _isAvailable = await _inAppPurchase.isAvailable();
+          debugPrint('In-app purchase available: $_isAvailable');
+          
+          if (!_isAvailable) {
+            debugPrint('❌ In-App Purchase service not available in production mode');
+            debugPrint('Common causes:');
+            debugPrint('  1. Device not logged into App Store');
+            debugPrint('  2. App not properly configured in App Store Connect');
+            debugPrint('  3. Bundle ID mismatch');
+            debugPrint('  4. Network connectivity issues');
+            debugPrint('  5. App Store region restrictions');
+            debugPrint('  6. Device restrictions (parental controls)');
+            
+            _isInitialized = true;
+            return false;
+          }
+          
           // 监听购买更新
           _subscription = _inAppPurchase.purchaseStream.listen(
             _handlePurchaseUpdate,
@@ -187,11 +203,18 @@ class InAppPurchaseService {
 
           // 加载商品信息
           await _loadProducts();
+          
+          _isInitialized = true;
+          debugPrint('=== InAppPurchaseService: Production initialization completed ===');
+          return true;
+          
+        } catch (e) {
+          debugPrint('❌ Production mode initialization failed: $e');
+          debugPrint('Error type: ${e.runtimeType}');
+          _isInitialized = true;
+          _isAvailable = false;
+          return false;
         }
-        
-        _isInitialized = true;
-        debugPrint('=== InAppPurchaseService: Production initialization completed ===');
-        return _isAvailable;
       }
       
     } catch (e) {

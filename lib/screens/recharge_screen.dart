@@ -8,6 +8,7 @@ import '../services/in_app_purchase_service.dart';
 import '../services/apple_signin_service.dart';
 import '../models/purchase_models.dart';
 import '../utils/iap_debug_helper.dart';
+import '../utils/release_iap_diagnostic.dart';
 import 'vip_privileges_screen.dart';
 import 'account_management_screen.dart';
 
@@ -134,6 +135,8 @@ class _RechargeScreenState extends State<RechargeScreen> with TickerProviderStat
           _showDiagnosisDialog();
         } else {
           _showErrorSnackBar('服务初始化失败，请检查网络连接后重试');
+          // 在生产模式下也显示诊断信息（用于排查问题）
+          _showDiagnosisDialog();
         }
       }
     }
@@ -1026,7 +1029,9 @@ class _RechargeScreenState extends State<RechargeScreen> with TickerProviderStat
     showDialog(
       context: context,
       builder: (context) => FutureBuilder<Map<String, dynamic>>(
-        future: IAPDebugHelper.diagnoseIAPIssues(),
+        future: kDebugMode 
+            ? IAPDebugHelper.diagnoseIAPIssues()
+            : ReleaseIAPDiagnostic.diagnoseReleaseIssues(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return AlertDialog(
@@ -1054,18 +1059,21 @@ class _RechargeScreenState extends State<RechargeScreen> with TickerProviderStat
           }
           
           final results = snapshot.data!;
-          final diagnosis = IAPDebugHelper.formatDiagnosisResults(results);
+          final diagnosis = kDebugMode
+              ? IAPDebugHelper.formatDiagnosisResults(results)
+              : ReleaseIAPDiagnostic.formatReleaseResults(results);
           
           return AlertDialog(
-            title: Text('内购服务诊断'),
+            title: Text(kDebugMode ? '内购服务诊断' : 'Release模式诊断'),
             content: Container(
               width: double.maxFinite,
+              constraints: BoxConstraints(maxHeight: 500),
               child: SingleChildScrollView(
                 child: Text(
                   diagnosis,
                   style: TextStyle(
                     fontFamily: 'monospace',
-                    fontSize: 12,
+                    fontSize: 11,
                   ),
                 ),
               ),
@@ -1075,16 +1083,15 @@ class _RechargeScreenState extends State<RechargeScreen> with TickerProviderStat
                 onPressed: () => Navigator.of(context).pop(),
                 child: Text('关闭'),
               ),
-              if (kDebugMode)
-                TextButton(
-                  onPressed: () {
-                    // 复制诊断信息到剪贴板
-                    Clipboard.setData(ClipboardData(text: diagnosis));
-                    Navigator.of(context).pop();
-                    _showErrorSnackBar('诊断信息已复制到剪贴板');
-                  },
-                  child: Text('复制'),
-                ),
+              TextButton(
+                onPressed: () {
+                  // 复制诊断信息到剪贴板
+                  Clipboard.setData(ClipboardData(text: diagnosis));
+                  Navigator.of(context).pop();
+                  _showErrorSnackBar('诊断信息已复制到剪贴板');
+                },
+                child: Text('复制'),
+              ),
             ],
           );
         },
