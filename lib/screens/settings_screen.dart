@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import '../constants/app_colors.dart';
+import '../utils/iap_debug_helper.dart';
 import 'feedback_screen.dart';
 import 'user_agreement_screen.dart';
 import 'privacy_policy_screen.dart';
@@ -78,6 +80,18 @@ class SettingsScreen extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => FeedbackScreen()),
               ),
             ),
+            
+            // 只在调试模式下显示内购诊断
+            if (kDebugMode) ...[
+              SizedBox(height: 12),
+              _buildSettingItem(
+                context,
+                icon: Icons.bug_report,
+                title: '内购服务诊断',
+                subtitle: '调试内购服务问题',
+                onTap: () => _showIAPDiagnosisDialog(context),
+              ),
+            ],
             
             SizedBox(height: 32),
             
@@ -240,4 +254,79 @@ class SettingsScreen extends StatelessWidget {
       ),
     );
   }
+  
+  // 显示内购诊断对话框
+  void _showIAPDiagnosisDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => FutureBuilder<Map<String, dynamic>>(
+        future: IAPDebugHelper.diagnoseIAPIssues(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return AlertDialog(
+              title: Text('正在诊断内购服务...'),
+              content: Container(
+                height: 100,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            );
+          }
+          
+          if (snapshot.hasError) {
+            return AlertDialog(
+              title: Text('诊断失败'),
+              content: Text('诊断过程中发生错误: ${snapshot.error}'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('关闭'),
+                ),
+              ],
+            );
+          }
+          
+          final results = snapshot.data!;
+          final diagnosis = IAPDebugHelper.formatDiagnosisResults(results);
+          
+          return AlertDialog(
+            title: Text('内购服务诊断报告'),
+            content: Container(
+              width: double.maxFinite,
+              constraints: BoxConstraints(maxHeight: 500),
+              child: SingleChildScrollView(
+                child: Text(
+                  diagnosis,
+                  style: TextStyle(
+                    fontFamily: 'monospace',
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('关闭'),
+              ),
+              TextButton(
+                onPressed: () {
+                  // 复制诊断信息到剪贴板
+                  Clipboard.setData(ClipboardData(text: diagnosis));
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('诊断信息已复制到剪贴板')),
+                  );
+                },
+                child: Text('复制'),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+  
+
 } 

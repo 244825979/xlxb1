@@ -7,6 +7,7 @@ import '../constants/app_colors.dart';
 import '../services/in_app_purchase_service.dart';
 import '../services/apple_signin_service.dart';
 import '../models/purchase_models.dart';
+import '../utils/iap_debug_helper.dart';
 import 'vip_privileges_screen.dart';
 import 'account_management_screen.dart';
 
@@ -129,6 +130,8 @@ class _RechargeScreenState extends State<RechargeScreen> with TickerProviderStat
         setState(() => _isLoading = false);
         if (kDebugMode) {
           _showErrorSnackBar('开发模式初始化错误: $e');
+          // 在调试模式下显示详细诊断信息
+          _showDiagnosisDialog();
         } else {
           _showErrorSnackBar('服务初始化失败，请检查网络连接后重试');
         }
@@ -1014,6 +1017,77 @@ class _RechargeScreenState extends State<RechargeScreen> with TickerProviderStat
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  // 添加诊断对话框方法
+  void _showDiagnosisDialog() async {
+    showDialog(
+      context: context,
+      builder: (context) => FutureBuilder<Map<String, dynamic>>(
+        future: IAPDebugHelper.diagnoseIAPIssues(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return AlertDialog(
+              title: Text('正在诊断...'),
+              content: Container(
+                height: 100,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            );
+          }
+          
+          if (snapshot.hasError) {
+            return AlertDialog(
+              title: Text('诊断失败'),
+              content: Text('诊断过程中发生错误: ${snapshot.error}'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('关闭'),
+                ),
+              ],
+            );
+          }
+          
+          final results = snapshot.data!;
+          final diagnosis = IAPDebugHelper.formatDiagnosisResults(results);
+          
+          return AlertDialog(
+            title: Text('内购服务诊断'),
+            content: Container(
+              width: double.maxFinite,
+              child: SingleChildScrollView(
+                child: Text(
+                  diagnosis,
+                  style: TextStyle(
+                    fontFamily: 'monospace',
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('关闭'),
+              ),
+              if (kDebugMode)
+                TextButton(
+                  onPressed: () {
+                    // 复制诊断信息到剪贴板
+                    Clipboard.setData(ClipboardData(text: diagnosis));
+                    Navigator.of(context).pop();
+                    _showErrorSnackBar('诊断信息已复制到剪贴板');
+                  },
+                  child: Text('复制'),
+                ),
+            ],
+          );
+        },
       ),
     );
   }
