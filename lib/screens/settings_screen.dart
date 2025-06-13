@@ -99,7 +99,7 @@ class SettingsScreen extends StatelessWidget {
               context,
               icon: Icons.security_outlined,
               title: '隐私政策',
-              subtitle: '了解我们的隐私保护',
+              subtitle: '了解心聊想伴的隐私保护',
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => PrivacyPolicyScreen()),
@@ -115,7 +115,7 @@ class SettingsScreen extends StatelessWidget {
               context,
               icon: Icons.info_outline,
               title: '关于我们',
-              subtitle: '了解心声日记',
+              subtitle: '了解心聊想伴',
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => AboutUsScreen()),
@@ -212,7 +212,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           SizedBox(height: 12),
           Text(
-            '心声日记',
+            '心聊想伴',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,

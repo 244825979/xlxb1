@@ -248,7 +248,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                               ],
                             ).createShader(bounds),
                             child: Text(
-                              '心声日记',
+                              '心聊想伴',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 32,
