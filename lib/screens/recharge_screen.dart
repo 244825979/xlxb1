@@ -97,13 +97,19 @@ class _RechargeScreenState extends State<RechargeScreen> with TickerProviderStat
     setState(() => _isLoading = true);
     
     try {
-      debugPrint('RechargeScreen: Starting purchase service initialization...');
+      debugPrint('🔄 RechargeScreen: Starting purchase service initialization...');
       final success = await _purchaseService.initialize();
-      debugPrint('RechargeScreen: Purchase service initialization result: $success');
+      debugPrint('📊 RechargeScreen: Purchase service initialization result: $success');
+      debugPrint('📊 RechargeScreen: Service state - isInitialized: ${_purchaseService.isInitialized}, isAvailable: ${_purchaseService.isAvailable}');
       
       if (success) {
+        debugPrint('🔄 Success path: Getting recharge items...');
         _rechargeItems = _purchaseService.getRechargeItems();
+        debugPrint('✅ Got ${_rechargeItems.length} recharge items');
+        
+        debugPrint('🔄 Success path: Getting VIP packages...');
         _vipPackages = _purchaseService.getVipPackages();
+        debugPrint('✅ Got ${_vipPackages.length} VIP packages');
         
         debugPrint('RechargeScreen: Loaded ${_rechargeItems.length} recharge items and ${_vipPackages.length} VIP packages');
         
@@ -114,10 +120,17 @@ class _RechargeScreenState extends State<RechargeScreen> with TickerProviderStat
           setState(() => _isLoading = false);
         }
       } else {
-        debugPrint('RechargeScreen: Purchase service not available');
+        debugPrint('⚠️ RechargeScreen: Purchase service initialization returned false');
+        debugPrint('⚠️ RechargeScreen: Detailed service state - isInitialized: ${_purchaseService.isInitialized}, isAvailable: ${_purchaseService.isAvailable}');
+        
         // 即使服务不可用，也尝试获取商品列表（使用本地价格）
+        debugPrint('🔄 Fallback path: Getting recharge items...');
         _rechargeItems = _purchaseService.getRechargeItems();
+        debugPrint('✅ Fallback: Got ${_rechargeItems.length} recharge items');
+        
+        debugPrint('🔄 Fallback path: Getting VIP packages...');
         _vipPackages = _purchaseService.getVipPackages();
+        debugPrint('✅ Fallback: Got ${_vipPackages.length} VIP packages');
         
         debugPrint('RechargeScreen: Loaded ${_rechargeItems.length} recharge items and ${_vipPackages.length} VIP packages (fallback mode)');
         
@@ -136,11 +149,19 @@ class _RechargeScreenState extends State<RechargeScreen> with TickerProviderStat
       
       // 即使出现异常，也尝试获取商品列表（使用本地价格）
       try {
+        debugPrint('🔄 Exception fallback path: Getting recharge items...');
         _rechargeItems = _purchaseService.getRechargeItems();
+        debugPrint('✅ Exception fallback: Got ${_rechargeItems.length} recharge items');
+        
+        debugPrint('🔄 Exception fallback path: Getting VIP packages...');
         _vipPackages = _purchaseService.getVipPackages();
+        debugPrint('✅ Exception fallback: Got ${_vipPackages.length} VIP packages');
+        
         debugPrint('RechargeScreen: Loaded ${_rechargeItems.length} recharge items and ${_vipPackages.length} VIP packages (exception fallback mode)');
       } catch (fallbackError) {
-        debugPrint('RechargeScreen: Fallback loading also failed: $fallbackError');
+        debugPrint('❌ RechargeScreen: Fallback loading also failed: $fallbackError');
+        debugPrint('❌ Error type: ${fallbackError.runtimeType}');
+        debugPrint('❌ Error details: $fallbackError');
       }
       
       if (mounted) {
@@ -565,7 +586,13 @@ class _RechargeScreenState extends State<RechargeScreen> with TickerProviderStat
                 ),
               )
             : _rechargeItems.isEmpty && _vipPackages.isEmpty
-                ? Center(
+                ? (() {
+                    debugPrint('⚠️ === DISPLAYING ERROR PAGE ===');
+                    debugPrint('⚠️ _rechargeItems.length: ${_rechargeItems.length}');
+                    debugPrint('⚠️ _vipPackages.length: ${_vipPackages.length}');
+                    debugPrint('⚠️ _isLoading: $_isLoading');
+                    debugPrint('⚠️ Service state: isInitialized=${_purchaseService.isInitialized}, isAvailable=${_purchaseService.isAvailable}');
+                    return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -610,7 +637,8 @@ class _RechargeScreenState extends State<RechargeScreen> with TickerProviderStat
                         ),
                       ],
                     ),
-                  )
+                  );
+                }())
                 : Column(
                     children: [
                       // 余额显示

@@ -80,44 +80,81 @@ class InAppPurchaseService {
       
       // 在真机上，严格检查Apple服务可用性
       if (isRealDevice) {
-        _isAvailable = await _inAppPurchase.isAvailable();
-        debugPrint('Apple In-App Purchase available on real device: $_isAvailable');
+        debugPrint('🔄 Step 1: Checking Apple In-App Purchase availability...');
+        try {
+          _isAvailable = await _inAppPurchase.isAvailable();
+          debugPrint('✅ Step 1 completed: Apple In-App Purchase available = $_isAvailable');
+        } catch (e) {
+          debugPrint('❌ Step 1 failed: $e');
+          _isInitialized = true;
+          _isAvailable = false;
+          return false;
+        }
         
         if (!_isAvailable) {
-          debugPrint('Apple In-App Purchase not available on real device');
+          debugPrint('❌ Apple In-App Purchase not available on real device');
           _isInitialized = true;
           return false;
         }
         
-        // 设置购买监听
-        _subscription = _inAppPurchase.purchaseStream.listen(
-          _handlePurchaseUpdate,
-          onError: (error) {
-            debugPrint('Purchase stream error: $error');
-            _purchaseController.add(PurchaseResult(
-              status: CustomPurchaseStatus.failed,
-              message: '购买过程中发生错误',
-            ));
-          },
-        );
+        debugPrint('🔄 Step 2: Setting up purchase stream listener...');
+        try {
+          // 设置购买监听
+          _subscription = _inAppPurchase.purchaseStream.listen(
+            _handlePurchaseUpdate,
+            onError: (error) {
+              debugPrint('Purchase stream error: $error');
+              _purchaseController.add(PurchaseResult(
+                status: CustomPurchaseStatus.failed,
+                message: '购买过程中发生错误',
+              ));
+            },
+          );
+          debugPrint('✅ Step 2 completed: Purchase stream listener set up');
+        } catch (e) {
+          debugPrint('❌ Step 2 failed: $e');
+          _isInitialized = true;
+          _isAvailable = false;
+          return false;
+        }
 
+        debugPrint('🔄 Step 3: Setting up StoreKit delegate (iOS only)...');
         // 在iOS上启用等待订单
         if (Platform.isIOS) {
           try {
             final InAppPurchaseStoreKitPlatformAddition iosPlatformAddition =
                 _inAppPurchase.getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
+            
+            // 检查是否已有delegate
+            debugPrint('Setting up payment queue delegate...');
             await iosPlatformAddition.setDelegate(ExamplePaymentQueueDelegate());
+            debugPrint('✅ Step 3 completed: StoreKit delegate set up successfully');
           } catch (e) {
-            debugPrint('StoreKit delegate setup failed: $e');
+            debugPrint('⚠️ Step 3 partial failure: StoreKit delegate setup failed: $e');
+            debugPrint('Error type: ${e.runtimeType}');
+            debugPrint('Error details: $e');
+            // 这不是致命错误，继续初始化
+            // 但如果是严重错误，我们需要知道
+            if (e.toString().contains('SKPaymentQueue') || 
+                e.toString().contains('delegate') ||
+                e.toString().contains('already') ||
+                e.toString().contains('nil')) {
+              debugPrint('This appears to be a non-critical StoreKit delegate error, continuing...');
+            } else {
+              debugPrint('⚠️ Unexpected delegate error: $e');
+            }
           }
+        } else {
+          debugPrint('✅ Step 3 skipped: Not on iOS platform');
         }
 
+        debugPrint('🔄 Step 4: Loading product information...');
         // 加载商品信息
         try {
           await _loadProducts();
-          debugPrint('✅ Product loading completed successfully');
+          debugPrint('✅ Step 4 completed: Product loading successful');
         } catch (e) {
-          debugPrint('❌ Product loading failed: $e');
+          debugPrint('⚠️ Step 4 partial failure: Product loading failed: $e');
           // 商品加载失败，但在Release模式下不应该导致整个初始化失败
           // 继续初始化，允许显示模拟商品
           if (kReleaseMode) {
@@ -125,12 +162,14 @@ class InAppPurchaseService {
             _products = [];
           } else {
             // 在调试模式下重新抛出错误
+            debugPrint('❌ Debug mode: Re-throwing product loading error');
             rethrow;
           }
         }
         
         _isInitialized = true;
-        debugPrint('=== InAppPurchaseService: Real device initialization completed ===');
+        debugPrint('🎉 === InAppPurchaseService: Real device initialization completed successfully ===');
+        debugPrint('Final state: isInitialized=$_isInitialized, isAvailable=$_isAvailable, products=${_products.length}');
         return true;
       } else if (kDebugMode) {
         // 只有在模拟器或测试环境中才使用fallback
@@ -316,6 +355,10 @@ class InAppPurchaseService {
 
   /// 获取充值商品列表
   List<RechargeItem> getRechargeItems() {
+    debugPrint('🛍️ === getRechargeItems called ===');
+    debugPrint('Service state: isInitialized=$_isInitialized, isAvailable=$_isAvailable, products=${_products.length}');
+    debugPrint('kDebugMode: $kDebugMode, kReleaseMode: $kReleaseMode');
+    
     final rechargeData = [
       {'productId': 'xin_coin_ios_12', 'price': 12.0, 'coins': 840},
       {'productId': 'xin_coin_ios_38', 'price': 38.0, 'coins': 2660},
@@ -326,24 +369,9 @@ class InAppPurchaseService {
       {'productId': 'xin_coin_ios_598', 'price': 598.0, 'coins': 41860},
     ];
 
-    // 在调试模式下，即使服务初始化了也始终返回商品列表（用于测试）
-    if (kDebugMode) {
-      debugPrint('Debug mode: Returning mock recharge items for testing');
-      return rechargeData.map((data) {
-        return RechargeItem(
-          productId: data['productId'] as String,
-          title: '${data['coins']}金币',
-          price: data['price'] as double,
-          coins: data['coins'] as int,
-          priceText: '￥${(data['price'] as double).toStringAsFixed(0)}',
-          isPopular: false,
-        );
-      }).toList();
-    }
-
-    // 生产模式下，即使没有真实商品信息也返回商品列表（用本地价格）
-    debugPrint('Creating recharge items: ${_products.length} real products available');
-    return rechargeData.map((data) {
+    // 统一的商品创建逻辑，确保Debug和Release模式行为一致
+    debugPrint('🛍️ Creating recharge items with ${_products.length} real products available');
+    final items = rechargeData.map((data) {
       // 尝试使用真实商品信息，如果没有则使用默认价格
       final product = _products.firstWhere(
         (p) => p.id == data['productId'],
@@ -361,38 +389,32 @@ class InAppPurchaseService {
         isPopular: false,
       );
     }).toList();
+    
+    if (kDebugMode) {
+      debugPrint('🔧 Debug mode: Created ${items.length} recharge items (${_products.length} real products)');
+    } else {
+      debugPrint('🏭 Release mode: Created ${items.length} recharge items (${_products.length} real products)');
+    }
+    
+    return items;
+
+
   }
 
   /// 获取VIP套餐列表
   List<VipPackage> getVipPackages() {
+    debugPrint('👑 === getVipPackages called ===');
+    debugPrint('Service state: isInitialized=$_isInitialized, isAvailable=$_isAvailable, products=${_products.length}');
+    
     final vipData = [
       {'productId': 'xin_vip_68', 'price': 68.0, 'duration': '1个月'},
       {'productId': 'xin_vip_168', 'price': 168.0, 'duration': '3个月'},
       {'productId': 'xin_vip_399', 'price': 399.0, 'duration': '12个月'},
     ];
 
-    // 在调试模式下，即使服务初始化了也始终返回VIP套餐列表（用于测试）
-    if (kDebugMode) {
-      debugPrint('Debug mode: Returning mock VIP packages for testing');
-      return vipData.map((data) {
-        return VipPackage(
-          productId: data['productId'] as String,
-          title: 'VIP会员',
-          price: data['price'] as double,
-          duration: data['duration'] as String,
-          priceText: '￥${(data['price'] as double).toStringAsFixed(0)}',
-          isPopular: false,
-          benefits: [
-            '无限制与AI助手对话',
-            '高级情感分析',
-          ],
-        );
-      }).toList();
-    }
-
-    // 生产模式下，即使没有真实商品信息也返回商品列表（用本地价格）
-    debugPrint('Creating VIP packages: ${_products.length} real products available');
-    return vipData.map((data) {
+    // 统一的VIP包创建逻辑，确保Debug和Release模式行为一致
+    debugPrint('👑 Creating VIP packages with ${_products.length} real products available');
+    final items = vipData.map((data) {
       // 尝试使用真实商品信息，如果没有则使用默认价格
       final product = _products.firstWhere(
         (p) => p.id == data['productId'],
@@ -414,6 +436,14 @@ class InAppPurchaseService {
         ],
       );
     }).toList();
+    
+    if (kDebugMode) {
+      debugPrint('🔧 Debug mode: Created ${items.length} VIP packages (${_products.length} real products)');
+    } else {
+      debugPrint('🏭 Release mode: Created ${items.length} VIP packages (${_products.length} real products)');
+    }
+    
+    return items;
   }
 
   /// 创建模拟商品（用于测试）
