@@ -88,13 +88,19 @@ class InAppPurchaseService {
           debugPrint('❌ Step 1 failed: $e');
           _isInitialized = true;
           _isAvailable = false;
-          return false;
+          
+          // 即使检查失败，也允许继续（使用本地价格）
+          debugPrint('⚠️ Step 1 failed but continuing with limited functionality');
+          return true; // 改为返回true，允许显示商品
         }
         
         if (!_isAvailable) {
           debugPrint('❌ Apple In-App Purchase not available on real device');
           _isInitialized = true;
-          return false;
+          
+          // 即使服务不可用，也允许继续（使用本地价格）
+          debugPrint('⚠️ Continuing with limited functionality (local prices only)');
+          return true; // 改为返回true，允许显示商品
         }
         
         debugPrint('🔄 Step 2: Setting up purchase stream listener...');
@@ -115,7 +121,10 @@ class InAppPurchaseService {
           debugPrint('❌ Step 2 failed: $e');
           _isInitialized = true;
           _isAvailable = false;
-          return false;
+          
+          // 即使流监听设置失败，也允许继续（使用本地价格）
+          debugPrint('⚠️ Step 2 failed but continuing with limited functionality');
+          return true; // 改为返回true，允许显示商品
         }
 
         debugPrint('🔄 Step 3: Setting up StoreKit delegate (iOS only)...');
