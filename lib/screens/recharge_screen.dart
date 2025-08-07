@@ -167,10 +167,10 @@ class _RechargeScreenState extends State<RechargeScreen> with TickerProviderStat
         
         if (_rechargeItems.isEmpty && _vipPackages.isEmpty) {
           // 只有在真的没有商品时才显示错误
-          if (kDebugMode) {
+        if (kDebugMode) {
             _showErrorSnackBar('开发模式：商品加载失败');
             _showDiagnosisDialog();
-          } else {
+        } else {
             _showErrorSnackBar('商品信息加载中，请稍后重试');
             _showDiagnosisDialog();
           }
@@ -192,7 +192,7 @@ class _RechargeScreenState extends State<RechargeScreen> with TickerProviderStat
         if (_selectedVipPackage != null) {
           _showVipSuccessDialog('会员开通成功');
         } else {
-          _showSuccessDialog('购买成功！金币已到账');
+        _showSuccessDialog('购买成功！金币已到账');
         }
         break;
       case CustomPurchaseStatus.failed:

@@ -1,0 +1,88 @@
+//
+//  ASHeaderPch.pch
+//  AS
+//
+//  Created by SA on 2025/4/9.
+//
+
+#ifndef ASHeaderPch_pch
+#define ASHeaderPch_pch
+#pragma mark - 常用宏，全局引用
+#import "ASDefineCommon.h"
+#import "ASDefineTheme.h"
+#import "ASDefineRequest.h"
+#import "ASConfigConst.h"
+
+#pragma mark - 第三方库
+#import <YYKit/YYKit.h>
+#import <AFNetworking.h>
+#import <MJRefresh.h>
+#import <MJExtension.h>
+#import <SDWebImage/SDWebImage.h>
+#import <ReactiveObjC/ReactiveObjC.h>
+#import <Masonry/Masonry.h>
+#import <GKPhotoBrowser/GKPhotoBrowser.h>
+#import "zhPopupController.h"
+#import <NIMSDK/NIMSDK.h>
+
+#pragma mark - 分类
+#import "UIViewController+NavigationControllerHidden.h"
+#import "UIView+Extension.h"
+#import "UITextView+Extension.h"
+#import "UITextField+Extension.h"
+#import "UIView+Dragable.h"
+#import "UIFont+Extension.h"
+#import "UIViewController+Extension.h"
+
+#pragma mark - 通用数据模型
+#import "ASVideoShowDataModel.h"
+#import "ASGiftDataModel.h"
+#import "ASUserInfoModel.h"
+#import "ASSetCellModel.h"
+#import "ASDataSelectModel.h"
+
+#pragma mark - 工具类
+#import "ASMyAppCommonFunc.h"
+#import "ASCommonFunc.h"
+#import "ASUserDefaults.h"
+#import "ASRefreshHeader.h"
+#import "ASRefreshFooter.h"
+#import "ASMsgTool.h"
+
+#pragma mark - 基类
+#import "ASBaseRequest.h"
+#import "ASBaseViewController.h"
+#import "ASBaseNavigationController.h"
+#import "ASBaseWebViewController.h"
+#import "ASBaseTableView.h"
+#import "ASBaseCollectionView.h"
+#import "ASBaseTabBarController.h"
+#import "ASBaseCommonCell.h"
+#import "ASBasePhotoCell.h"
+
+#pragma mark - 管理类
+#import "ASTextAttributedManager.h"
+#import "ASLoginManager.h"
+#import "ASUploadImageManager.h"
+#import "ASUserDataManager.h"
+#import "ASAlertViewManager.h"
+#import "ASPopViewManager.h"
+#import "ASIMManager.h"
+#import "ASRtcManager.h"
+#import "ASDataSelectManager.h"
+#import "ASAuthStateVerifyManager.h"
+#import "ASAudioPlayManager.h"
+#import "ASVideoShowManager.h"
+#import "ASIMHelperDataManager.h"
+
+#pragma mark - 常用类
+#import "ASCommonRequest.h"
+#import "ASLoginRequest.h"
+#import "UIAlertController+Extension.h"
+#import "ASVideoShowPlayController.h"
+#import "ASGiftSVGAPlayerController.h"
+#import "ASPayGoodsDataModel.h"
+
+#endif /* ASHeaderPch_pch */
+
+

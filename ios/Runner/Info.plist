@@ -22,28 +22,78 @@
 	<string>2.2.3</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>weixin</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wx69b3fd56af9da2d3</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>myapp</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>myapp</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>xlxb</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.aoyou.xinbo</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>2.2.3</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>weixinURLParamsAPI</string>
+		<string>weixinULAPI</string>
+		<string>weixin</string>
+		<string>wechat</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>需要访问相机以拍摄照片，用于个性化您的日记和头像</string>
+	<string>心聊想伴需要您的同意，才能访问相机进行分享动态、图片、更换头像等功能。</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>我们需要访问网络以提供更好的服务体验</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>需要访问您的位置信息以提供更好的服务</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>需要访问您的位置信息以提供更好的服务</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>需要访问麦克风以录制语音日记</string>
+	<string>心聊想伴需要您的同意，才能访问麦克风进行发送语音、语音通话等功能。</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>心聊想伴需要您的同意，才能访问相册进行分享动态、图片、更换头像等功能。</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>需要访问相册以选择图片，用于个性化您的日记和头像</string>
+	<string>心聊想伴需要您的同意，才能访问相册进行分享动态、图片、更换头像等功能。</string>
+	<key>NSRemoteNotificationUsageDescription</key>
+	<string>心聊想伴需要发送通知以便及时提醒您</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>为给您更精准的提供个性化内容，请您允许我们获取广告信息。</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -55,5 +105,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>

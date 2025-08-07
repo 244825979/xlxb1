@@ -82,7 +82,7 @@ class InAppPurchaseService {
       if (isRealDevice) {
         debugPrint('🔄 Step 1: Checking Apple In-App Purchase availability...');
         try {
-          _isAvailable = await _inAppPurchase.isAvailable();
+        _isAvailable = await _inAppPurchase.isAvailable();
           debugPrint('✅ Step 1 completed: Apple In-App Purchase available = $_isAvailable');
         } catch (e) {
           debugPrint('❌ Step 1 failed: $e');
@@ -105,17 +105,17 @@ class InAppPurchaseService {
         
         debugPrint('🔄 Step 2: Setting up purchase stream listener...');
         try {
-          // 设置购买监听
-          _subscription = _inAppPurchase.purchaseStream.listen(
-            _handlePurchaseUpdate,
-            onError: (error) {
-              debugPrint('Purchase stream error: $error');
-              _purchaseController.add(PurchaseResult(
-                status: CustomPurchaseStatus.failed,
-                message: '购买过程中发生错误',
-              ));
-            },
-          );
+        // 设置购买监听
+        _subscription = _inAppPurchase.purchaseStream.listen(
+          _handlePurchaseUpdate,
+          onError: (error) {
+            debugPrint('Purchase stream error: $error');
+            _purchaseController.add(PurchaseResult(
+              status: CustomPurchaseStatus.failed,
+              message: '购买过程中发生错误',
+            ));
+          },
+        );
           debugPrint('✅ Step 2 completed: Purchase stream listener set up');
         } catch (e) {
           debugPrint('❌ Step 2 failed: $e');
@@ -160,7 +160,7 @@ class InAppPurchaseService {
         debugPrint('🔄 Step 4: Loading product information...');
         // 加载商品信息
         try {
-          await _loadProducts();
+        await _loadProducts();
           debugPrint('✅ Step 4 completed: Product loading successful');
         } catch (e) {
           debugPrint('⚠️ Step 4 partial failure: Product loading failed: $e');
@@ -229,9 +229,9 @@ class InAppPurchaseService {
         debugPrint('=== Production mode initialization ===');
         
         try {
-          _isAvailable = await _inAppPurchase.isAvailable();
-          debugPrint('In-app purchase available: $_isAvailable');
-          
+        _isAvailable = await _inAppPurchase.isAvailable();
+        debugPrint('In-app purchase available: $_isAvailable');
+        
           if (!_isAvailable) {
             debugPrint('❌ In-App Purchase service not available in production mode');
             debugPrint('Common causes:');
@@ -271,17 +271,17 @@ class InAppPurchaseService {
 
           // 加载商品信息
           try {
-            await _loadProducts();
+          await _loadProducts();
             debugPrint('✅ Product loading completed successfully');
           } catch (e) {
             debugPrint('❌ Product loading failed: $e');
             // 商品加载失败，但在Release模式下不应该导致整个初始化失败
             debugPrint('⚠️ Production mode: Continuing with empty product list');
             _products = [];
-          }
-          
-          _isInitialized = true;
-          debugPrint('=== InAppPurchaseService: Production initialization completed ===');
+        }
+        
+        _isInitialized = true;
+        debugPrint('=== InAppPurchaseService: Production initialization completed ===');
           return true;
           
         } catch (e) {

