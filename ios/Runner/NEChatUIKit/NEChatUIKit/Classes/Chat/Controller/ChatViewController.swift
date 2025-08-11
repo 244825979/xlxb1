@@ -361,7 +361,7 @@ open class ChatViewController: ChatBaseViewController, UINavigationControllerDel
     
     open func verifySendMessage(message: NIMMessage) {
         weak var weakSelf = self
-        viewmodel.verifySendMessage(message: message) { [weak self] error in
+        viewmodel.verifySendMessage(message: message) { error in
             if error != nil {
                 weakSelf?.view.makeToast(error?.localizedDescription)
             }
@@ -823,7 +823,7 @@ open class ChatViewController: ChatBaseViewController, UINavigationControllerDel
     @objc func applicationFrontDesk(notification: NSNotification) {
         if self.needMarkReadMsgs.count != 0 {
             viewmodel.markRead(messages: self.needMarkReadMsgs) { error in
-                print("mark read \(error?.localizedDescription)")
+                print("mark read \(String(describing: error?.localizedDescription))")
             }
         }
     }
@@ -950,7 +950,7 @@ open class ChatViewController: ChatBaseViewController, UINavigationControllerDel
     open func layoutInputViewWithAnimation(offset: CGFloat, _ animation: CGFloat = 0.3) {
         NELog.infoLog(className(), desc: "normal height : \(normalInputHeight) normal offset: \(normalOffset) offset : \(offset)")
         weak var weakSelf = self
-        var topValue = normalInputHeight - normalOffset
+        let topValue = normalInputHeight - normalOffset
         if offset > 80 {
             chatInputView.contentSubView?.isHidden = false
         } else {
@@ -1030,7 +1030,7 @@ open class ChatViewController: ChatBaseViewController, UINavigationControllerDel
             _ = delegate.perform(action)
             return
         }
-    
+        
         //更多点击事件
         if let type = cell.cellData?.type {
             p2pChatDelegate?.moreViewClikedItem(type: type)
@@ -1204,7 +1204,7 @@ open class ChatViewController: ChatBaseViewController, UINavigationControllerDel
                 chatInputView.sendButton.isSelected = false
             }
         } else {
-            var title = ""
+            let title = ""
             var content = ""
             
             if let contentText = chatInputView.textView.text {
@@ -1457,7 +1457,6 @@ open class ChatViewController: ChatBaseViewController, UINavigationControllerDel
     open func imagePickerController(_ picker: UIImagePickerController,
                                     didFinishPickingMediaWithInfo info: [UIImagePickerController
                                         .InfoKey: Any]) {
-                                            weak var weakSelf = self
                                             picker.dismiss(animated: true, completion: {
                                                 
                                             })
@@ -1786,7 +1785,7 @@ open class ChatViewController: ChatBaseViewController, UINavigationControllerDel
     open func playAudio(_ filePath: String, didBeganWithError error: Error?) {
         print(#function + "\(error?.localizedDescription ?? "")")
         NIMSDK.shared().mediaManager.switch(viewmodel.getHandSetEnable() ? .speaker : .receiver)
-        if let e = error {
+        if error != nil {
             showErrorToast(error)
             // stop
             playingCell?.stopAnimation(byRight: playingModel?.message?.isOutgoingMsg ?? true)
@@ -2611,7 +2610,7 @@ open class ChatViewController: ChatBaseViewController, UINavigationControllerDel
                 }
                 
             } else {
-                playingUrl == ""
+                playingUrl = ""
                 if let isPalying = p2pChatDelegate?.isPlayingAudio(), isPalying == true {
                     linkStopPlay()
                 }
@@ -2782,7 +2781,7 @@ open class ChatViewController: ChatBaseViewController, UINavigationControllerDel
                     }
                 } else {
                     p2pChatDelegate?.didTapCustomCell(customModel: attachmentModel, type: obj1.type)
-                    print(#function + "message did tap, type:\(model?.type.rawValue)")
+                    print(#function + "message did tap, type:\(String(describing: model?.type.rawValue))")
                 }
             }
         } else {
@@ -3144,7 +3143,7 @@ extension ChatViewController: ChatBaseCellDelegate {
                 }
             }
             
-            if let title = data?["title"] as? String {
+            if data?["title"] is String {
                 // 切换换行输入框
                 expandButtonDidClick()
             }
@@ -3224,7 +3223,7 @@ extension ChatViewController: ChatBaseCellDelegate {
             if UIApplication.shared.applicationState == .active && self.currentInsInBottom {
                 if needMarkReadMsgs.count != 0 {
                     viewmodel.markRead(messages: self.needMarkReadMsgs) { error in
-                        print("mark read \(error?.localizedDescription)")
+                        print("mark read \(String(describing: error?.localizedDescription))")
                     }
                 }
             }

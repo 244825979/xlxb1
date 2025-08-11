@@ -185,7 +185,7 @@
         [wself.navigationController pushViewController:vc animated:YES];
     }];
     [self.view addSubview:itemBg];
-    CGFloat freezeMoneyH = self.model.freeze_money.floatValue > 0 ? SCALES(65) : 0;//是否显示待结算样式
+    CGFloat freezeMoneyH = (self.model.freeze_money.floatValue > 0 || self.model.wait_coin_show == 1) ? SCALES(65) : 0;//是否显示待结算样式及冻结
     [itemBg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.balanceMoney.mas_bottom).offset(self.model.wait_coin_show == 1 ? SCALES(55)+freezeMoneyH : SCALES(31)+freezeMoneyH);
         make.centerX.equalTo(topView);

@@ -179,7 +179,6 @@
     self.token = [ASUserDefaults valueForKey:@"userinfo_token"];
     self.user_id = [ASUserDefaults valueForKey:@"userinfo_user_id"];
     //保存本地数据
-//    [NSString stringWithFormat:@"%@_intimate_%@",USER_INFO.user_id, STRING(recentSession.session.sessionId)];
     [ASIMHelperDataManager shared].helperList = [NSMutableArray arrayWithArray:[ASUserDefaults valueForKey:[NSString stringWithFormat:@"userinfo_helper_list_%@",STRING(USER_INFO.user_id)]]];
     [ASIMHelperDataManager shared].dashanList = [NSMutableArray arrayWithArray:[ASUserDefaults valueForKey:[NSString stringWithFormat:@"userinfo_dashan_list_%@",STRING(USER_INFO.user_id)]]];
     NSNumber *amount = [ASUserDefaults valueForKey:[NSString stringWithFormat:@"userinfo_dashan_amount_%@",STRING(USER_INFO.user_id)]];

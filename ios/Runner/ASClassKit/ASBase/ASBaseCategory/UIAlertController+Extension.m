@@ -311,7 +311,7 @@
         make.right.offset(SCALES(-46));
     }];
     NSString *nickname = model.nickname.length > 5 ? [NSString stringWithFormat:@"%@...",[model.nickname substringToIndex:5]] : model.nickname;
-    NSString *tonickname = model.tonickname.length > 5 ? [NSString stringWithFormat:@"%@...",[model.nickname substringToIndex:5]] : model.tonickname;
+    NSString *tonickname = model.tonickname.length > 5 ? [NSString stringWithFormat:@"%@...",[model.tonickname substringToIndex:5]] : model.tonickname;
     NSString *name = [NSString stringWithFormat:@"%@ 送给 %@", nickname, tonickname];
     NSMutableAttributedString *nameAttributed = [[NSMutableAttributedString alloc] initWithString:name];
     //设置部分字体颜色name

@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 //视频秀赞赏
 + (void)popVideoShowGiftWithModel:(ASVideoShowDataModel *)model;
 //首次弹出防诈骗弹窗
-+ (void)popPreventFraudAlertView;
++ (void)popPreventFraudAlertViewWithVc:(UIViewController *)vc cancel:(VoidBlock)cancelAction;
 //亲密度详情弹窗
 + (void)popIntimacyDetailsWithModel:(ASIMIntimateUserModel *)model;
 //赠送礼物弹窗
@@ -150,7 +150,7 @@ NS_ASSUME_NONNULL_BEGIN
                 affirmAction:(VoidBlock)affirmAction
                  cancelBlock:(VoidBlock)cancelBlock;
 //IM搭讪引导
-+ (void)imDashanDemonstrationPopViewWithCancelBlock:(VoidBlock)cancelBlock;
++ (void)imDashanDemonstrationPopViewWithVc:(UIViewController *)vc CancelBlock:(VoidBlock)cancelBlock;
 @end
 
 NS_ASSUME_NONNULL_END

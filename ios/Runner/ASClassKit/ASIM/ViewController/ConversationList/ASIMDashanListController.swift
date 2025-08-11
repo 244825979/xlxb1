@@ -40,6 +40,10 @@ class ASIMDashanListController: ConversationController, NIMConversationManagerDe
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.reloadTableView()
+        //禁止右滑返回
+        let traget = navigationController?.interactivePopGestureRecognizer?.delegate
+        let pan = UIPanGestureRecognizer.init(target: traget, action: nil)
+        view.addGestureRecognizer(pan)
     }
     
     override func onselectedTableRow(sessionType: NIMSessionType, sessionId: String, indexPath: IndexPath) {

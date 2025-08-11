@@ -96,7 +96,7 @@ class ASIMConversationListController: ConversationController, JXCategoryListCont
                             NIMSDK.shared().subscribeManager.unSubscribeEvent(request) { error, list in
                             }
                         } else {
-                            //清空聊天内容，不删除会话消息
+                            //清空聊天内容，不删除会话
                             let messagesOption = NIMDeleteMessagesOption()
                             messagesOption.removeSession = false
                             messagesOption.removeTable = true
@@ -112,9 +112,49 @@ class ASIMConversationListController: ConversationController, JXCategoryListCont
         //自动清理会话列表消息
         NotificationCenter.default.rac_addObserver(forName: "clearDeleteMsgListNotification", object: nil).subscribeNext { [weak self] notification in
             guard let self = self else { return }
+            //获取当前时间
+            let timeStr = (ASCommonFunc.currentTimeStr() as NSString).intValue
+            //处理搭讪列表的会话数据
+            if ASIMHelperDataManager.shared().dashanList.count > 0 {
+                var dashanList = ASIMHelperDataManager.shared().dashanList//没处理前的搭讪用户
+                for userid in ASIMHelperDataManager.shared().dashanList {
+                    let session = NIMSession.init(userid as? String ?? "", type: .P2P)
+                    //获取亲密度判断，有亲密度不处理
+                    let intimateKey = ASUserDataManager.shared().user_id + "_intimate_" + session.sessionId
+                    let intimateData = UserDefaults.standard.value(forKey: intimateKey) as? NSDictionary ?? [:]
+                    let score = intimateData["score"] as? NSString ?? ""
+                    if score.floatValue > 0 {
+                        continue
+                    }
+                    let recentSession = NIMSDK.shared().conversationManager.recentSession(by: session)
+                    if let rs = recentSession, Int(timeStr) - Int(rs.lastMessage?.timestamp ?? 0.0) > 43200 {
+                        //清空聊天内容，删除会话消息
+                        let messagesOption = NIMDeleteMessagesOption()
+                        messagesOption.removeSession = true
+                        messagesOption.removeTable = true
+                        NIMSDK.shared().conversationManager.deleteAllmessages(in: session, option: messagesOption)
+                        let cloudOption = NIMClearMessagesOption()
+                        cloudOption.removeRoam = true
+                        NIMSDK.shared().conversationManager.deleteSelfRemoteSession(session, option: cloudOption)
+                        //取消在线状态订阅
+                        let request = NIMSubscribeRequest()
+                        request.type = 1
+                        request.expiry = 60*60*24*1
+                        request.syncEnabled = true
+                        request.publishers = [session.sessionId]
+                        NIMSDK.shared().subscribeManager.unSubscribeEvent(request) { error, list in
+                        }
+                        if dashanList.contains(userid) {
+                            dashanList.remove(userid)
+                        }
+                    }
+                }
+                //同步搭讪列表的用户数据
+                ASIMHelperDataManager.shared().dashanList = dashanList
+                ASUserDefaults.setValue(dashanList, forKey: "userinfo_dashan_list_" + ASUserDataManager.shared().user_id)
+            }
+            
             if let conversationListArray = self.viewModel.conversationListArray, conversationListArray.count > 0 {
-                //获取当前时间，时间大于12小时进行删除
-                let timeStr = (ASCommonFunc.currentTimeStr() as NSString).intValue
                 for n in 0 ..< conversationListArray.count {
                     let model = conversationListArray[n]
                     if let recentSession = model.recentSession, let session = recentSession.session {
@@ -124,28 +164,34 @@ class ASIMConversationListController: ConversationController, JXCategoryListCont
                             session.sessionId == NEKitConversationConfig.shared.kefuzushou_id {
                             continue
                         }
+                        //是否置顶，置顶消息不删除
+                        if viewModel.stickTopInfos[session] != nil {
+                            continue
+                        }
+                        //获取亲密度判断，有亲密度不处理
                         let intimateKey = ASUserDataManager.shared().user_id + "_intimate_" + session.sessionId
                         let intimateData = UserDefaults.standard.value(forKey: intimateKey) as? NSDictionary ?? [:]
                         let score = intimateData["score"] as? NSString ?? ""
-                        if score.floatValue == 0 {
-                            //消息时间超过12小时
-                            if (Int(timeStr) - Int(recentSession.lastMessage?.timestamp ?? 0.0)) > 43200 {
-                                //清空聊天内容，删除会话消息
-                                let messagesOption = NIMDeleteMessagesOption()
-                                messagesOption.removeSession = true
-                                messagesOption.removeTable = true
-                                NIMSDK.shared().conversationManager.deleteAllmessages(in: session, option: messagesOption)
-                                let cloudOption = NIMClearMessagesOption()
-                                cloudOption.removeRoam = true
-                                NIMSDK.shared().conversationManager.deleteSelfRemoteSession(session, option: cloudOption)
-                                //取消在线状态订阅
-                                let request = NIMSubscribeRequest()
-                                request.type = 1
-                                request.expiry = 60*60*24*1
-                                request.syncEnabled = true
-                                request.publishers = [session.sessionId]
-                                NIMSDK.shared().subscribeManager.unSubscribeEvent(request) { error, list in
-                                }
+                        if score.floatValue > 0 {
+                            continue
+                        }
+                        //消息时间超过12小时
+                        if (Int(timeStr) - Int(recentSession.lastMessage?.timestamp ?? 0.0)) > 43200 {
+                            //清空聊天内容，删除会话消息
+                            let messagesOption = NIMDeleteMessagesOption()
+                            messagesOption.removeSession = true
+                            messagesOption.removeTable = true
+                            NIMSDK.shared().conversationManager.deleteAllmessages(in: session, option: messagesOption)
+                            let cloudOption = NIMClearMessagesOption()
+                            cloudOption.removeRoam = true
+                            NIMSDK.shared().conversationManager.deleteSelfRemoteSession(session, option: cloudOption)
+                            //取消在线状态订阅
+                            let request = NIMSubscribeRequest()
+                            request.type = 1
+                            request.expiry = 60*60*24*1
+                            request.syncEnabled = true
+                            request.publishers = [session.sessionId]
+                            NIMSDK.shared().subscribeManager.unSubscribeEvent(request) { error, list in
                             }
                         }
                     }
@@ -171,13 +217,8 @@ class ASIMConversationListController: ConversationController, JXCategoryListCont
                     foldView.frame = CGRectMake(0, 0, kScreenWidth, 0)
                     foldView.dashanAmount = 0
                 }
+                foldView.isUnread = ASIMManager.shared().dashanIsUnread()
                 self.tableView.reloadData()
-                //男用户首次有折叠消息，就提示折叠引导浮窗
-                let isDemonstrationPop = ASUserDefaults.value(forKey: "im_demonstration_" + ASUserDataManager.shared().user_id) as? String ?? ""
-                if isDemonstrationPop != "1" {
-                    ASAlertViewManager.imDashanDemonstrationPopView { }
-                    ASUserDefaults.setValue("1", forKey: "im_demonstration_" + ASUserDataManager.shared().user_id)
-                }
             } else {
                 foldView.dashanAmount = ASIMHelperDataManager.shared().dashanAmount
             }

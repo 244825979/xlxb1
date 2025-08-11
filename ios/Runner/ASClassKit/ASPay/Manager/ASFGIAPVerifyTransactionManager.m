@@ -6,6 +6,7 @@
 //
 
 #import "ASFGIAPVerifyTransactionManager.h"
+#import "ASMyAppRegister.h"
 
 @implementation ASFGIAPVerifyTransactionManager
 
@@ -130,6 +131,6 @@
         [ASMsgTool hideMsg];
     }];
     [alertController addAction:action];
-    [kCurrentWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+    [[ASMyAppRegister shared].window.rootViewController presentViewController:alertController animated:YES completion:nil];
 }
 @end

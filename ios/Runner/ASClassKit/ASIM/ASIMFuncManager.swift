@@ -147,44 +147,4 @@ open class ASIMFuncManager: NSObject {
         ASCommonFunc.currentVc().navigationController?.setViewControllers(newVCList, animated: true)
         ASCommonFunc.currentVc().navigationController?.pushViewController(popVc, animated: true)
     }
-    //过滤搭讪、小助手的会话数据及已读的数据
-    @objc class func filtrationUnreadConversation() -> [NIMSession] {
-        let recents = NIMSDK.shared().conversationManager.allRecentSessions()
-        if let recentSessions = recents {
-            //判断会话的扩展字段，1表示小助手，2为搭讪列表。判断系统类型的消息
-            let recents = recentSessions.filter { recentSession in
-                if let localExt = recentSession.localExt {
-                    let conversationType = localExt["conversation_type"] as? String ?? ""
-                    if conversationType == "1" || conversationType == "2" {
-                        return false
-                    }
-                }
-                if let sessionID = recentSession.session?.sessionId {
-                    if sessionID == NEKitChatConfig.shared.xitongxiaoxi_id ||
-                        sessionID == NEKitChatConfig.shared.huodongxiaozushou_id {
-                        return false
-                    }
-                }
-                if recentSession.unreadCount == 0 {
-                    return false
-                }
-                return true
-            }
-            return recents.map { $0.session ?? NIMSession()}
-        } else {
-            return []
-        }
-    }
-    //获取搭讪列表的会话数据
-    @objc class func dashanConversationSession() -> [NIMSession] {
-        if ASIMHelperDataManager.shared().dashanList.count == 0 {
-            return []
-        }
-        var sessions: [NIMSession] = []
-        for userid in ASIMHelperDataManager.shared().dashanList {
-            let session = NIMSession.init(userid as? String ?? "", type: .P2P)
-            sessions.append(session)
-        }
-        return sessions
-    }
 }

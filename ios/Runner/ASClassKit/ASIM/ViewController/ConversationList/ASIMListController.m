@@ -42,9 +42,7 @@
     }
     self.categoryView.dotStates = @[@0,[[ASIMManager shared] miyouIsUnread] == YES ? @1 : @0];
     [self.categoryView reloadData];
-    if (kAppType == 0) {
-        [self clearMessage];
-    }
+    [self clearMessage];
     if (USER_INFO.gender == 1 && kAppType == 0 && USER_INFO.systemIndexModel.is_fate_helper_show == 1) {
         [self requestMatchHelperData];
     }
@@ -131,18 +129,10 @@
 }
 
 - (void)homeData {
-    //IM引导折叠提示的弹窗
-    NSString *isDemonstrationPop = [ASUserDefaults valueForKey:[NSString stringWithFormat:@"im_demonstration_%@",USER_INFO.user_id]];
-    if (USER_INFO.gender == 1 && (kStringIsEmpty(isDemonstrationPop) || isDemonstrationPop.integerValue == 0)) {
-        [ASAlertViewManager imDashanDemonstrationPopViewWithCancelBlock:^{ }];
-        [ASUserDefaults setValue:@"1" forKey:[NSString stringWithFormat:@"im_demonstration_%@",USER_INFO.user_id]];
-    }
-    //防诈骗提醒弹窗
-    NSString *isPop = [ASUserDefaults valueForKey:kIsPopPreventFraudView];
-    if (kStringIsEmpty(isPop) || isPop.integerValue == 0) {
-        [ASAlertViewManager popPreventFraudAlertView];
-        [ASUserDefaults setValue:@"1" forKey:kIsPopPreventFraudView];
-    }
+    //弹窗
+    [[ASPopViewManager shared] IMListPopViewWithVc:self complete:^{
+        
+    }];
     kWeakSelf(self);
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"requestMatchHelperNotification" object:nil]
      subscribeNext:^(NSNotification * _Nullable notifiction) {
@@ -164,6 +154,18 @@
         if (status.integerValue == 1) {
             wself.categoryView.dotStates = @[@0, @1];
             [wself.categoryView reloadData];
+        }
+        if (status.integerValue == 2) {
+            wself.categoryView.dotStates = @[@0,[[ASIMManager shared] miyouIsUnread] == YES ? @1 : @0];
+            [wself.categoryView reloadData];
+        }
+    }];
+    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"refreshDashanDataNotify" object:nil]
+     subscribeNext:^(NSNotification * _Nullable notifiction) {
+        if (USER_INFO.gender == 2) {
+            [[ASPopViewManager shared] IMListManPopDemonstrationViewWithVc:wself complete:^{
+                
+            }];
         }
     }];
     //用户通知权限是否开启提示
@@ -189,11 +191,6 @@
             });
         }
     }];
-    [[ASPopViewManager shared] activityPopWithPlacement:3 vc:self isPopWindow:YES affirmAction:^{
-        
-    } cancelBlock:^{
-        
-    }];//活动弹窗
 }
 
 //自动清理
@@ -210,6 +207,7 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"clearDeleteMsgListNotification" object:nil];
         }];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"clearDeleteMsgListNotification" object:nil];
 }
 
 - (id<JXCategoryListContentViewDelegate>)listContainerView:(JXCategoryListContainerView *)listContainerView initListForIndex:(NSInteger)index {

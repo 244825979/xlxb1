@@ -235,7 +235,7 @@
         little.font = TEXT_FONT_20;
         little.text = STRING(title);
         little.textColor = TEXT_SIMPLE_COLOR;
-        little.text = @"（选填）";
+        little.text = @"（必填）";
         [view addSubview:little];
         [little mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(text.mas_right);

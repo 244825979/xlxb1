@@ -487,7 +487,7 @@ extension NEBaseConversationController: UITableViewDelegate, UITableViewDataSour
                         request.syncEnabled = true
                         request.publishers = [userID]
                         NIMSDK.shared().subscribeManager.subscribeEvent(request) { error, list in
-                            print(error)
+                            
                         }
                     }
                 }

@@ -7,6 +7,7 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 #import <FURenderKit/FURenderKit.h>
+#import "ASMyAppRegister.h"
 
 #pragma mark - 宏
 
@@ -89,7 +90,7 @@ static CGFloat const FUFunctionSliderHeight = 30.f;
 
 static inline CGFloat FUSafaAreaBottomInsets() {
     if (@available(iOS 11.0, *)) {
-        return [UIApplication sharedApplication].delegate.window.safeAreaInsets.bottom;
+        return [ASMyAppRegister shared].window.safeAreaInsets.bottom;
     }
     return 0;
 }

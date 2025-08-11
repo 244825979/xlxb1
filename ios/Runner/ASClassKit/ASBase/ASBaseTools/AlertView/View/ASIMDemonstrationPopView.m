@@ -14,12 +14,12 @@
         self.backgroundColor = [UIColor clearColor];
         self.size = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT);
         UIImageView *icon = [[UIImageView alloc] init];
-        icon.image = [UIImage imageNamed:@"im_demonstration"];
+        icon.image = [UIImage imageNamed:USER_INFO.gender == 1 ? @"im_demonstration1" : @"im_demonstration"];
         [self addSubview:icon];
         [icon mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self);
             make.top.mas_equalTo(HEIGHT_NAVBAR + SCALES(100));
-            make.size.mas_equalTo(CGSizeMake(SCALES(343), SCALES(312)));
+            make.size.mas_equalTo(CGSizeMake(SCALES(343), USER_INFO.gender == 2 ? SCALES(312) : SCALES(282)));
         }];
         kWeakSelf(self);
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];

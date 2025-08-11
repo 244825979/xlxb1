@@ -96,12 +96,20 @@
     [ASAlertViewManager bottomPopTitles:@[@"一键已读", @"清除消息"] indexAction:^(NSString *indexName) {
         if ([indexName isEqualToString:@"一键已读"]) {
             [ASAlertViewManager defaultPopTitle:@"一键已读" content:@"消息气泡会清除，但消息不会丢失" left:@"确认" right:@"取消" affirmAction:^{
-                if ([ASIMFuncManager filtrationUnreadConversation].count > 0) {
-                    [[[NIMSDK sharedSDK] conversationManager] batchMarkMessagesReadInSessions:[ASIMFuncManager filtrationUnreadConversation]];
-                    [[ASIMManager shared] updateUnreadCount];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"homeMessageRemindUpdate" object:nil];
+                NSArray *recentSessions = [NIMSDK sharedSDK].conversationManager.allRecentSessions;
+                for (NIMRecentSession *recentSession in recentSessions) {
+                    NSDictionary *localExt = recentSession.localExt;
+                    NSString *conversationType = localExt[@"conversation_type"];
+                    if ([conversationType isEqualToString:@"1"] ||
+                        [conversationType isEqualToString:@"2"]) {
+                        continue;
+                    }
+                    [[[NIMSDK sharedSDK] conversationManager] markAllMessagesReadInSession:recentSession.session];
                 }
+                [[ASIMManager shared] updateUnreadCount];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"homeMessageRemindUpdate" object:nil];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshZushouOrHuodongNotify" object: @"0"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshMiyouNotification" object: @"2"];
             } cancelAction:^{
                 
             }];
@@ -127,8 +135,11 @@
     [ASAlertViewManager bottomPopTitles:USER_INFO.gender == 2 ? @[@"一键已读", @"清除消息"] : @[@"清除消息"] indexAction:^(NSString *indexName) {
         if ([indexName isEqualToString:@"一键已读"]) {
             [ASAlertViewManager defaultPopTitle:@"一键已读" content:@"消息气泡会清除，但消息不会丢失" left:@"确认" right:@"取消" affirmAction:^{
-                if ([[ASIMManager shared] dashanIsUnread] == YES) {
-                    [[[NIMSDK sharedSDK] conversationManager] batchMarkMessagesReadInSessions:[ASIMFuncManager dashanConversationSession]];
+                if ([ASIMHelperDataManager shared].dashanList.count > 0) {
+                    for (NSString *userid in [ASIMHelperDataManager shared].dashanList) {
+                        NIMSession *session = [NIMSession session:userid type:NIMSessionTypeP2P];
+                        [[[NIMSDK sharedSDK] conversationManager] markAllMessagesReadInSession:session];
+                    }
                     [[ASIMManager shared] updateUnreadCount];
                 }
             } cancelAction:^{
@@ -142,7 +153,15 @@
                     for (NSString *userid in [ASIMHelperDataManager shared].dashanList) {
                         NIMSession *session = [NIMSession session:STRING(userid) type:NIMSessionTypeP2P];
                         NIMRecentSession *recentSession = [[NIMSDK sharedSDK].conversationManager recentSessionBySession:session];
-                        [[NIMSDK sharedSDK].conversationManager deleteRecentSession:recentSession];//删除会话
+                        NSMutableDictionary *localExt = [NSMutableDictionary dictionaryWithDictionary:recentSession.localExt];
+                        [localExt setObject:@"0" forKey:@"conversation_type"];//3个消息列表。0或者没值为默认会话列表，1为匹配小助手会话列表。2为搭讪消息列表
+                        [[NIMSDK sharedSDK].conversationManager updateRecentLocalExt:localExt recentSession:recentSession];
+                        NIMDeleteRecentSessionOption *option = [[NIMDeleteRecentSessionOption alloc] init];
+                        option.isDeleteRoamMessage = YES;
+                        option.shouldMarkAllMessagesReadInSessions = YES;
+                        [[NIMSDK sharedSDK].conversationManager deleteRecentSession:recentSession option:option completion:^(NSError * _Nullable error) {
+                            
+                        }];
                         //取消订阅
                         NIMSubscribeRequest *request = [[NIMSubscribeRequest alloc] init];
                         request.type = 1;
@@ -154,6 +173,9 @@
                         }];
                     }
                     [[ASIMHelperDataManager shared].dashanList removeAllObjects];
+                    [ASIMHelperDataManager shared].dashanList = [NSMutableArray arrayWithArray:@[]];
+                    [ASIMHelperDataManager shared].dashanAmount = 0;
+                    [[ASIMManager shared] updateUnreadCount];
                 }
             } cancelAction:^{
                 

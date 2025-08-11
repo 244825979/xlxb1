@@ -22,6 +22,7 @@
 #import "ASGiftSVGAPlayerController.h"
 #import "TZImagePickerController.h"
 #import "ASLoginBindPhoneController.h"
+#import "ASMyAppRegister.h"
 
 @interface ASIMManager ()<NIMSystemNotificationManagerDelegate, NIMChatManagerDelegate, NIMLoginManagerDelegate, NIMSDKConfigDelegate, NIMEventSubscribeManagerDelegate, NIMConversationManagerDelegate>
 @property (nonatomic, strong) zhPopupController *IMNotifyPopView;//IM消息提醒
@@ -135,10 +136,7 @@
             break;
         case kIMIntimacyValueChange://亲密值变化
         {
-            if (kAppType == 1) {
-                return;
-            }
-            NSString *user_id = USER_INFO.gender == 2 ? notifyModel.data.to_uid : notifyModel.data.from_uid;
+            NSString *user_id = [notifyModel.data.from_uid isEqualToString: USER_INFO.user_id] ? notifyModel.data.to_uid : notifyModel.data.from_uid;
             NSString *intimateKey = [NSString stringWithFormat:@"%@_intimate_%@",USER_INFO.user_id, user_id];
             NSDictionary *valueDict = @{@"user_id": STRING(user_id),
                                         @"grade": @(notifyModel.data.grade),
@@ -149,10 +147,8 @@
             break;
         case kIMIntimacyValuePromote://亲密值弹窗提示
         {
-            if (kAppType == 1) {
-                return;
-            }
-            NSString *intimateKey = [NSString stringWithFormat:@"%@_intimate_%@",USER_INFO.user_id, notifyModel.data.to_uid];
+            NSString *user_id = [notifyModel.data.from_uid isEqualToString: USER_INFO.user_id] ? notifyModel.data.to_uid : notifyModel.data.from_uid;
+            NSString *intimateKey = [NSString stringWithFormat:@"%@_intimate_%@",USER_INFO.user_id, user_id];
             NSDictionary *valueDict = @{@"user_id": STRING(notifyModel.data.to_uid),
                                         @"grade": @(notifyModel.data.grade),
                                         @"score": STRING(notifyModel.data.current_score)};
@@ -649,6 +645,13 @@
             NSMutableDictionary *localExt = [NSMutableDictionary dictionaryWithDictionary:recentSession.localExt];
             [localExt setObject:@"0" forKey:@"conversation_type"];//改变下状态，让其可以回到会话列表显示
             [[NIMSDK sharedSDK].conversationManager updateRecentLocalExt:localExt recentSession:recentSession notifyRecentUpdate:YES];
+            if ([ASIMHelperDataManager shared].dashanAmount > 0) {
+                [ASIMHelperDataManager shared].dashanAmount = [ASIMHelperDataManager shared].dashanAmount -1;
+            }
+            //发消息告知更新搭讪人数
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshDashanDataNotify" object: nil];
+            });
         }
     }
     //判断我是男用户，我回消息在搭讪列表的用户，把搭讪列表用户挪出
@@ -662,6 +665,13 @@
             NSMutableDictionary *localExt = [NSMutableDictionary dictionaryWithDictionary:recentSession.localExt];
             [localExt setObject:@"0" forKey:@"conversation_type"];//改变下状态，让其可以回到会话列表显示
             [[NIMSDK sharedSDK].conversationManager updateRecentLocalExt:localExt recentSession:recentSession notifyRecentUpdate:YES];
+            if ([ASIMHelperDataManager shared].dashanAmount > 0) {
+                [ASIMHelperDataManager shared].dashanAmount = [ASIMHelperDataManager shared].dashanAmount -1;
+            }
+            //发消息告知更新搭讪人数
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshDashanDataNotify" object: nil];
+            });
         }
     }
 }
@@ -776,10 +786,10 @@
 }
 
 - (void)updateUnreadCount {
-    if (![[UIApplication sharedApplication].delegate.window.rootViewController isKindOfClass: [ASBaseTabBarController class]]) {
+    if (![[ASMyAppRegister shared].window.rootViewController isKindOfClass: [ASBaseTabBarController class]]) {
         return;
     }
-    ASBaseTabBarController *tabbarVC = (ASBaseTabBarController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+    ASBaseTabBarController *tabbarVC = (ASBaseTabBarController *)[ASMyAppRegister shared].window.rootViewController;
     if (kObjectIsEmpty(tabbarVC)) {
         return;
     }
@@ -791,7 +801,7 @@
     if ([self xitongIsUnread] == YES) {
         unreadCount += 1;
     }
-    //活动小助手
+    //活动通知
     if ([self huodongIsUnread] == YES) {
         unreadCount += 1;
     }

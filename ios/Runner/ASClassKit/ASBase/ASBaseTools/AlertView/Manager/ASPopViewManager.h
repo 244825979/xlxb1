@@ -17,6 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)homePopViewWithVc:(UIViewController *)vc complete:(VoidBlock)complete;
 //我的页面进行有序弹窗
 - (void)minePopViewWithVc:(UIViewController *)vc complete:(VoidBlock)complete;
+//会话列表有序弹窗
+- (void)IMListPopViewWithVc:(UIViewController *)vc complete:(VoidBlock)complete;
+//IM页男用户来了首条折叠消息处理
+- (void)IMListManPopDemonstrationViewWithVc:(UIViewController *)vc complete:(VoidBlock)complete;
+#pragma mark - 首页
 //更新弹窗
 - (void)requestAppVersionPopViewWithVc:(UIViewController *)vc complete:(VoidBlock)complete;
 //开启青少年模式弹窗
@@ -41,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
                      isPopWindow:(BOOL)isPopWindow
                     affirmAction:(VoidBlock)affirmAction
                      cancelBlock:(VoidBlock)cancelBlock;
-
+#pragma mark - 我的页面
 //我的页面：视频秀发布引导提示
 - (void)requestVideoShowRemindWithVc:(UIViewController *)vc complete:(VoidBlock)complete;
 //我的页面：头像引导提醒
@@ -50,6 +55,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)requestXuzhiPopWithVc:(UIViewController *)vc complete:(VoidBlock)complete;
 //弹出绑定提醒
 - (void)requestPopBindWithVc:(UIViewController *)vc complete:(VoidBlock)complete;
+#pragma mark - IM会话列表
+//防诈骗提醒弹窗
+- (void)popPreventFraudViewWithVc:(UIViewController *)vc complete:(VoidBlock)complete;
+//IM引导折叠提示的弹窗
+- (void)popDemonstrationViewWithVc:(UIViewController *)vc isMan:(BOOL)isMan complete:(VoidBlock)complete;
 @end
 
 NS_ASSUME_NONNULL_END

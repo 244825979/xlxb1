@@ -59,7 +59,7 @@
 }
 
 - (void)refreshRed:(NSNotification *)notification {
-    if (kObjectIsEmpty(notification.object)) {
+    if (!kObjectIsEmpty(notification.object)) {
         NSString *isRed = notification.object;
         if (isRed.integerValue == 0) {
             self.xitongtongzhiRedView.hidden = YES;

@@ -166,7 +166,7 @@ open class NEBaseReadViewController: ChatBaseViewController, UIScrollViewDelegat
 
   func loadData(message: NIMMessage) {
     NIMSDK.shared().chatManager.queryMessageReceiptDetail(message) { anError, receiptInfo in
-      print("anError:\(anError) receiptInfo:\(receiptInfo)")
+        print("anError:\(String(describing: anError)) receiptInfo:\(String(describing: receiptInfo))")
       if let error = anError as? NSError {
         if error.code == noNetworkCode {
           self.showToast(commonLocalizable("network_error"))

@@ -11,7 +11,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ASIMActivityFloatingView : UIView
 @property (nonatomic, strong) ASBannerModel *model;
-//@property (nonatomic, copy) VoidBlock clickBlock;
 @property (nonatomic, copy) VoidBlock closeBlock;
 @end
 

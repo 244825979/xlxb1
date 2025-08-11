@@ -80,7 +80,7 @@ open class ConversationListCell: NEBaseConversationListCell {
                     let intimateKey = myUserID + "_intimate_" + (conversationModel.userInfo?.userId ?? "")
                     let intimateData = UserDefaults.standard.value(forKey: intimateKey) as? NSDictionary ?? [:]
                     let score = intimateData["score"] as? NSString ?? ""
-                    let grade = intimateData["grade"] as? NSInteger ?? 0
+//                    let grade = intimateData["grade"] as? NSInteger ?? 0
                     if score.floatValue > 0 {
                         intimateValue.isHidden = false
                         intimateIcon.isHidden = false

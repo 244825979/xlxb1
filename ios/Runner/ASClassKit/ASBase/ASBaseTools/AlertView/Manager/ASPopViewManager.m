@@ -73,14 +73,35 @@
     }];
 }
 
+//IM页面进入弹窗处理
+- (void)IMListPopViewWithVc:(UIViewController *)vc complete:(VoidBlock)complete {
+    ASBaseAlertViewController *alertVc = [[ASBaseAlertViewController alloc] init];
+    ASBaseNavigationController *nav = [[ASBaseNavigationController alloc] initWithRootViewController:alertVc];
+    nav.modalPresentationStyle = UIModalPresentationOverFullScreen;//覆盖全屏
+    [vc presentViewController:nav animated:NO completion:nil];
+    [alertVc IMListPopViewWithComplete:^{
+        complete();
+    }];
+}
+
 //我的页面进行有序弹窗
 - (void)minePopViewWithVc:(UIViewController *)vc complete:(VoidBlock)complete {
-    //我的页面的弹窗管理控制器
     ASBaseAlertViewController *alertVc = [[ASBaseAlertViewController alloc] init];
     ASBaseNavigationController *nav = [[ASBaseNavigationController alloc] initWithRootViewController:alertVc];
     nav.modalPresentationStyle = UIModalPresentationOverFullScreen; //覆盖全屏
     [vc presentViewController:nav animated:NO completion:nil];
     [alertVc minePopViewWithComplete:^{
+        complete();
+    }];
+}
+
+//IM页男用户来了首条折叠消息处理
+- (void)IMListManPopDemonstrationViewWithVc:(UIViewController *)vc complete:(VoidBlock)complete {
+    ASBaseAlertViewController *alertVc = [[ASBaseAlertViewController alloc] init];
+    ASBaseNavigationController *nav = [[ASBaseNavigationController alloc] initWithRootViewController:alertVc];
+    nav.modalPresentationStyle = UIModalPresentationOverFullScreen; //覆盖全屏
+    [vc presentViewController:nav animated:NO completion:nil];
+    [alertVc IMListManPopDemonstrationViewWithComplete:^{
         complete();
     }];
 }
@@ -499,4 +520,36 @@
         complete();
     }];
 }
+
+//防诈骗提醒弹窗
+- (void)popPreventFraudViewWithVc:(UIViewController *)vc complete:(VoidBlock)complete {
+    NSString *isPop = [ASUserDefaults valueForKey:kIsPopPreventFraudView];
+    if (isPop.integerValue == 1) {
+        complete();
+        return;
+    }
+    [ASUserDefaults setValue:@"1" forKey:kIsPopPreventFraudView];
+    [ASAlertViewManager popPreventFraudAlertViewWithVc:vc cancel:^{
+        complete();
+    }];
+}
+
+//IM引导折叠提示的弹窗
+- (void)popDemonstrationViewWithVc:(UIViewController *)vc isMan:(BOOL)isMan complete:(VoidBlock)complete {
+    NSString *isDemonstrationPop = [ASUserDefaults valueForKey:[NSString stringWithFormat:@"im_demonstration_%@",USER_INFO.user_id]];
+    if ((USER_INFO.gender == 2 && isMan == NO) || (USER_INFO.gender == 1 && isMan == YES)) {
+        complete();
+        return;
+    }
+    if (isDemonstrationPop.integerValue == 1) {
+        complete();
+        return;
+    }
+    [ASUserDefaults setValue:@"1" forKey:[NSString stringWithFormat:@"im_demonstration_%@",USER_INFO.user_id]];
+    [ASAlertViewManager imDashanDemonstrationPopViewWithVc:vc CancelBlock:^{
+        complete();
+    }];
+}
+
+
 @end

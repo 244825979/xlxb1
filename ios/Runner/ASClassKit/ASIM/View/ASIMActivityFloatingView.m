@@ -22,9 +22,6 @@
         [self.activityImage addGestureRecognizer:tap];
         kWeakSelf(self);
         [[tap rac_gestureSignal] subscribeNext:^(__kindof UIGestureRecognizer * _Nullable x) {
-//            if (wself.clickBlock) {
-//                wself.clickBlock();
-//            }
             [ASMyAppCommonFunc bannerClikedWithBannerModel:wself.model viewController:[ASCommonFunc currentVc] action:^(id  _Nonnull data) {
                 
             }];

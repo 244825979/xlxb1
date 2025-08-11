@@ -330,13 +330,17 @@
         [wPopupController dismiss];
     };
 }
-+ (void)popPreventFraudAlertView {
++ (void)popPreventFraudAlertViewWithVc:(UIViewController *)vc cancel:(VoidBlock)cancelAction {
     ASPreventFraudAlertView *alertView = [[ASPreventFraudAlertView alloc] initPreventFraudView];
     zhPopupController *popupController = [[zhPopupController alloc] initWithView:alertView size:alertView.bounds.size];
     popupController.presentationStyle = zhPopupSlideStyleFade;
     popupController.presentationTransformScale = 1.25;
     popupController.dismissonTransformScale = 0.85;
-    [popupController showInView:kCurrentWindow completion:NULL];
+    [popupController showInView:vc.view completion:NULL];
+    popupController.didDismissBlock = ^(zhPopupController * _Nonnull popupController) {
+        //关闭弹窗的时候调用，弹出其他的弹窗
+        cancelAction();
+    };
     __weak typeof(popupController) wPopupController = popupController;
     alertView.affirmBlock = ^{
         [wPopupController dismiss];
@@ -866,13 +870,13 @@
 }
 
 //IM搭讪引导
-+ (void)imDashanDemonstrationPopViewWithCancelBlock:(VoidBlock)cancelBlock {
++ (void)imDashanDemonstrationPopViewWithVc:(UIViewController *)vc CancelBlock:(VoidBlock)cancelBlock {
     ASIMDemonstrationPopView *alertView = [[ASIMDemonstrationPopView alloc] init];
     zhPopupController *popupController = [[zhPopupController alloc] initWithView:alertView size:alertView.bounds.size];
     popupController.presentationStyle = zhPopupSlideStyleFade;
     popupController.presentationTransformScale = 1.25;
     popupController.dismissonTransformScale = 0.85;
-    [popupController showInView:kCurrentWindow completion:NULL];
+    [popupController showInView:vc.view completion:NULL];
     popupController.didDismissBlock = ^(zhPopupController * _Nonnull popupController) {
         //关闭弹窗的时候调用，弹出其他的弹窗
         cancelBlock();

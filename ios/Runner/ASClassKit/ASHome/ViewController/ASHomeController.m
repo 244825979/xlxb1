@@ -363,6 +363,7 @@
     kWeakSelf(self);
     if (USER_INFO.systemIndexModel.you_like_switch_home == 0) {
         self.topViewHeight = self.topView.banners.count > 0 ? SCALES(178) : SCALES(108);
+        self.topView.likes = @[];
         [self.pagingView resizeTableHeaderViewHeightWithAnimatable:YES duration:0.2 curve:UIViewAnimationCurveEaseInOut];
         return;
     }
@@ -377,6 +378,7 @@
         //刷新一下UI
         [wself.pagingView resizeTableHeaderViewHeightWithAnimatable:YES duration:0.2 curve:UIViewAnimationCurveEaseInOut];
     } errorBack:^(NSInteger code, NSString * _Nonnull message) {
+        wself.topView.likes = @[];
         [wself.pagingView resizeTableHeaderViewHeightWithAnimatable:YES duration:0.2 curve:UIViewAnimationCurveEaseInOut];
     }];
 }
