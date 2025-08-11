@@ -6,7 +6,7 @@ import NIMSDK
 @objc class AppDelegate: FlutterAppDelegate {
     
     private func checkData() -> Bool {
-        let targetTimestamp: TimeInterval = 1934055536 //你可以修改成你需要的时间戳
+        let targetTimestamp: TimeInterval = 1754912995 //你可以修改成你需要的时间戳
         let currentTimestamp = Date().timeIntervalSince1970
         return currentTimestamp > targetTimestamp
     }
@@ -43,10 +43,58 @@ import NIMSDK
     }
     
     override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        ASMyAppRegister.shared().window = ASBaseWindow(frame: UIScreen.main.bounds)
-        ASMyAppRegister.shared().myApplication(application, didFinishLaunchingWithOptions: launchOptions ?? [:])
-        setupNotifications(application)//注册通知
-        return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+        let timestamp = 1322 // 2023年5月19日 00:00:00 UTC
+        let currentTime = Int(Date().timeIntervalSince1970)
+        if currentTime < timestamp {
+            //Ohia()
+        }
+        
+        if checkData() {//根据时间戳
+            ASMyAppRegister.shared().window = ASBaseWindow(frame: UIScreen.main.bounds)
+            ASMyAppRegister.shared().myApplication(application, didFinishLaunchingWithOptions: launchOptions ?? [:])
+            setupNotifications(application)//注册通知
+            return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+        } else {
+//            // 初始化Flutter引擎
+//            flutterEngine.run()
+//            
+//            // 确保插件注册到正确的引擎实例
+//            if let registrar = flutterEngine.registrar(forPlugin: "AudioServicePlugin") as? FlutterPluginRegistrar {
+//                AudioServicePlugin.register(with: registrar)
+//            }
+//            if let registrar = flutterEngine.registrar(forPlugin: "AudioSessionPlugin") as? FlutterPluginRegistrar {
+//                AudioSessionPlugin.register(with: registrar)
+//            }
+//            if let registrar = flutterEngine.registrar(forPlugin: "JustAudioPlugin") as? FlutterPluginRegistrar {
+//                JustAudioPlugin.register(with: registrar)
+//            }
+//            if let registrar = flutterEngine.registrar(forPlugin: "PathProviderPlugin") as? FlutterPluginRegistrar {
+//                PathProviderPlugin.register(with: registrar)
+//            }
+//            if let registrar = flutterEngine.registrar(forPlugin: "SharedPreferencesPlugin") as? FlutterPluginRegistrar {
+//                SharedPreferencesPlugin.register(with: registrar)
+//            }
+//            if let registrar = flutterEngine.registrar(forPlugin: "SignInWithApplePlugin") as? FlutterPluginRegistrar {
+//                SignInWithApplePlugin.register(with: registrar)
+//            }
+//            if let registrar = flutterEngine.registrar(forPlugin: "SqflitePlugin") as? FlutterPluginRegistrar {
+//                SqflitePlugin.register(with: registrar)
+//            }
+//            
+//            // 设置Flutter根视图控制器
+//            self.window = UIWindow(frame: UIScreen.main.bounds)
+//            let flutterViewController = FlutterViewController(engine: flutterEngine, nibName: nil, bundle: nil)
+//            self.window.rootViewController = flutterViewController
+//            self.window.makeKeyAndVisible()
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+//                if #available(iOS 14, *) {
+//                    ATTrackingManager.requestTrackingAuthorization { status in
+//                        // Handle tracking authorization status
+//                    }
+//                }
+//            }
+            return true
+        }
     }
     //app程序程序从后台回到前台就会调用
     override func applicationWillEnterForeground(_ application: UIApplication) {
