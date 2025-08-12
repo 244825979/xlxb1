@@ -80,6 +80,11 @@
     [ASUserDefaults setValue:@(self.vip) forKey:@"userinfo_vip"];
     [ASUserDefaults setValue:self.token forKey:@"userinfo_token"];
     [ASUserDefaults setValue:self.user_id forKey:@"userinfo_user_id"];
+    //保存本地数据
+    [ASIMHelperDataManager shared].helperList = [NSMutableArray arrayWithArray:[ASUserDefaults valueForKey:[NSString stringWithFormat:@"userinfo_helper_list_%@",STRING(USER_INFO.user_id)]]];
+    [ASIMHelperDataManager shared].dashanList = [NSMutableArray arrayWithArray:[ASUserDefaults valueForKey:[NSString stringWithFormat:@"userinfo_dashan_list_%@",STRING(USER_INFO.user_id)]]];
+    NSNumber *amount = [ASUserDefaults valueForKey:[NSString stringWithFormat:@"userinfo_dashan_amount_%@",STRING(USER_INFO.user_id)]];
+    [ASIMHelperDataManager shared].dashanAmount = amount.integerValue;
     //登录云信
     kWeakSelf(self);
     [[ASIMManager shared] NELoginWithAccount:kStringIsEmpty(USER_INFO.user_id) ? userModel.user_id : USER_INFO.user_id

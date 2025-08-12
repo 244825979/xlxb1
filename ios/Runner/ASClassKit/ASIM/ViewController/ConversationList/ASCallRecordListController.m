@@ -39,6 +39,13 @@
     [self.tableView setTableHeaderView:self.topView];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    id traget = self.navigationController.interactivePopGestureRecognizer.delegate;
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:traget action:nil];
+    [self.view addGestureRecognizer:pan];
+}
+
 - (void)onRefresh {
     self.page = 1;
     [self requestList];
