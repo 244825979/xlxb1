@@ -8,7 +8,7 @@
 #import "ASIMActionManager.h"
 #import "ASIMRequest.h"
 #import "ASAddUsefulLanController.h"
-#import "心聊想伴-Swift.h"
+#import "Runner-Swift.h"
 @implementation ASIMActionManager
 
 + (void)chatInputViewItemWithType:(ChatTabbarItemType)type toUserID:(NSString *)toUserID backBlock:(void(^)(id _Nullable data))block {

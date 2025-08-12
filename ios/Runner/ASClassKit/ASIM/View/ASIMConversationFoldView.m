@@ -6,7 +6,7 @@
 //
 
 #import "ASIMConversationFoldView.h"
-#import "心聊想伴-Swift.h"
+#import "Runner-Swift.h"
 
 @interface ASIMConversationFoldView ()
 @property (nonatomic, strong) UIImageView *icon;

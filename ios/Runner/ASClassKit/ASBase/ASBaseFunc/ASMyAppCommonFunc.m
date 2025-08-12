@@ -15,7 +15,7 @@
 #import "ASVideoShowPlayController.h"
 #import "ASPersonalController.h"
 #import "ASDynamicRequest.h"
-#import "心聊想伴-Swift.h"
+#import "Runner-Swift.h"
 #import "NEChatUIKit/NEChatUIKit-Swift.h"
 #import "ASRtcRequest.h"
 #import "ASRtcAnchorPriceModel.h"

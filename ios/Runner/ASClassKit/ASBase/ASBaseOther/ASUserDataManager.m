@@ -7,7 +7,7 @@
 
 #import "ASUserDataManager.h"
 #import <UserNotifications/UserNotifications.h>
-#import "心聊想伴-Swift.h"
+#import "Runner-Swift.h"
 
 @implementation ASUserDataManager
 

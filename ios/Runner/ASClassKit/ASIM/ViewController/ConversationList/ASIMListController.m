@@ -8,7 +8,7 @@
 #import "ASIMListController.h"
 #import <JXCategoryView/JXCategoryView.h>
 #import <UserNotifications/UserNotifications.h>
-#import "心聊想伴-Swift.h"
+#import "Runner-Swift.h"
 #import "ASFriendHomeController.h"
 #import "ASIMActionManager.h"
 #import "ASIMConversationListTopView.h"

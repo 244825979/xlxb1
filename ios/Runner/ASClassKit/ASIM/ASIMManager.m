@@ -14,7 +14,7 @@
 #import "ASDynamicController.h"
 #import "ASIMListController.h"
 #import "ASVideoShowPlayController.h"
-#import "心聊想伴-Swift.h"
+#import "Runner-Swift.h"
 #import "ASCallRtcVideoAnswerController.h"
 #import "ASCallRtcVideoController.h"
 #import "ASCallRtcVoiceAnswerController.h"

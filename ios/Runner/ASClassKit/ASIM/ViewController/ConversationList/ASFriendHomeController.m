@@ -6,7 +6,7 @@
 //
 
 #import "ASFriendHomeController.h"
-#import "心聊想伴-Swift.h"
+#import "Runner-Swift.h"
 #import "ASFansListController.h"
 #import "ASFollowListController.h"
 

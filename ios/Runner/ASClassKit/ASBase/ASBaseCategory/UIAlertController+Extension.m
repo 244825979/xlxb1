@@ -6,7 +6,7 @@
 //
 
 #import "UIAlertController+Extension.h"
-#import "心聊想伴-Swift.h"
+#import "Runner-Swift.h"
 
 @implementation UIAlertController (Extension)
 

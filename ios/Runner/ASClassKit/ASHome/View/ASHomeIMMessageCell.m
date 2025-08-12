@@ -6,7 +6,7 @@
 //
 
 #import "ASHomeIMMessageCell.h"
-#import "心聊想伴-Swift.h"
+#import "Runner-Swift.h"
 
 @interface ASHomeIMMessageCell ()
 @property (nonatomic, strong) UIView *bgView;

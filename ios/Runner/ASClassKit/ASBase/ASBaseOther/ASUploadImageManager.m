@@ -3,7 +3,7 @@
 #import "TZImagePickerController.h"
 #import <AliyunOSSiOS/OSSService.h>
 #import "ASAliOSSModel.h"
-#import "心聊想伴-Swift.h"
+#import "Runner-Swift.h"
 
 @interface ASUploadImageManager ()<TZImagePickerControllerDelegate>
 @property (nonatomic, strong) ASAliOSSModel *ossModel;

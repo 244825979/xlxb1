@@ -21,7 +21,7 @@
 #import "ASHomeIMMessageCell.h"
 #import "ASDynamicRequest.h"
 #import "ASEditDataController.h"
-#import "心聊想伴-Swift.h"
+#import "Runner-Swift.h"
 #import "ASVipDetailsController.h"
 #import "UIView+Dragable.h"
 #import "NEChatUIKit/NEChatUIKit-Swift.h"
