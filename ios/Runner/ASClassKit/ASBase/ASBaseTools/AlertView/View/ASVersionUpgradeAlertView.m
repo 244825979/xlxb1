@@ -130,7 +130,6 @@
             [[affirmBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
                 if (wself.affirmBlock) {
                     wself.affirmBlock();
-                    [wself removeView];
                 }
             }];
             [affirmBtn setTitle:@"立即升级" forState:UIControlStateNormal];

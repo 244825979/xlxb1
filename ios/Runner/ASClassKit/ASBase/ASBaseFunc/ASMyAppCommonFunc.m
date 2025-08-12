@@ -443,6 +443,7 @@
                     if ([[UIApplication sharedApplication] canOpenURL:url]) {
                         [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
                             ASLog(success ? @"✅ 跳转成功" : @"❌ 跳转失败");
+                            [ASMsgTool hideMsg];
                         }];
                     } else {
                         successBack(model);
@@ -452,6 +453,7 @@
                 }
             } errorBack:^(NSInteger code, NSString *msg) {
                 errorBack(code);
+                [ASMsgTool hideMsg];
             }];
         } errorBack:^{
             [ASCommonRequest requestApplePayWithParams:prame success:^(id  _Nullable data) {
@@ -461,6 +463,7 @@
                     if ([[UIApplication sharedApplication] canOpenURL:url]) {
                         [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
                             ASLog(success ? @"✅ 跳转成功" : @"❌ 跳转失败");
+                            [ASMsgTool hideMsg];
                         }];
                     } else {
                         successBack(model);
@@ -470,6 +473,7 @@
                 }
             } errorBack:^(NSInteger code, NSString *msg) {
                 errorBack(code);
+                [ASMsgTool hideMsg];
             }];
         }];
     } else {
@@ -480,6 +484,7 @@
                 if ([[UIApplication sharedApplication] canOpenURL:url]) {
                     [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
                         ASLog(success ? @"✅ 跳转成功" : @"❌ 跳转失败");
+                        [ASMsgTool hideMsg];
                     }];
                 } else {
                     successBack(model);
@@ -489,6 +494,7 @@
             }
         } errorBack:^(NSInteger code, NSString *msg) {
             errorBack(code);
+            [ASMsgTool hideMsg];
         }];
     }
 }

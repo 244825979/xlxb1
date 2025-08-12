@@ -372,7 +372,7 @@
     //6.3的新的API调用，是为了兼容国外平台(例如:新版facebookSDK,VK等)的调用[如果用6.2的api调用会没有回调],对国内平台没有影响。
     BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url options:options];
     if (!result) {
-        if ([url.scheme isEqualToString:@"myapp"]) {//回到自己的app
+        if ([url.scheme containsString:@"myapp"]) {//回到自己的app
             NSString *openUrl = url.absoluteString;
             if ([openUrl containsString:@"withdraw"]) {//到提现页
                 BOOL isInclude = NO;
@@ -387,6 +387,12 @@
                     ASWithdrawChangeController *vc = [[ASWithdrawChangeController alloc] init];
                     [[ASCommonFunc currentVc].navigationController pushViewController:vc animated:YES];
                 }
+            }
+            if ([openUrl containsString:@"noticeSuccessfulVip"]) {//vip
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"updateVipNotification" object:nil];
+            }
+            if ([openUrl containsString:@"noticeSuccessful"]) {//金币
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"updateBalanceNotification" object:nil];
             }
         } else if ([url.scheme isEqualToString:kAppBundleID]) {//回到自己的app
             //巨量
