@@ -31,7 +31,7 @@
     switch (serverType) {
         case kServerTest:
         {
-            self.server_url =  @"http://testoeglngldnzfgs.ixyys.cn/";
+            self.server_url =  @"http://testoeglngldnzfgs.ixyys.cn/api/";
             self.server_image_url = @"http://testasset.iyuanshen.cn/";
             self.server_h5_url = @"http://testh5.ixyys.cn/";
             self.server_im_env = @"test";
@@ -40,7 +40,7 @@
             break;
         case kServerPre:
         {
-            self.server_url =  @"https://preapi.ixyys.cn/";
+            self.server_url =  @"https://preapi.ixyys.cn/api/";
             self.server_image_url = @"https://asset.ixyys.cn/";
             self.server_h5_url = @"https://h5.ixyys.cn/";
             self.server_im_env = @"beta";
@@ -49,9 +49,9 @@
             break;
         case kServerPublish:
         {
-            self.server_url =  @"https://api.tjaoyou.cn/";
-            self.server_image_url = @"https://asset.tjaoyou.cn/";
-            self.server_h5_url = @"https://h5.tjaoyou.cn/";
+            self.server_url =  @"https://api.xlxban.cn/api/";
+            self.server_image_url = @"https://asset.xlxban.cn/";
+            self.server_h5_url = @"https://xlxbh5.xlxban.cn/";
             self.server_im_env = @"";
             self.server_name = @"线上环境";
         }
@@ -60,9 +60,9 @@
             break;
     }
 #else
-    self.server_url =  @"https://api.tjaoyou.cn/";
-    self.server_image_url = @"https://asset.tjaoyou.cn/";
-    self.server_h5_url = @"https://h5.tjaoyou.cn/";
+    self.server_url =  @"https://api.xlxban.cn/api/";
+    self.server_image_url = @"https://asset.xlxban.cn/";
+    self.server_h5_url = @"https://xlxbh5.xlxban.cn/";
     self.server_im_env = @"";
     self.NEIM_apns = NEIM_APNS_Rel;
 #endif

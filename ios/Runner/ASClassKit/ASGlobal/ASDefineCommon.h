@@ -15,12 +15,12 @@
 #define AESKey              @"ZRghOdN2phjhfb)Z"                                     //正式环境秘钥
 #define NEIM_AppKey         @"262cd20eba3ed3040679012b52bdc0d7"                     //网易IM appkey
 #define NEIM_AppSecret      @"29b0b56977d6"                                         //网易IM appSecret
-#define TX_LoginID          @"1400922059"                                           //腾讯一键登录的ID
+#define TX_LoginID          @"1400921954"                                           //腾讯一键登录的ID 正式：1400921954 测试：1400922059
 #define UM_AppKey           @"68677d9779267e02109f80a8"                             //友盟appkey
 #define WX_UNIVERSAL_LINK   @"https://testoeglngldnzfgs.ixyys.cn/app/"              //微信跳转的UNIVERSAL_LINK
 #define WX_AppKey           @"wx69b3fd56af9da2d3"                                   //微信appKey
 #define WX_AppSecret        @"1382481cd501acf6e9603a205a83f125"                     //微信WX_AppSecret
-#define APP_CHANNEL         @"2405"                                                 //渠道号
+#define APP_CHANNEL         @"2585"                                                 //渠道号
 #define NEIM_APNS_DEV       @"xlxb_dev"
 #define NEIM_APNS_Rel       @"xlxb_push"
 #define TX_VideoShowKey     @"26936db97cd60c1c143927af2d15a7ef"
