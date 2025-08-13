@@ -13,7 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)homePopViewWithComplete:(VoidBlock)complete;
 - (void)minePopViewWithComplete:(VoidBlock)complete;
 - (void)IMListPopViewWithComplete:(VoidBlock)complete;
-- (void)IMListManPopDemonstrationViewWithComplete:(VoidBlock)complete;
 @end
 
 NS_ASSUME_NONNULL_END

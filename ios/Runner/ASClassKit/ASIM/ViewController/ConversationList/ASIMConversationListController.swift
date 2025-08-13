@@ -114,6 +114,7 @@ class ASIMConversationListController: ConversationController, JXCategoryListCont
             guard let self = self else { return }
             //获取当前时间
             let timeStr = (ASCommonFunc.currentTimeStr() as NSString).intValue
+            var isClear = false //是否进行清理了
             //处理搭讪列表的会话数据
             if ASIMHelperDataManager.shared().dashanList.count > 0 {
                 var dashanList = ASIMHelperDataManager.shared().dashanList//没处理前的搭讪用户
@@ -147,13 +148,13 @@ class ASIMConversationListController: ConversationController, JXCategoryListCont
                         if dashanList.contains(userid) {
                             dashanList.remove(userid)
                         }
+                        isClear = true//进行了清理
                     }
                 }
                 //同步搭讪列表的用户数据
                 ASIMHelperDataManager.shared().dashanList = dashanList
                 ASUserDefaults.setValue(dashanList, forKey: "userinfo_dashan_list_" + ASUserDataManager.shared().user_id)
             }
-            
             if let conversationListArray = self.viewModel.conversationListArray, conversationListArray.count > 0 {
                 for n in 0 ..< conversationListArray.count {
                     let model = conversationListArray[n]
@@ -193,10 +194,14 @@ class ASIMConversationListController: ConversationController, JXCategoryListCont
                             request.publishers = [session.sessionId]
                             NIMSDK.shared().subscribeManager.unSubscribeEvent(request) { error, list in
                             }
+                            isClear = true//进行了清理
                         }
                     }
                 }
-                showToast("已为您清除过期消息会话")
+            }
+            if isClear == true {
+                ASMsgTool.showTips("已为您清除过期消息会话")
+                ASIMManager.shared().updateUnreadCount()
                 ASUserDefaults.setValue("\(timeStr)", forKey: "lastClearTime")
             }
         }

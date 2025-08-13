@@ -94,7 +94,7 @@
 - (void)IMListPopViewWithComplete:(VoidBlock)complete {
     kWeakSelf(self);
     [[ASPopViewManager shared] popPreventFraudViewWithVc:self complete:^{//防诈骗弹窗
-        [[ASPopViewManager shared] popDemonstrationViewWithVc:wself isMan:NO complete:^{//女用户折叠提示弹窗
+        [[ASPopViewManager shared] popDemonstrationViewWithVc:wself complete:^{//女用户折叠提示弹窗
             [[ASPopViewManager shared] activityPopWithPlacement:3 vc:wself isPopWindow:NO affirmAction:^{//活动配置弹窗
                 
             } cancelBlock:^{
@@ -105,17 +105,6 @@
                 }
             }];
         }];
-    }];
-}
-
-- (void)IMListManPopDemonstrationViewWithComplete:(VoidBlock)complete {
-    kWeakSelf(self);
-    [[ASPopViewManager shared] popDemonstrationViewWithVc:self isMan:YES complete:^{//男用户折叠提示弹窗
-        if ([wself isSelfVc]) {//最后一步判断当前顶层控制器来决定是否关闭弹窗流程
-            [wself dismissViewControllerAnimated:NO completion:^{
-                
-            }];
-        }
     }];
 }
 

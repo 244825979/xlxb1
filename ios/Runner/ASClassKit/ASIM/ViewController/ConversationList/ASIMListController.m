@@ -42,10 +42,14 @@
     }
     self.categoryView.dotStates = @[@0,[[ASIMManager shared] miyouIsUnread] == YES ? @1 : @0];
     [self.categoryView reloadData];
-    [self clearMessage];
     if (USER_INFO.gender == 1 && kAppType == 0 && USER_INFO.systemIndexModel.is_fate_helper_show == 1) {
         [self requestMatchHelperData];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self clearMessage];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -162,8 +166,13 @@
     }];
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"refreshDashanDataNotify" object:nil]
      subscribeNext:^(NSNotification * _Nullable notifiction) {
-        if (USER_INFO.gender == 2) {
-            [[ASPopViewManager shared] IMListManPopDemonstrationViewWithVc:wself complete:^{
+        if (USER_INFO.gender == 2) {//男用户折叠引导浮窗
+            NSString *isDemonstrationPop = [ASUserDefaults valueForKey:[NSString stringWithFormat:@"im_demonstration_%@",USER_INFO.user_id]];
+            if (isDemonstrationPop.integerValue == 1) {
+                return;
+            }
+            [ASUserDefaults setValue:@"1" forKey:[NSString stringWithFormat:@"im_demonstration_%@",USER_INFO.user_id]];
+            [ASAlertViewManager imDashanDemonstrationPopViewWithVc:wself CancelBlock:^{
                 
             }];
         }
@@ -207,7 +216,6 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"clearDeleteMsgListNotification" object:nil];
         }];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"clearDeleteMsgListNotification" object:nil];
 }
 
 - (id<JXCategoryListContentViewDelegate>)listContainerView:(JXCategoryListContainerView *)listContainerView initListForIndex:(NSInteger)index {

@@ -95,17 +95,6 @@
     }];
 }
 
-//IM页男用户来了首条折叠消息处理
-- (void)IMListManPopDemonstrationViewWithVc:(UIViewController *)vc complete:(VoidBlock)complete {
-    ASBaseAlertViewController *alertVc = [[ASBaseAlertViewController alloc] init];
-    ASBaseNavigationController *nav = [[ASBaseNavigationController alloc] initWithRootViewController:alertVc];
-    nav.modalPresentationStyle = UIModalPresentationOverFullScreen; //覆盖全屏
-    [vc presentViewController:nav animated:NO completion:nil];
-    [alertVc IMListManPopDemonstrationViewWithComplete:^{
-        complete();
-    }];
-}
-
 //开启青少年模式弹窗
 - (void)isOpenTeenagerPopWithVc:(UIViewController *)vc complete:(VoidBlock)complete {
     kWeakSelf(self);
@@ -534,10 +523,10 @@
     }];
 }
 
-//IM引导折叠提示的弹窗
-- (void)popDemonstrationViewWithVc:(UIViewController *)vc isMan:(BOOL)isMan complete:(VoidBlock)complete {
+//IM引导折叠提示的弹窗，女用户
+- (void)popDemonstrationViewWithVc:(UIViewController *)vc complete:(VoidBlock)complete {
     NSString *isDemonstrationPop = [ASUserDefaults valueForKey:[NSString stringWithFormat:@"im_demonstration_%@",USER_INFO.user_id]];
-    if ((USER_INFO.gender == 2 && isMan == NO) || (USER_INFO.gender == 1 && isMan == YES)) {
+    if (USER_INFO.gender == 2) {
         complete();
         return;
     }

@@ -18,7 +18,7 @@
         [self addSubview:icon];
         [icon mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self);
-            make.top.mas_equalTo(HEIGHT_NAVBAR + SCALES(100));
+            make.top.mas_equalTo(HEIGHT_NAVBAR + SCALES(100) + (USER_INFO.gender == 2 ? TAB_BAR_MAGIN : 0));
             make.size.mas_equalTo(CGSizeMake(SCALES(343), USER_INFO.gender == 2 ? SCALES(312) : SCALES(282)));
         }];
         kWeakSelf(self);

@@ -164,9 +164,11 @@
     }
 #ifdef DEBUG
     self.phoneText = [ASCommonFunc removeCharWithString:inputPhone chars:@[@" "]];
-    self.codeText = @"7777";
-    self.enterOTPTextField.textField.text = @"7777";
-    [self verifyButton];
+    if ([[ASConfigConst shared].bundleID isEqualToString:@"com.yuansheng.shouai"]) {//shouai 测试用
+        self.codeText = @"7777";
+        self.enterOTPTextField.textField.text = @"7777";
+        [self verifyButton];
+    }
 #else
     
 #endif

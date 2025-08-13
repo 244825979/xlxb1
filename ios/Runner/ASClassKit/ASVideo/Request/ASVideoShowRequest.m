@@ -80,7 +80,7 @@
                              @"page":@(page),
                              @"pageSize":@(15)
     };
-    [ASBaseRequest postWithUrl:API_MyVideoShowList params:params success:^(id _Nonnull response) {
+    [ASBaseRequest postWithUrl:API_VideoShowList params:params success:^(id _Nonnull response) {
         NSArray *listArray = [ASVideoShowDataModel mj_objectArrayWithKeyValuesArray:response[@"list"]];
         successBack(listArray);
     } fail:^(NSInteger code, NSString *msg) {
@@ -196,7 +196,7 @@
                              @"page":@(page),
                              @"pageSize":@(15)
     };
-    [ASBaseRequest postWithUrl:API_VideoShowList params:params success:^(id  _Nonnull response) {
+    [ASBaseRequest postWithUrl:API_MyVideoShowList params:params success:^(id  _Nonnull response) {
         NSArray *lists = [ASVideoShowDataModel mj_objectArrayWithKeyValuesArray:response[@"list"]];
         successBack(lists);
     } fail:^(NSInteger code, NSString *msg) {
