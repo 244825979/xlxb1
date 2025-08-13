@@ -17,7 +17,7 @@
 #define NEIM_AppSecret      @"29b0b56977d6"                                         //网易IM appSecret
 #define TX_LoginID          @"1400921954"                                           //腾讯一键登录的ID 正式：1400921954 测试：1400922059
 #define UM_AppKey           @"68677d9779267e02109f80a8"                             //友盟appkey
-#define WX_UNIVERSAL_LINK   @"https://testoeglngldnzfgs.ixyys.cn/app/"              //微信跳转的UNIVERSAL_LINK
+#define WX_UNIVERSAL_LINK   @"https://preapi.xlxban.cn/app/"                        //微信跳转的UNIVERSAL_LINK
 #define WX_AppKey           @"wx69b3fd56af9da2d3"                                   //微信appKey
 #define WX_AppSecret        @"1382481cd501acf6e9603a205a83f125"                     //微信WX_AppSecret
 #define APP_CHANNEL         @"2585"                                                 //渠道号
