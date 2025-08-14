@@ -25,7 +25,6 @@
 //    self.bundleID = @"com.aoyou.xinbo";
     //com.aoyou.xinbo //心聊想伴
     //守爱 :com.yuansheng.shouai
-    // Ta爱 @"com.aoyou.zhuil"
 #ifdef DEBUG
     self.NEIM_apns = NEIM_APNS_DEV;
     switch (serverType) {
