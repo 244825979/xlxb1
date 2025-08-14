@@ -92,7 +92,7 @@ class ASIMChatController: P2PChatViewController {
         } else {
             if (userID == NEKitChatConfig.shared.kefuzushou_id) {
                 let serviceBtn = UIButton()
-                serviceBtn.setBackgroundImage(UIImage.init(named: "btn_select_bg"), for: .normal)
+                serviceBtn.setBackgroundImage(UIImage.init(named: "button_bg"), for: .normal)
                 serviceBtn.setTitle("联系客服", for: .normal)
                 serviceBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
                 serviceBtn.addTarget(self, action: #selector(serviceCliked), for: .touchUpInside)
