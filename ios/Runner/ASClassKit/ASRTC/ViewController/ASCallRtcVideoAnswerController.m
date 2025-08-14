@@ -245,11 +245,11 @@
             [wself.videoShowPlayView destoryPlayer];
         }
         [[ASRtcCallRingManager shared] stop];
-        [wself.mCamera stopCapture];
         [NERtcCallKit.sharedInstance removeDelegate:wself];
         [[ASWebSocketManager shared] SRWebSocketClose];
         [ASWebSocketManager shared].socket_url = @"";
         [ASWebSocketManager shared].room_id = @"";
+        [wself.mCamera stopCapture];
         [[FaceUnityManager shared] saveBeauty];
         [FaceUnityManager destory];
         completion();
@@ -376,7 +376,7 @@
             input.renderConfig.readBackToPixelBuffer = YES;
             //开启重力感应，内部会自动计算正确方向，设置fuSetDefaultRotationMode，无须外面设置
             input.renderConfig.gravityEnable = YES;
-            [[FURenderKit shareRenderKit] renderWithInput:input];
+            FURenderOutput *output = [[FURenderKit shareRenderKit] renderWithInput:input];
         }
     }
     CVPixelBufferLockBaseAddress(pixelBuffer, 0);

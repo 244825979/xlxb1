@@ -67,26 +67,16 @@ static dispatch_once_t onceToken;
     setupConfig.authPack = FUAuthPackMake(g_auth_package, sizeof(g_auth_package));
     // 初始化 FURenderKit
     [FURenderKit setupWithSetupConfig:setupConfig];
-    
     // 加载人脸 AI 模型
     NSString *faceAIPath = [[NSBundle mainBundle] pathForResource:@"ai_face_processor" ofType:@"bundle"];
     [FUAIKit loadAIModeWithAIType:FUAITYPE_FACEPROCESSOR dataPath:faceAIPath];
-    
-    // 加载身体 AI 模型
-    NSString *bodyAIPath = [[NSBundle mainBundle] pathForResource:@"ai_human_processor" ofType:@"bundle"];
-    [FUAIKit loadAIModeWithAIType:FUAITYPE_HUMAN_PROCESSOR dataPath:bodyAIPath];
-    
-    [FUAIKit shareKit].maxTrackFaces = 4;
-    
+    [FUAIKit shareKit].maxTrackFaces = 1;
     // 设置人脸算法质量
-    [FUAIKit shareKit].faceProcessorFaceLandmarkQuality = [FURenderKit devicePerformanceLevel] == FUDevicePerformanceLevelHigh ? FUFaceProcessorFaceLandmarkQualityHigh : FUFaceProcessorFaceLandmarkQualityMedium;
-    
+    [FUAIKit shareKit].faceProcessorFaceLandmarkQuality = [FURenderKit devicePerformanceLevel] >= FUDevicePerformanceLevelHigh ? FUFaceProcessorFaceLandmarkQualityHigh : FUFaceProcessorFaceLandmarkQualityMedium;
     // 设置小脸检测是否打开
     [FUAIKit shareKit].faceProcessorDetectSmallFace = [FURenderKit devicePerformanceLevel] == FUDevicePerformanceLevelHigh;
-    
     // 性能测试初始化
     [[FaceUnityRecorder shareRecorder] setupRecord];
-    
     [self loadDefaultBeauty];
 }
 
@@ -94,14 +84,12 @@ static dispatch_once_t onceToken;
     NSAssert(view, @"目标控制器不能为空");
     self.targetView = view;
     self.demoOriginY = originY;
-    
     [view addSubview:self.bottomBar];
     [view addSubview:self.skinView];
     [view addSubview:self.shapeView];
     [view addSubview:self.filterView];
     [view addSubview:self.trackTipLabel];
     [view addSubview:self.renderSwitch];
-    
     [self showFunctionView:self.skinView];
     self.showingView = self.skinView;
     [self.bottomBar selectItemAtIndex:0];

@@ -45,7 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param view 父视图
 /// @param originY 视图在父视图上的Y坐标（底部功能选择栏的Y坐标，X坐标默认为0）
 - (void)addFUViewToView:(UIView *)view originY:(CGFloat)originY;
-
 @end
 
 NS_ASSUME_NONNULL_END

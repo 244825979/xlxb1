@@ -239,11 +239,11 @@
             [wself.videoShowPlayView destoryPlayer];
         }
         [[ASRtcCallRingManager shared] stop];
-        [wself.mCamera stopCapture];//美颜采集相机
         [NERtcCallKit.sharedInstance removeDelegate:wself];
         [[ASWebSocketManager shared] SRWebSocketClose];
         [ASWebSocketManager shared].socket_url = @"";
         [ASWebSocketManager shared].room_id = @"";
+        [wself.mCamera stopCapture];//美颜采集相机
         [[FaceUnityManager shared] saveBeauty];//保存更改的美颜数据
         [FaceUnityManager destory];
         completion();

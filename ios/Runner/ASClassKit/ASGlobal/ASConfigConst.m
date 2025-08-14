@@ -20,9 +20,9 @@
 
 - (void)setServerType:(kServerType)serverType {
     _serverType = serverType;
-//    self.bundleID = [[NSBundle mainBundle] bundleIdentifier];
+    self.bundleID = [[NSBundle mainBundle] bundleIdentifier];
 //    self.bundleID = @"com.yuansheng.shouai";
-    self.bundleID = @"com.aoyou.xinbo";
+//    self.bundleID = @"com.aoyou.xinbo";
     //com.aoyou.xinbo //心聊想伴
     //守爱 :com.yuansheng.shouai
     // Ta爱 @"com.aoyou.zhuil"
