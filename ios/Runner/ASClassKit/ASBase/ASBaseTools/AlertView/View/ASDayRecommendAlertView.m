@@ -346,6 +346,13 @@
         cell = [[ASDayRecommendZhaohuyuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:iden];
     }
     cell.zhaohuyuText = self.listArray[indexPath.row];
+    kWeakSelf(self);
+    cell.actionBlock = ^{
+        wself.tableView.hidden = YES;
+        NSString *text = wself.listArray[indexPath.row];
+        wself.zhaohuyu = text;
+        [wself.selectBtn setTitle:STRING(text) forState:UIControlStateNormal];
+    };
     return cell;
 }
 
@@ -353,12 +360,6 @@
     return SCALES(49);
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.tableView.hidden = YES;
-    NSString *text = self.listArray[indexPath.row];
-    self.zhaohuyu = text;
-    [self.selectBtn setTitle:STRING(text) forState:UIControlStateNormal];
-}
 @end
 
 @interface ASDayRecommendZhaohuyuCell()
@@ -372,6 +373,16 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.contentView.backgroundColor = UIColorRGB(0xFFEEEE);
         [self createUI];
+        
+        kWeakSelf(self);
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
+        [self.contentView addGestureRecognizer:tap];
+        [[tap rac_gestureSignal] subscribeNext:^(__kindof UIGestureRecognizer * _Nullable x) {
+            if (wself.actionBlock) {
+                ASLog(@"-------2324235235235332553223");
+                wself.actionBlock();
+            }
+        }];
     }
     return self;
 }
@@ -386,7 +397,6 @@
     [self.text mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.contentView);
     }];
-    
     [self.line mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.contentView);
         make.height.mas_equalTo(SCALES(1));

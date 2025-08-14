@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ASDayRecommendZhaohuyuCell : UITableViewCell
 @property (nonatomic, copy) NSString *zhaohuyuText;
+@property (nonatomic, copy) VoidBlock actionBlock;
 @end
 
 NS_ASSUME_NONNULL_END
