@@ -17,7 +17,7 @@ jobs:
 
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '16.4' # 需支持 iOS 18.2 的 Xcode 版本
+          xcode-version: '16.0' # 需支持 iOS 18.2 的 Xcode 版本
 
       - uses: subosito/flutter-action@v1
         with:
