@@ -75,6 +75,10 @@
     if ([ASPopViewManager shared].popGoodAnchorState == 2 || [ASPopViewManager shared].popGoodAnchorState == 1) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goodAnchorConfigNotification" object:nil];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     [self requestIsAuth];
     [self requestUsersHiddenList];
     [self requestRecommendStatus];
@@ -125,6 +129,7 @@
     //首页进行弹窗
     [[ASPopViewManager shared] homePopViewWithVc:self complete:^{
         [wself requestRecommendStatus];
+        [wself requestIndexConfig];
     }];
     //腾讯短视频鉴权
     [self TXLiteAVSDKInit];
@@ -171,7 +176,7 @@
         make.width.mas_equalTo(SCALES(118));
         make.height.mas_equalTo(SCALES(38));
     }];
-    if (USER_INFO.gender != 1) {
+    if (USER_INFO.gender == 2) {
         [self.view addSubview:self.dayYuanfen];
         [self.dayYuanfen mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.view).offset(SCALES(-10));
@@ -271,6 +276,9 @@
 }
 
 - (void)requestRecommendStatus {
+    if (USER_INFO.gender == 1) {
+        return;
+    }
     kWeakSelf(self);
     [ASCommonRequest requestRecommendStatusdSuccess:^(id  _Nullable data) {
         NSNumber *isPop = data[@"isPop"];

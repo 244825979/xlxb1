@@ -107,7 +107,7 @@
             }];
         } else {
             //初始化失败进行手机号登录
-            wself.txLoginInitIsSuccess = 0;
+            wself.txLoginInitIsSuccess = NO;
             [wself TXLoginFailedLogin];
         }
     }];
@@ -139,6 +139,10 @@
 
 //进行腾讯一键登录
 - (void)TX_LoginPushFailDispose:(BOOL)failDispose actionBlock:(VoidBlock)actionBlock {
+    if (self.txLoginInitIsSuccess == NO && failDispose == YES) {
+        actionBlock();
+        return;
+    }
     [ASMsgTool showLoading];
     kWeakSelf(self);
     [TXLoginOauthSDK loginWithController:[ASCommonFunc currentVc]

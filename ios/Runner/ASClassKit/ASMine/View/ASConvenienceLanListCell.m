@@ -77,7 +77,7 @@
             make.right.equalTo(self.topView).offset(SCALES(-14));
             make.centerY.equalTo(self.topView);
             make.height.mas_equalTo(SCALES(20));
-            make.width.mas_equalTo(SCALES(90));
+            make.width.mas_equalTo(SCALES(100));
         }];
         [self.delBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.selectBtn.mas_left).offset(SCALES(-8));
