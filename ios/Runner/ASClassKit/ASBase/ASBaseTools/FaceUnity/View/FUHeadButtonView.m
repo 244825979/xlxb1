@@ -20,12 +20,12 @@
 
 - (void)setupSubView{
     _backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _backButton.adjustsImageWhenHighlighted = NO;
+    _backButton.adjustsImageWhenHighlighted = NO;//去掉点击效果
     [_backButton setImage:[UIImage imageNamed:@"back1"] forState:UIControlStateNormal];
     [_backButton addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_backButton];
     _switchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _switchButton.adjustsImageWhenHighlighted = NO;
+    _switchButton.adjustsImageWhenHighlighted = NO;//去掉点击效果
     [_switchButton setBackgroundImage:[UIImage imageNamed:@"meiyan_open"] forState:UIControlStateNormal];
     [_switchButton setBackgroundImage:[UIImage imageNamed:@"meiyan_close"] forState:UIControlStateSelected];
     [_switchButton addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -63,7 +63,6 @@
         make.top.equalTo(self);
         make.leading.equalTo(self).offset(16);
         make.height.width.mas_equalTo(44);
-    
     }];
     [_switchButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.backButton);

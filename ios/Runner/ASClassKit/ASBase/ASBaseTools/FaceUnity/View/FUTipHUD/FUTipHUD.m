@@ -8,7 +8,6 @@
 
 #import "FUTipHUD.h"
 #import "FUInsetsLabel.h"
-#import "ASMyAppRegister.h"
 
 @implementation FUTipHUD
 
@@ -21,7 +20,7 @@
 }
 
 + (void)showTips:(NSString *)tipsString dismissWithDelay:(NSTimeInterval)delay position:(FUTipHUDPosition)position {
-    UIWindow *window = [ASMyAppRegister shared].window;
+    UIWindow *window = [UIApplication sharedApplication].delegate.window;
     // 避免重复生成label
     NSArray<UIView *> *views = window.subviews;
     [views enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

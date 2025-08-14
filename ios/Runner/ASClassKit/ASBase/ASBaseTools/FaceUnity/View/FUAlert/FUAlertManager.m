@@ -6,7 +6,6 @@
 
 #import "FUAlertManager.h"
 #import "FUAlertController.h"
-#import "ASMyAppRegister.h"
 
 @implementation FUAlertManager
 
@@ -93,7 +92,7 @@
 }
 
 + (UIViewController *)topViewController {
-    UIViewController *root = [ASMyAppRegister shared].window.rootViewController;
+    UIViewController *root = [UIApplication sharedApplication].delegate.window.rootViewController;
     return [self currentViewControllerWithRootViewController:root];
 }
 

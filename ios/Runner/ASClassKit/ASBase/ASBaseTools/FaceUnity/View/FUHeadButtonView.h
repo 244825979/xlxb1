@@ -20,6 +20,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FUHeadButtonView : UIView
+
 @property (nonatomic, assign) BOOL shouldRender;
 @property (strong, nonatomic) UIButton *defaultButton;
 @property (strong, nonatomic) UIButton *switchButton;
