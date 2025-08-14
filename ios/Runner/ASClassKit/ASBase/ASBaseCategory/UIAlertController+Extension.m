@@ -163,10 +163,10 @@
 + (zhPopupController *)friendUpPopWithModel:(ASIMSystemNotifyDataModel *)model affirmAction:(VoidBlock)affirmAction {
     UIImageView *mainView = [[UIImageView alloc]init];
     mainView.frame = CGRectMake(0, (SCREEN_WIDTH - SCALES(375))/2, SCALES(375), SCALES(126));
-    mainView.image = [UIImage imageNamed:@"im_chat_up"];
+    mainView.image = [UIImage imageNamed:@"im_up"];
     mainView.userInteractionEnabled = YES;
     UIImageView *typeIcon = [[UIImageView alloc]init];
-    typeIcon.image = [UIImage imageNamed:@"up_miyou"];
+    typeIcon.image = [UIImage imageNamed:@"miyou_up"];
     [mainView addSubview:typeIcon];
     [typeIcon mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.equalTo(mainView).offset(SCALES(14));
