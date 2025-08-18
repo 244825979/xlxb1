@@ -151,6 +151,7 @@
                                     content:@"我们已接收到您的举报补充内容，请耐心等待审核。"
                                        left:@"确定"
                                       right:@""
+                                  isTouched:NO
                                affirmAction:^{
             [wself.navigationController popViewControllerAnimated:YES];
             if (wself.backBlock) {
@@ -225,6 +226,7 @@
                                             content:@"您确定要撤销投诉吗？"
                                                left:@"确定"
                                               right:@"取消"
+                                          isTouched:NO
                                        affirmAction:^{
                     [ASSetRequest requestReportDrawWithID:wself.model.ID success:^(id  _Nonnull response) {
                         [wself.navigationController popViewControllerAnimated:YES];
@@ -245,7 +247,6 @@
                     NSString *urlsString = [urls componentsJoinedByString: @","];
                     [wself saveRequestWithUrls:urlsString];
                 } fail:^{
-                    
                 }];
                 return;
             }

@@ -76,7 +76,7 @@
                 });
             } else {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"无麦风克权限，前往开启？" left:@"去开启" right:@"取消" affirmAction:^{
+                    [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"无麦风克权限，前往开启？" left:@"去开启" right:@"取消" isTouched:YES affirmAction:^{
                         NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
                         if ([[UIApplication sharedApplication] canOpenURL:url]) {
                             [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
@@ -102,7 +102,7 @@
                 });
             } else {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"无相机权限，前往开启？" left:@"去开启" right:@"取消" affirmAction:^{
+                    [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"无相机权限，前往开启？" left:@"去开启" right:@"取消" isTouched:YES affirmAction:^{
                         NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
                         if ([[UIApplication sharedApplication] canOpenURL:url]) {
                             [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
@@ -373,7 +373,12 @@
             }];
             return;
         }
-        [ASAlertViewManager defaultPopTitle:@"提示" content:@"开启对Ta隐身后，对方将看不到你的在线状态，并且查看消息对方仍展示未读状态，关闭后可恢复正常状态" left:@"开启隐身" right:@"取消" affirmAction:^{
+        [ASAlertViewManager defaultPopTitle:@"提示"
+                                    content:@"开启对Ta隐身后，对方将看不到你的在线状态，并且查看消息对方仍展示未读状态，关闭后可恢复正常状态"
+                                       left:@"开启隐身"
+                                      right:@"取消"
+                                  isTouched:YES
+                               affirmAction:^{
             [ASIMRequest requestSetHidingWithUserID:STRING(userID) state:!isOpen success:^(id  _Nullable data) {
                 action(!isOpen);
             } errorBack:^(NSInteger code, NSString *msg) {
@@ -387,6 +392,7 @@
                                     content:[NSString stringWithFormat:@"解除对 %@ 的隐身才能发送消息、送礼物、发起音视频通话哟~",kStringIsEmpty(nickName) ? @"Ta" : nickName]
                                        left:@"解除"
                                       right:@"取消"
+                                  isTouched:YES
                                affirmAction:^{
             [ASIMRequest requestSetHidingWithUserID:STRING(userID) state:!isOpen success:^(id  _Nullable data) {
                 action(!isOpen);

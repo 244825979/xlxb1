@@ -134,6 +134,7 @@
                                     content:@"我们已接收到您的举报内容，非常重视您的举报。每一条举报都会被认真核实，并依据国家法律法规及本平台条款积极处理，感谢您的配合。"
                                        left:@"确定"
                                       right:@"需紧急处理"
+                                  isTouched:YES
                                affirmAction:^{
             [wself dismissViewControllerAnimated:YES completion:^{ }];
         } cancelAction:^{

@@ -163,7 +163,7 @@
                 kShowToast(@"请选择赠送的套餐");
                 return;
             }
-            [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"当前操作为赠送对方VIP，而非为自己开通VIP，确认赠送吗？" left:@"确认" right:@"取消" affirmAction:^{
+            [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"当前操作为赠送对方VIP，而非为自己开通VIP，确认赠送吗？" left:@"确认" right:@"取消" isTouched:YES affirmAction:^{
                 [ASMsgTool showLoading:@"赠送购买进行中，完成前请不要离开"];
                 [ASMyAppCommonFunc applePayRequestWithScene:Pay_Scene_Vip
                                                rechargeType:@"2"

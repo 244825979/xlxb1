@@ -20,7 +20,7 @@
 @property (nonatomic, strong) UIButton *oneClickLoginBtn;//一键回复
 @property (nonatomic, strong) ASBaseTableView *tableView;
 /**数据**/
-@property (nonatomic, strong) NSArray *lists;
+@property (nonatomic, strong) NSArray *lists;//列表数据
 @property (nonatomic, strong) NSMutableArray *userIDs;//选中的用户ID
 @property (nonatomic, assign) NSInteger sendMessageCount;//需要发送的消息条数
 @end
@@ -51,7 +51,7 @@
 }
 
 - (void)refreshList:(NSNotification *)notification {
-    [self refreshList];
+    [self refreshListIsAdd:YES];
 }
 
 - (void)layoutSubviews {
@@ -81,18 +81,64 @@
 - (void)setModel:(ASFateHelperStatusModel *)model {
     _model = model;
     self.title.text = STRING(model.helperTitle);
-    [self refreshList];
+    [self refreshListIsAdd:NO];
 }
 
 //列表数据刷新
-- (void)refreshList {
+- (void)refreshListIsAdd:(BOOL)isAdd {
     if ([ASIMHelperDataManager shared].helperList.count > 0) {
+        //获取启动的时间
+        NSString *startTime = [ASUserDefaults valueForKey:@"littleHelperClearTime"];
         self.oneClickLoginBtn.hidden = NO;
-        self.lists = [ASIMHelperDataManager shared].helperList;
-        for (NSString *userid in self.lists) {
+        NSMutableArray *lists = [NSMutableArray arrayWithArray:[ASIMHelperDataManager shared].helperList];
+        BOOL isClearMsg = NO;
+        for (NSString *userid in lists) {
+            if (isAdd == NO) {
+                //删除会话
+                NIMSession *session = [NIMSession session:userid type:NIMSessionTypeP2P];
+                NIMRecentSession *recentSession = [[NIMSDK sharedSDK].conversationManager recentSessionBySession:session];
+                if ((startTime.intValue - recentSession.lastMessage.timestamp) > USER_INFO.systemIndexModel.last_fate_helper_show_time * 60) {
+                    NSMutableDictionary *localExt = [NSMutableDictionary dictionaryWithDictionary:recentSession.localExt];
+                    [localExt setObject:@"0" forKey:@"conversation_type"];//3个消息列表。0或者没值为默认会话列表，1为匹配小助手会话列表。2为搭讪消息列表
+                    [[NIMSDK sharedSDK].conversationManager updateRecentLocalExt:localExt recentSession:recentSession];
+                    NIMDeleteRecentSessionOption *option = [[NIMDeleteRecentSessionOption alloc] init];
+                    option.isDeleteRoamMessage = YES;
+                    option.shouldMarkAllMessagesReadInSessions = YES;
+                    [[NIMSDK sharedSDK].conversationManager deleteRecentSession:recentSession option:option completion:^(NSError * _Nullable error) {
+                        
+                    }];
+                    //取消订阅
+                    NIMSubscribeRequest *request = [[NIMSubscribeRequest alloc] init];
+                    request.type = 1;
+                    request.expiry = 60*60*24*1;
+                    request.syncEnabled = YES;
+                    request.publishers = @[userid];
+                    [[NIMSDK sharedSDK].subscribeManager unSubscribeEvent:request completion:^(NSError * _Nullable error, NSArray * _Nullable failedPublishers) {
+                        
+                    }];
+                    //删除本地保存的小助手数据
+                    if ([[ASIMHelperDataManager shared].helperList containsObject: userid]) {
+                        [[ASIMHelperDataManager shared].helperList removeObject:STRING(userid)];
+                    }
+                    if ([self.userIDs containsObject:userid]) {
+                        [self.userIDs removeObject:userid];
+                    }
+                    isClearMsg = YES;
+                    continue;
+                }
+            }
             if (![self.userIDs containsObject:userid]) {
                 [self.userIDs addObject:userid];
             }
+        }
+        //清理提示
+        if (isClearMsg && !kStringIsEmpty(USER_INFO.systemIndexModel.last_fate_helper_show_message)) {
+            //同步本地数据
+            [ASUserDefaults setValue:[ASIMHelperDataManager shared].helperList forKey:[NSString stringWithFormat:@"userinfo_helper_list_%@",STRING(USER_INFO.user_id)]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshLittleHelperAcountNotify" object: nil];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                kShowToast(USER_INFO.systemIndexModel.last_fate_helper_show_message);
+            });
         }
         if (self.userIDs.count > 0) {
             self.oneClickLoginBtn.userInteractionEnabled = YES;
@@ -103,6 +149,7 @@
             [self.oneClickLoginBtn setBackgroundImage:[UIImage imageNamed:@"button_bg1"] forState:UIControlStateNormal];
             [self.oneClickLoginBtn setTitleColor:TEXT_SIMPLE_COLOR forState:UIControlStateNormal];
         }
+        self.lists = [ASIMHelperDataManager shared].helperList;
         [self.tableView reloadData];
     } else {
         self.oneClickLoginBtn.hidden = YES;
@@ -154,7 +201,7 @@
                         [wself removeView];
                         wself.cancelBlock();
                     }
-                    [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"有通过审核的快捷用语才能使用一键回复" left:@"确认" right:@"取消" affirmAction:^{
+                    [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"有通过审核的快捷用语才能使用一键回复" left:@"确认" right:@"取消" isTouched:YES affirmAction:^{
                         ASConvenienceLanListController *vc = [[ASConvenienceLanListController alloc]init];
                         [[ASCommonFunc currentVc].navigationController pushViewController:vc animated:YES];
                     } cancelAction:^{

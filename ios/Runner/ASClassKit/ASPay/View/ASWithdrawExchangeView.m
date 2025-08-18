@@ -168,7 +168,7 @@
         [[_submit rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             [wself.textField resignFirstResponder];
             NSString *content = [NSString stringWithFormat:@"将消耗%@元，获得%zd金币，（兑换金币成功后不可撤销）", wself.textField.text, wself.textField.text.integerValue * 100];
-            [ASAlertViewManager defaultPopTitle:@"兑换金币" content:content left:@"确定" right:@"取消" affirmAction:^{
+            [ASAlertViewManager defaultPopTitle:@"兑换金币" content:content left:@"确定" right:@"取消" isTouched:YES affirmAction:^{
                 [ASCommonRequest requestChangeCoinWithMoney:wself.textField.text success:^(id  _Nullable data) {
                     kShowToast(@"兑换成功");
                     if (wself.backBlock) {

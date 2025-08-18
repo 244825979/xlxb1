@@ -158,7 +158,7 @@
                     return;
                 }
                 if ([indexName isEqualToString:@"拉黑"]) {
-                    [ASAlertViewManager defaultPopTitle:@"提示" content:@"拉黑后，你将不再收到对方消息，并且你们互相看不到对方的动态更新。可以在”系统设置-黑名单”中解除" left:@"确定" right:@"取消" affirmAction:^{
+                    [ASAlertViewManager defaultPopTitle:@"提示" content:@"拉黑后，你将不再收到对方消息，并且你们互相看不到对方的动态更新。可以在”系统设置-黑名单”中解除" left:@"确定" right:@"取消" isTouched:YES affirmAction:^{
                         [wself requestBlack];
                     } cancelAction:^{
                         

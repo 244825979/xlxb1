@@ -49,7 +49,7 @@
         NSString *title = [wself.model.user_id isEqualToString:USER_INFO.user_id] ? @"删除" : @"举报该条动态";
         [ASAlertViewManager bottomPopTitles:@[title] indexAction:^(NSString *indexName) {
             if ([indexName isEqualToString:@"删除"]) {
-                [ASAlertViewManager defaultPopTitle:@"提示" content:@"是否确定删除这条动态？" left:@"删除" right:@"取消" affirmAction:^{
+                [ASAlertViewManager defaultPopTitle:@"提示" content:@"是否确定删除这条动态？" left:@"删除" right:@"取消" isTouched:YES affirmAction:^{
                     [ASDynamicRequest requestDynamicDeleteWithID:wself.model.ID success:^(NSNumber * _Nullable data) {
                         kShowToast(@"删除成功");
                         [wself.navigationController popViewControllerAnimated:YES];

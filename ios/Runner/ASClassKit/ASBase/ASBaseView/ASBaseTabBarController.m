@@ -34,7 +34,7 @@
 }
 
 - (void)openRecordPowerNotification:(NSNotification *)notification {
-    [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"无麦风克权限，前往开启？" left:@"去开启" right:@"取消" affirmAction:^{
+    [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"无麦风克权限，前往开启？" left:@"去开启" right:@"取消" isTouched:YES affirmAction:^{
         NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
         if ([[UIApplication sharedApplication] canOpenURL:url]) {
             [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
@@ -45,7 +45,7 @@
 }
 
 - (void)removeRecentSessionNotification:(NSNotification *)notification {
-    [ASAlertViewManager defaultPopTitle:@"确认删除" content:@"删除后无法恢复，确定删除聊天记录吗？" left:@"删除" right:@"取消" affirmAction:^{
+    [ASAlertViewManager defaultPopTitle:@"确认删除" content:@"删除后无法恢复，确定删除聊天记录吗？" left:@"删除" right:@"取消" isTouched:YES affirmAction:^{
         NIMSession *session = notification.object[@"session"];
         if (!kObjectIsEmpty(session)) {
             //清空聊天内容

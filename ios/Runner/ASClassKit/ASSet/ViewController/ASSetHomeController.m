@@ -86,7 +86,7 @@
     [outLogin setTitle:@"退出账号" forState:UIControlStateNormal];
     [outLogin setTitleColor:TITLE_COLOR forState:UIControlStateNormal];
     [[outLogin rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        [ASAlertViewManager defaultPopTitle:@"提示" content:@"您确定要退出当前账号吗？" left:@"确定" right:@"取消" affirmAction:^{
+        [ASAlertViewManager defaultPopTitle:@"提示" content:@"您确定要退出当前账号吗？" left:@"确定" right:@"取消" isTouched:YES affirmAction:^{
             [ASLoginRequest requestOutLoginSuccess:^(id  _Nullable data) {
                 
             } errorBack:^(NSInteger code, NSString *msg) {
@@ -281,7 +281,7 @@
         return;
     }
     if ([model.leftTitle isEqualToString:@"清除缓存"]) {
-        [ASAlertViewManager defaultPopTitle:@"提示" content:@"是否删除心聊想伴数据？" left:@"确定" right:@"取消" affirmAction:^{
+        [ASAlertViewManager defaultPopTitle:@"提示" content:@"是否删除心聊想伴数据？" left:@"确定" right:@"取消" isTouched:YES affirmAction:^{
             [ASCommonFunc clearAppCache];
             kShowToast(@"清除成功");
             ASBaseCommonCell *cell = [wself.tableView cellForRowAtIndexPath:indexPath];

@@ -290,10 +290,7 @@ extension ASIMChatController: IMP2PChatDelegate {
         if self.isSystemUser == true {
             return
         }
-        let session = NIMSession(userID, type: .P2P)
-        let p2pVC = P2PChatViewController.init(session: session)
-        p2pVC.userID = userID
-        ASIMFuncManager.popP2PViewController(p2pVC)
+        ASIMFuncManager.chatOneViewController(userId: userID, nickName: "")
     }
     
     func sendMessage(message: NIMMessage, type: NSInteger) {

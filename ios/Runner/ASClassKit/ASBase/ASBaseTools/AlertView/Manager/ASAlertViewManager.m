@@ -51,6 +51,7 @@
                 content:(NSString *)content
                    left:(NSString *)left
                   right:(NSString *)right
+              isTouched:(BOOL)isTouched
            affirmAction:(VoidBlock)affirmAction
            cancelAction:(VoidBlock)cancelAction {
     ASDefaultAlertView *alertView = [[ASDefaultAlertView alloc]initWithTitle:title message:content affirmText:left cancelText:right];
@@ -58,6 +59,7 @@
     popupController.presentationStyle = zhPopupSlideStyleTransform;
     popupController.presentationTransformScale = 1.25;
     popupController.dismissonTransformScale = 0.85;
+    popupController.dismissOnMaskTouched = isTouched;
     [popupController showInView:kCurrentWindow completion:NULL];
     __weak typeof(popupController) wPopupController = popupController;
     alertView.affirmBlock = ^{

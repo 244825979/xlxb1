@@ -164,7 +164,7 @@
         _delView.title.text = @"删除视频秀";
         kWeakSelf(self);
         _delView.clikedBlock = ^{
-            [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"确认删除当前视频秀" left:@"确认" right:@"取消" affirmAction:^{
+            [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"确认删除当前视频秀" left:@"确认" right:@"取消" isTouched:YES affirmAction:^{
                 [ASVideoShowRequest requestDelVideoShowCoverWithVideoID:wself.model.ID success:^(id  _Nullable data) {
                     if (wself.delBlock) {
                         wself.delBlock();

@@ -21,6 +21,7 @@
 #import "ASWebSocketManager.h"
 #import <UserNotifications/UserNotifications.h>
 #import "ASWithdrawChangeController.h"
+#import "Runner-Swift.h"
 
 @implementation ASMyAppRegister
 
@@ -150,7 +151,7 @@
                 [[ASLoginManager shared] TX_LoginInit];//腾讯一键登录初始化
                 [wself restartUserData];//获取用户数据
             } else {
-                [ASAlertViewManager defaultPopTitle:@"温馨提醒" content:@"您暂未开启网络，是否开启网络？" left:@"去开启" right:@"取消" affirmAction:^{
+                [ASAlertViewManager defaultPopTitle:@"温馨提醒" content:@"您暂未开启网络，是否开启网络？" left:@"去开启" right:@"取消" isTouched:YES affirmAction:^{
                     NSURL *url = [NSURL URLWithString: UIApplicationOpenSettingsURLString];
                     if ([[UIApplication sharedApplication] canOpenURL:url]){
                         [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
@@ -347,9 +348,7 @@
     NSNumber *nim = data[@"nim"];
     NSString *sessionID = data[@"sessionID"];
     if (nim.integerValue == 1 && !kStringIsEmpty(sessionID)) {
-        [ASMyAppCommonFunc chatWithUserID:STRING(sessionID) nickName:@"" action:^(id  _Nonnull data) {
-            
-        }];
+        [ASIMFuncManager chatOneViewControllerWithUserId:STRING(sessionID) nickName:@""];
     } else {
         NSNumber *link_type = data[@"link_type"];
         NSString *link_url = data[@"link_url"];

@@ -281,7 +281,7 @@ static AFHTTPSessionManager *manager;
             break;
         case 1009://封号处理
         {
-            [ASAlertViewManager defaultPopTitle:@"无法登录" content:STRING(result.message) left:@"退出心聊想伴" right:@"联系客服" affirmAction:^{
+            [ASAlertViewManager defaultPopTitle:@"无法登录" content:STRING(result.message) left:@"退出心聊想伴" right:@"联系客服" isTouched:YES affirmAction:^{
                 //关闭app
                 exit(0);
             } cancelAction:^{
@@ -298,7 +298,7 @@ static AFHTTPSessionManager *manager;
             break;
         case 1012://理性消费提示弹窗
         {
-            [ASAlertViewManager defaultPopTitle:@"理性消费提示" content:STRING(result.message) left:@"确定" right:@"" affirmAction:^{
+            [ASAlertViewManager defaultPopTitle:@"理性消费提示" content:STRING(result.message) left:@"确定" right:@"" isTouched:YES affirmAction:^{
                 
             } cancelAction:^{
                 
@@ -332,7 +332,7 @@ static AFHTTPSessionManager *manager;
             break;
         case 1011://未设置快捷用语
         {
-            [ASAlertViewManager defaultPopTitle:@"温馨提示" content:STRING(result.message) left:@"去设置" right:@"取消" affirmAction:^{
+            [ASAlertViewManager defaultPopTitle:@"温馨提示" content:STRING(result.message) left:@"去设置" right:@"取消" isTouched:YES affirmAction:^{
                 ASConvenienceLanListController *vc = [[ASConvenienceLanListController alloc] init];
                 [[ASCommonFunc currentVc].navigationController pushViewController:vc animated:YES];
             } cancelAction:^{ }];

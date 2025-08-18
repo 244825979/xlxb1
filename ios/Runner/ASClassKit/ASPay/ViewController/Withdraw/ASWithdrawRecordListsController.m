@@ -100,7 +100,7 @@
     id model = self.lists[indexPath.row];
     if ([model isKindOfClass:[ASCashoutRecordModel class]]) {
         ASCashoutRecordModel *listModel = model;
-        [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"确定删除这一条记录吗？" left:@"确认删除" right:@"我再想想" affirmAction:^{
+        [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"确定删除这一条记录吗？" left:@"确认删除" right:@"我再想想" isTouched:YES affirmAction:^{
             [ASPayRequest requestDelMoneyRecordWithRecordID:listModel.ID type:4 success:^(id  _Nullable data) {
                 [wself.lists  removeObjectAtIndex:indexPath.row];
                 [wself.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];

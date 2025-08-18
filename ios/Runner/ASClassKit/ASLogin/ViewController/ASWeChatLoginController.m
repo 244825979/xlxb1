@@ -99,7 +99,7 @@
             if (USER_INFO.systemIndexModel.mobile_login_status == 1) {//是否开启手机号码登录
                 [[ASLoginManager shared] phoneLoginVc];
             } else {
-                [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"登录失败，请优先使用微信登录方式" left:@"确定" right:@"" affirmAction:^{
+                [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"登录失败，请优先使用微信登录方式" left:@"确定" right:@"" isTouched:YES affirmAction:^{
                     
                 } cancelAction:^{
                     

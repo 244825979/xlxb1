@@ -74,8 +74,13 @@
                                                                                          @"coin": @(model.coin),
                                                                                          @"replace_content": STRING(model.replace_content)}];
         if (isTid == 1) {//匹配小助手
-            [remoteExt setObject:@(model.is_beckon_un) forKey:@"is_beckon_un"];
-            [remoteExt setObject:@(model.is_fold) forKey:@"is_fold"];
+            [remoteExt setObject:@(1) forKey:@"is_beckon_un"];
+            [remoteExt setObject:@(1) forKey:@"is_fold"];
+        } else {
+            if (USER_INFO.gender == 2) {
+                [remoteExt setObject:@(model.is_beckon_un) forKey:@"is_beckon_un"];
+                [remoteExt setObject:@(model.is_fold) forKey:@"is_fold"];
+            }
         }
         [remoteExt setObject:@(model.is_pop) forKey:@"is_pop"];
         message.remoteExt = remoteExt;
@@ -95,7 +100,7 @@
 + (void)clearMessage {
     [ASAlertViewManager bottomPopTitles:@[@"一键已读", @"清除消息"] indexAction:^(NSString *indexName) {
         if ([indexName isEqualToString:@"一键已读"]) {
-            [ASAlertViewManager defaultPopTitle:@"一键已读" content:@"消息气泡会清除，但消息不会丢失" left:@"确认" right:@"取消" affirmAction:^{
+            [ASAlertViewManager defaultPopTitle:@"一键已读" content:@"消息气泡会清除，但消息不会丢失" left:@"确认" right:@"取消" isTouched:YES affirmAction:^{
                 NSArray *recentSessions = [NIMSDK sharedSDK].conversationManager.allRecentSessions;
                 for (NIMRecentSession *recentSession in recentSessions) {
                     NSDictionary *localExt = recentSession.localExt;
@@ -116,7 +121,7 @@
             return;
         }
         if ([indexName isEqualToString:@"清除消息"]) {
-            [ASAlertViewManager defaultPopTitle:@"确定删除全部消息" content:@"删除后数据无法恢复，请谨慎操作" left:@"确定删除" right:@"再考虑下" affirmAction:^{
+            [ASAlertViewManager defaultPopTitle:@"确定删除全部消息" content:@"删除后数据无法恢复，请谨慎操作" left:@"确定删除" right:@"再考虑下" isTouched:YES affirmAction:^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"deleteMsgListNotification" object:nil];
                 [[ASIMManager shared] updateUnreadCount];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"homeMessageRemindUpdate" object:nil];
@@ -134,7 +139,7 @@
 + (void)dashanClearMessage {
     [ASAlertViewManager bottomPopTitles:USER_INFO.gender == 2 ? @[@"一键已读", @"清除消息"] : @[@"清除消息"] indexAction:^(NSString *indexName) {
         if ([indexName isEqualToString:@"一键已读"]) {
-            [ASAlertViewManager defaultPopTitle:@"一键已读" content:@"消息气泡会清除，但消息不会丢失" left:@"确认" right:@"取消" affirmAction:^{
+            [ASAlertViewManager defaultPopTitle:@"一键已读" content:@"消息气泡会清除，但消息不会丢失" left:@"确认" right:@"取消" isTouched:YES affirmAction:^{
                 if ([ASIMHelperDataManager shared].dashanList.count > 0) {
                     for (NSString *userid in [ASIMHelperDataManager shared].dashanList) {
                         NIMSession *session = [NIMSession session:userid type:NIMSessionTypeP2P];
@@ -148,7 +153,7 @@
             return;
         }
         if ([indexName isEqualToString:@"清除消息"]) {
-            [ASAlertViewManager defaultPopTitle:@"确定删除全部消息" content:@"删除后数据无法恢复，请谨慎操作" left:@"确定删除" right:@"再考虑下" affirmAction:^{
+            [ASAlertViewManager defaultPopTitle:@"确定删除全部消息" content:@"删除后数据无法恢复，请谨慎操作" left:@"确定删除" right:@"再考虑下" isTouched:YES affirmAction:^{
                 if ([ASIMHelperDataManager shared].dashanList.count > 0) {
                     for (NSString *userid in [ASIMHelperDataManager shared].dashanList) {
                         NIMSession *session = [NIMSession session:STRING(userid) type:NIMSessionTypeP2P];

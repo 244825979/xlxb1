@@ -182,7 +182,7 @@
         _nolleProsequi.hidden = YES;
         kWeakSelf(self);
         [[_nolleProsequi rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-            [ASAlertViewManager defaultPopTitle:@"提示" content:@"您确定要撤销投诉吗？" left:@"确认" right:@"取消" affirmAction:^{
+            [ASAlertViewManager defaultPopTitle:@"提示" content:@"您确定要撤销投诉吗？" left:@"确认" right:@"取消" isTouched:YES affirmAction:^{
                 [ASSetRequest requestReportDrawWithID:wself.model.ID success:^(id  _Nullable data) {
                     wself.model.status = 3;
                     wself.state.text = @"已撤回";

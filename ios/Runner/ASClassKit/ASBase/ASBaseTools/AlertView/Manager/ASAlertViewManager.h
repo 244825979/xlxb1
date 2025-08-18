@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
                 content:(NSString *)content
                    left:(NSString *)left
                   right:(NSString *)right
+              isTouched:(BOOL)isTouched
            affirmAction:(VoidBlock)affirmAction
            cancelAction:(VoidBlock)cancelAction;
 //底部弹出弹窗

@@ -268,7 +268,7 @@
         _delBtn.adjustsImageWhenHighlighted = NO;
         kWeakSelf(self);
         [[_delBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-            [ASAlertViewManager defaultPopTitle:@"确定删除当前模版？" content:@"" left:@"确认" right:@"取消" affirmAction:^{
+            [ASAlertViewManager defaultPopTitle:@"确定删除当前模版？" content:@"" left:@"确认" right:@"取消" isTouched:YES affirmAction:^{
                 [ASMineRequest requestDelConvenienceLanWithID:wself.model.ID success:^(id  _Nullable data) {
                     kShowToast(@"删除成功！");
                     if (wself.delBlock) {

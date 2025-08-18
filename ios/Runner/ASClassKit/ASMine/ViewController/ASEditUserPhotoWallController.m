@@ -146,7 +146,7 @@
            [photos addObject:photo];
        }];
        [[ASUploadImageManager shared] showMediaWithPhotos:photos index:indexPath.row btnText:@"删除" viewController:self backBlock:^(NSInteger index, GKPhotoBrowser * _Nonnull browser) {
-           [ASAlertViewManager defaultPopTitle:@"提示" content:@"是否删除这张图片" left:@"删除" right:@"取消" affirmAction:^{
+           [ASAlertViewManager defaultPopTitle:@"提示" content:@"是否删除这张图片" left:@"删除" right:@"取消" isTouched:YES affirmAction:^{
                [wself.photos removeObjectAtIndex:index];
                [wself.collectionView reloadData];
                [browser dismiss];

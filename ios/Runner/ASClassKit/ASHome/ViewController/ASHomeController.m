@@ -135,6 +135,8 @@
     [self TXLiteAVSDKInit];
     //我的页面数据
     [self requestMineData];
+    //每次进入获取当前时间，来记录小助手的删除对比时间
+    [ASUserDefaults setValue:STRING([ASCommonFunc currentTimeStr]) forKey:@"littleHelperClearTime"];
 }
 
 - (void)createUI {

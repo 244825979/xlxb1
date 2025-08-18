@@ -436,7 +436,7 @@
             if (!kStringIsEmpty(link_url)) {
                 if ([link_url isEqualToString:@"rechargeCoin"] || link_type.integerValue != 2) {
                     kWeakSelf(self);
-                    [ASAlertViewManager defaultPopTitle:@"余额不足" content:@"余额不足，去充值" left:@"确定" right:@"取消" affirmAction:^{
+                    [ASAlertViewManager defaultPopTitle:@"余额不足" content:@"余额不足，去充值" left:@"确定" right:@"取消" isTouched:YES affirmAction:^{
                         wself.itemBg.goPayView.hidden = NO;
                         [ASMyAppCommonFunc balanceDeficiencyPopViewWithPayScene:Pay_Scene_VideoGift cancel:^{
                             
@@ -660,7 +660,7 @@
                 }];
             } errorBack:^(NSInteger code, NSString *msg) {
                 if (code == 1002 || code == 1003) {//您的可用金币不足
-                    [ASAlertViewManager defaultPopTitle:@"余额不足" content:@"金币余额不足1分钟，请及时充值避免错过缘分！" left:@"马上充值" right:@"舍不得" affirmAction:^{
+                    [ASAlertViewManager defaultPopTitle:@"余额不足" content:@"金币余额不足1分钟，请及时充值避免错过缘分！" left:@"马上充值" right:@"舍不得" isTouched:YES affirmAction:^{
                         [ASMyAppCommonFunc balanceDeficiencyPopViewWithPayScene:Pay_Scene_VideoCalling cancel:^{
                             
                         }];

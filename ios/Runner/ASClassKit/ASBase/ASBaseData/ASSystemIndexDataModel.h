@@ -50,9 +50,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger sms_fail_voice_tips_bind;
 @property (nonatomic, assign) NSInteger sms_fail_voice_retry_time;//语音验证码触发的条件：次数
 @property (nonatomic, assign) NSInteger sms_fail_voice_alert_seconds;//语音验证码触发的条件：秒
-
 @property (nonatomic, assign) NSInteger you_like_switch_home;//猜你喜欢，首页
 @property (nonatomic, assign) NSInteger you_like_switch_dynamic;//猜你喜欢，动态
+@property (nonatomic, assign) NSInteger last_fate_helper_show_time;//小助手匹配列表过期时间，单位分钟
+@property (nonatomic, copy) NSString *last_fate_helper_show_message;//小助手匹配列表过期消息内容
 @end
 
 NS_ASSUME_NONNULL_END

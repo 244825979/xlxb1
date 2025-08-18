@@ -208,7 +208,7 @@
         kWeakSelf(self);
         _closeBtn.actionBlock = ^{
             if (NERtcCallKit.sharedInstance.callStatus == NERtcCallStatusInCall) {//已接通，主动挂断
-                [ASAlertViewManager defaultPopTitle:USER_INFO.gender == 1 ? @"温馨提示" : @"是否要挂断？" content:USER_INFO.gender == 1 ? @"多次主动挂断音视频通话，会降低你的推荐值以及女神星级。如果发现为恶意、无故挂断导致对方金币损失，平台会进行封号处理！请真诚交友。" : @"" left:@"挂断" right:@"继续聊" affirmAction:^{
+                [ASAlertViewManager defaultPopTitle:USER_INFO.gender == 1 ? @"温馨提示" : @"是否要挂断？" content:USER_INFO.gender == 1 ? @"多次主动挂断音视频通话，会降低你的推荐值以及女神星级。如果发现为恶意、无故挂断导致对方金币损失，平台会进行封号处理！请真诚交友。" : @"" left:@"挂断" right:@"继续聊" isTouched:YES affirmAction:^{
                     [NERtcCallKit.sharedInstance hangup:^(NSError * _Nullable error) {
                         if (error) {
                             ASLog(@"挂断失败，再次点击可以继续取消 error = %@", error);

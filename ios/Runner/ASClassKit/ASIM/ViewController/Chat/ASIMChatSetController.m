@@ -226,7 +226,6 @@
         }];
         return;
     }
-    
     if ([model.leftTitle isEqualToString:@"举报"]) {
         ASReportController *vc = [[ASReportController alloc] init];
         vc.uid = self.userID;
@@ -236,9 +235,8 @@
         [self presentViewController:nav animated:YES completion:nil];
         return;
     }
-    
     if ([model.leftTitle isEqualToString:@"清空聊天记录"]) {
-        [ASAlertViewManager defaultPopTitle:@"确认删除" content:@"删除后无法恢复，确定删除聊天记录吗？" left:@"确定" right:@"取消" affirmAction:^{
+        [ASAlertViewManager defaultPopTitle:@"确认删除" content:@"删除后无法恢复，确定删除聊天记录吗？" left:@"确定" right:@"取消" isTouched:YES affirmAction:^{
             NIMSession *session = [NIMSession session:wself.userID type:NIMSessionTypeP2P];
             NIMDeleteMessagesOption *option = [[NIMDeleteMessagesOption alloc]init];
             option.removeSession = NO;

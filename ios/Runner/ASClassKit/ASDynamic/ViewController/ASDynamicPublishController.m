@@ -167,7 +167,7 @@
     [self.view endEditing:YES];
     if (self.selectedPhotos.count > 0 || self.textView.text.length > 0) {
         kWeakSelf(self);
-        [ASAlertViewManager defaultPopTitle:@"是否放弃发布内容" content:@"" left:@"确定" right:@"取消" affirmAction:^{
+        [ASAlertViewManager defaultPopTitle:@"是否放弃发布内容" content:@"" left:@"确定" right:@"取消" isTouched:YES affirmAction:^{
             [wself.navigationController popViewControllerAnimated:YES];
         } cancelAction:^{
             

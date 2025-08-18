@@ -132,7 +132,7 @@
     [self.view endEditing:YES];
     if (self.isEdit == YES) {
         kWeakSelf(self);
-        [ASAlertViewManager defaultPopTitle:@"提示" content:@"是否确认放弃本次修改" left:@"确认" right:@"取消" affirmAction:^{
+        [ASAlertViewManager defaultPopTitle:@"提示" content:@"是否确认放弃本次修改" left:@"确认" right:@"取消" isTouched:YES affirmAction:^{
             [wself.navigationController popViewControllerAnimated:YES];
         } cancelAction:^{
         }];

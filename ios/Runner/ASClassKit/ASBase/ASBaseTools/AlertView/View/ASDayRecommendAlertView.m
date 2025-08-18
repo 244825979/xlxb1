@@ -229,6 +229,12 @@
             }
             wself.tableView.hidden = NO;
             [wself.tableView reloadData];
+        } else {
+            kShowToast(@"暂无更多缘分用户~");
+            if (wself.cancelBlock) {
+                wself.cancelBlock();
+                [wself removeView];
+            }
         }
     } errorBack:^(NSInteger code, NSString *msg) {
         

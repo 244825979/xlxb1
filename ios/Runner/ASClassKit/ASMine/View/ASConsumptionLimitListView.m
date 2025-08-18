@@ -234,7 +234,7 @@
         kWeakSelf(self);
         _extraQuotaView.actionBlock = ^{
             if (wself.model.is_extra == 1) {
-                [ASAlertViewManager defaultPopTitle:@"提示" content:@"申请前需完成真人人脸核验" left:@"去验证" right:@"取消" affirmAction:^{
+                [ASAlertViewManager defaultPopTitle:@"提示" content:@"申请前需完成真人人脸核验" left:@"去验证" right:@"取消" isTouched:YES affirmAction:^{
                     ASBaseWebViewController *vc = [[ASBaseWebViewController alloc]init];
                     vc.webUrl = USER_INFO.systemIndexModel.matchAuth;
                     vc.backBlock = ^{

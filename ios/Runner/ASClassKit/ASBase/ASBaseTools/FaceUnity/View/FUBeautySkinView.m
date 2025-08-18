@@ -105,7 +105,7 @@ static NSString * const kFUBeautySkinCellIdentifier = @"FUBeautySkinCell";
 
 - (void)recoverAction {
     kWeakSelf(self);
-    [ASAlertViewManager defaultPopTitle:@"提示" content:@"是否将所有参数恢复到默认值" left:@"确定" right:@"取消" affirmAction:^{
+    [ASAlertViewManager defaultPopTitle:@"提示" content:@"是否将所有参数恢复到默认值" left:@"确定" right:@"取消" isTouched:YES affirmAction:^{
         [wself.viewModel recoverAllSkinValuesToDefault];
         [wself refreshSubviews];
     } cancelAction:^{

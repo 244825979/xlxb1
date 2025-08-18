@@ -414,7 +414,7 @@
             if (!kStringIsEmpty(link_url)) {
                 if ([link_url isEqualToString:@"rechargeCoin"] || link_type.integerValue != 2) {
                     kWeakSelf(self);
-                    [ASAlertViewManager defaultPopTitle:@"余额不足" content:@"余额不足，去充值" left:@"确定" right:@"取消" affirmAction:^{
+                    [ASAlertViewManager defaultPopTitle:@"余额不足" content:@"余额不足，去充值" left:@"确定" right:@"取消" isTouched:YES affirmAction:^{
                         wself.itemBg.goPayView.hidden = NO;
                         [ASMyAppCommonFunc balanceDeficiencyPopViewWithPayScene:Pay_Scene_VideoGift cancel:^{
                             

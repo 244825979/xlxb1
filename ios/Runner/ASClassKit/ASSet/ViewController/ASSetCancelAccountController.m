@@ -52,7 +52,7 @@
         [button setTitle:@"确定" forState:UIControlStateNormal];
         [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             if (wself.agreementBtn.isSelected == YES) {
-                [ASAlertViewManager defaultPopTitle:@"提示" content:@"您确定要注销账号吗？" left:@"确定" right:@"取消" affirmAction:^{
+                [ASAlertViewManager defaultPopTitle:@"提示" content:@"您确定要注销账号吗？" left:@"确定" right:@"取消" isTouched:YES affirmAction:^{
                     [ASLoginRequest requestCancelAccountSuccess:^(id  _Nullable data) {
 
                     } errorBack:^(NSInteger code, NSString *msg) {

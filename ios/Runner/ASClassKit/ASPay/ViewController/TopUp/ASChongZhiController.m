@@ -315,6 +315,7 @@
                                         content:STRING(model.greenText)
                                            left:@"确定并充值"
                                           right:@""
+                                      isTouched:YES
                                    affirmAction:^{
                 complete();
             } cancelAction:^{
@@ -327,6 +328,7 @@
                                         content:STRING(model.rechargeMaxText)
                                            left:@"确定并充值"
                                           right:@""
+                                      isTouched:YES
                                    affirmAction:^{
                 complete();
             } cancelAction:^{

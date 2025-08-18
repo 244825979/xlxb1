@@ -241,7 +241,7 @@
                     return @"重新获取";
                 }];
                 //弹窗提示
-                [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"我们将以电话的方式告诉您验证码\n请注意接听" left:@"知道了" right:@"" affirmAction:^{
+                [ASAlertViewManager defaultPopTitle:@"温馨提示" content:@"我们将以电话的方式告诉您验证码\n请注意接听" left:@"知道了" right:@"" isTouched:YES affirmAction:^{
                     
                 } cancelAction:^{
                     

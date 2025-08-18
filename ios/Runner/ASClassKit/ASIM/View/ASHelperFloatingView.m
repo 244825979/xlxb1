@@ -32,7 +32,7 @@
                 wself.clickBlock();
             }
         }];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAcount:) name:@"refreshListLittleHelperNotify" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAcount:) name:@"refreshLittleHelperAcountNotify" object:nil];
     }
     return self;
 }
@@ -42,7 +42,16 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.textBtn setTitle:[NSString stringWithFormat:@"%zd个新匹配", [ASIMHelperDataManager shared].helperList.count] forState:UIControlStateNormal];
         });
+    } else {
+        if ([ASIMHelperDataManager shared].helperList.count > 0) {
+            self.pauseAcount.hidden = NO;
+            self.pauseAcount.text = [NSString stringWithFormat:@"%zd", [ASIMHelperDataManager shared].helperList.count];
+        } else {
+            self.pauseAcount.hidden = YES;
+        }
+        [self.textBtn setTitle:@"点击回复" forState:UIControlStateNormal];
     }
+    [self layoutSubviews];
 }
 
 - (void)layoutSubviews {
@@ -71,9 +80,9 @@
         self.pauseAcount.hidden = YES;
         [self.textBtn setTitle:[NSString stringWithFormat:@"%zd个新匹配", [ASIMHelperDataManager shared].helperList.count] forState:UIControlStateNormal];
     } else {
-        if (model.waitReplyNum > 0) {
+        if ([ASIMHelperDataManager shared].helperList.count > 0) {
             self.pauseAcount.hidden = NO;
-            self.pauseAcount.text = [NSString stringWithFormat:@"%zd", model.waitReplyNum];
+            self.pauseAcount.text = [NSString stringWithFormat:@"%zd", [ASIMHelperDataManager shared].helperList.count];
         } else {
             self.pauseAcount.hidden = YES;
         }

@@ -122,7 +122,7 @@
     switch (notifyModel.ID) {
         case kIMConsumptionReminder://消费提醒
         {
-            [ASAlertViewManager defaultPopTitle:@"理性消费提示" content:notifyModel.data.message left:@"确定" right:@"" affirmAction:^{
+            [ASAlertViewManager defaultPopTitle:@"理性消费提示" content:notifyModel.data.message left:@"确定" right:@"" isTouched:YES affirmAction:^{
             } cancelAction:^{
             }];
         }
@@ -552,9 +552,27 @@
                 if (USER_INFO.gender == 2 && [ASIMHelperDataManager shared].dashanList.count >= USER_INFO.systemIndexModel.foldVol) {//男用户且大于等于了限制数量
                     if (![[ASIMHelperDataManager shared].dashanList containsObject: STRING(recentSession.session.sessionId)]) {//不包含就添加
                         //删除会话
-                        NSString *userid = [ASIMHelperDataManager shared].dashanList[0];
+                        NSString *userid = [ASIMHelperDataManager shared].dashanList[USER_INFO.systemIndexModel.foldVol - 1];
                         NIMRecentSession *delRecentSession = [[NIMSDK sharedSDK].conversationManager recentSessionBySession: [NIMSession session:STRING(userid) type:NIMSessionTypeP2P]];
-                        [[NIMSDK sharedSDK].conversationManager deleteRecentSession:delRecentSession];
+                        NSMutableDictionary *delLocalExt = [NSMutableDictionary dictionaryWithDictionary:delRecentSession.localExt];
+                        [delLocalExt setObject:@"0" forKey:@"conversation_type"];//3个消息列表。0或者没值为默认会话列表，1为匹配小助手会话列表。2为搭讪消息列表
+                        [[NIMSDK sharedSDK].conversationManager updateRecentLocalExt:delLocalExt recentSession:delRecentSession];
+                        NIMDeleteRecentSessionOption *option = [[NIMDeleteRecentSessionOption alloc] init];
+                        option.isDeleteRoamMessage = YES;
+                        option.shouldMarkAllMessagesReadInSessions = YES;
+                        [[NIMSDK sharedSDK].conversationManager deleteRecentSession:delRecentSession option:option completion:^(NSError * _Nullable error) {
+                            
+                        }];
+                        //取消订阅
+                        NIMSubscribeRequest *request = [[NIMSubscribeRequest alloc] init];
+                        request.type = 1;
+                        request.expiry = 60*60*24*1;
+                        request.syncEnabled = YES;
+                        request.publishers = @[userid];
+                        [[NIMSDK sharedSDK].subscribeManager unSubscribeEvent:request completion:^(NSError * _Nullable error, NSArray * _Nullable failedPublishers) {
+                            
+                        }];
+                        //移除数据的ID
                         [[ASIMHelperDataManager shared].dashanList removeObject:userid];
                         //更新会话本地扩展字段
                         NSMutableDictionary *localExt = [NSMutableDictionary dictionaryWithDictionary:recentSession.localExt];
@@ -630,6 +648,7 @@
                         [ASIMHelperDataManager shared].helperList = helperList;
                     }
                 }
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshLittleHelperAcountNotify" object: nil];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshListLittleHelperNotify" object: nil];
             }
         }

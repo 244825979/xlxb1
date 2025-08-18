@@ -54,7 +54,7 @@
         [strategyBtn setBackgroundImage:[UIImage imageNamed:@"qinmidu_strategy"] forState:UIControlStateNormal];
         strategyBtn.adjustsImageWhenHighlighted = NO;
         [[strategyBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-            [ASAlertViewManager defaultPopTitle:@"亲密值升级攻略" content:@"1、在你们私信聊天当中，每产生消耗金币的行为即可增加亲密度（消息、私聊送礼、音视频通话都包括在内）；\n2、1亲密度=10金币，不同等级可解锁不同特权奖励；\n3、奖励最终解释权归平台所有。" left:@"确认" right:@"" affirmAction:^{
+            [ASAlertViewManager defaultPopTitle:@"亲密值升级攻略" content:@"1、在你们私信聊天当中，每产生消耗金币的行为即可增加亲密度（消息、私聊送礼、音视频通话都包括在内）；\n2、1亲密度=10金币，不同等级可解锁不同特权奖励；\n3、奖励最终解释权归平台所有。" left:@"确认" right:@"" isTouched:YES affirmAction:^{
                 
             } cancelAction:^{
                 

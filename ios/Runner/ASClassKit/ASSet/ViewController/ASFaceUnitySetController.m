@@ -145,7 +145,7 @@
 //返回
 - (void)headButtonViewBackAction:(UIButton *)btn {
     kWeakSelf(self);
-    [ASAlertViewManager defaultPopTitle:@"确认保存？" content:@"" left:@"确认" right:@"取消" affirmAction:^{
+    [ASAlertViewManager defaultPopTitle:@"确认保存？" content:@"" left:@"确认" right:@"取消" isTouched:YES affirmAction:^{
         [[FaceUnityManager shared] saveBeauty];
         [FaceUnityManager destory];
         [wself.navigationController popViewControllerAnimated:YES];
@@ -160,7 +160,7 @@
 
 //恢复默认
 - (void)headButtonViewDefaultAction:(UIButton *)btn {
-    [ASAlertViewManager defaultPopTitle:@"提示" content:@"确认恢复默认设置吗？" left:@"确认" right:@"取消" affirmAction:^{
+    [ASAlertViewManager defaultPopTitle:@"提示" content:@"确认恢复默认设置吗？" left:@"确认" right:@"取消" isTouched:YES affirmAction:^{
         [[FaceUnityManager shared] resetFUConfig];
     } cancelAction:^{
     }];
