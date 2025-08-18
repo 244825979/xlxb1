@@ -184,11 +184,11 @@
 }
 
 //绑定手机号一键登录
-- (void)TX_BindPhoneLoginWithUser:(ASUserInfoModel *)user {
+- (void)TX_BindPhoneLoginWithUser:(ASUserInfoModel *)user isWeChatFirst:(BOOL)isWeChatFirst {
     [ASMsgTool showLoading];
     kWeakSelf(self);
     [TXLoginOauthSDK loginWithController:[ASCommonFunc currentVc]
-                              andUIModel:[self loginBindUIWithUser:user]
+                              andUIModel:[self loginBindUIWithUser:user isWeChatFirst:isWeChatFirst]
                             successBlock:^(NSDictionary * _Nonnull resultDic) {
         if ([resultDic[@"loginResultCode"] isEqualToString:@"200087"]) {
             ASLog(@"拉起登录授权页面成功");
@@ -196,7 +196,7 @@
         } else {
             //授权成功，返回token进行服务器登录操作
             NSString *token = STRING([resultDic valueForKey:@"token"]);
-            [ASLoginRequest requestTxOneKeyBindMobileWithTXToken:token isRegister:YES success:^(id  _Nonnull response) {
+            [ASLoginRequest requestTxOneKeyBindMobileWithTXToken:token isWeChatFirst:isWeChatFirst success:^(id  _Nonnull response) {
                 //绑定成功，进入到首页
                 [wself loginSuccess];
                 [ASMsgTool hideMsg];
@@ -208,7 +208,7 @@
         [ASMsgTool hideMsg];
         [TXLoginOauthSDK delectScrip];
         //执行普通绑定手机号方式
-        [wself TXLoginBindPhoneWithUser:user];
+        [wself TXLoginBindPhoneWithUser:user isWeChatFirst:isWeChatFirst];
     }];
 }
 
@@ -226,7 +226,7 @@
         } else {
             //授权成功，返回token进行服务器登录操作
             NSString *token = STRING([resultDic valueForKey:@"token"]);
-            [ASLoginRequest requestTxOneKeyBindMobileWithTXToken:token isRegister:NO success:^(id  _Nonnull response) {
+            [ASLoginRequest requestTxOneKeyBindMobileWithTXToken:token isWeChatFirst:NO success:^(id  _Nonnull response) {
                 //绑定成功，关闭当前弹窗
                 [ASMsgTool hideMsg];
                 [TXLoginOauthSDK dismissViewControllerAnimated:NO completion:^{
@@ -260,8 +260,9 @@
 }
 
 //绑定手机号的手机号码登录
-- (void)TXLoginBindPhoneWithUser:(ASUserInfoModel *)user {
+- (void)TXLoginBindPhoneWithUser:(ASUserInfoModel *)user isWeChatFirst:(BOOL)isWeChatFirst {
     ASLoginBindPhoneController *vc = [[ASLoginBindPhoneController alloc] init];
+    vc.isWeChatFirst = isWeChatFirst;
     vc.userModel = user;
     ASBaseNavigationController *nav = [[ASBaseNavigationController alloc] initWithRootViewController:vc];
     nav.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -316,6 +317,7 @@
                     ASRegisterUserController *vc = [[ASRegisterUserController alloc] init];
                     vc.iconurl = resp.iconurl;
                     vc.name = resp.name;
+                    vc.isWeChatFirst = YES;
                     vc.showNavigation = YES;
                     vc.backBlock = ^{
                         //因为从一键登录页进入的微信登录，返回到一键登录页
@@ -458,7 +460,7 @@
 }
 
 #pragma mark - TX一键登录样式，绑定手机号
-- (TXLoginUIModel *)loginBindUIWithUser:(ASUserInfoModel *)user {
+- (TXLoginUIModel *)loginBindUIWithUser:(ASUserInfoModel *)user isWeChatFirst:(BOOL)isWeChatFirst {
     kWeakSelf(self);
     self.bindModel = [[TXLoginUIModel alloc] init];
     /**状态栏设置*/
@@ -517,7 +519,7 @@
     [self.bindModel setSloganLabelOffsetY:loginNumberY + SCALES(50) + TAB_BAR_MAGIN];//品牌logo图片及标签的Y偏移量
     /**其他登录方式view*/
     [self.bindModel setIfCreateCustomView:YES];
-    UIButton *phoneBtn = [self setPhoneBtnWithframe:CGRectMake(SCREEN_WIDTH/2 - SCALES(65), SCREEN_HEIGHT - self.bindModel.logBtnOffsetY + SCALES(15), SCALES(130), SCALES(20)) user:user vc:nil isPopWindow:NO close:^{
+    UIButton *phoneBtn = [self setPhoneBtnWithframe:CGRectMake(SCREEN_WIDTH/2 - SCALES(65), SCREEN_HEIGHT - self.bindModel.logBtnOffsetY + SCALES(15), SCALES(130), SCALES(20)) user:user vc:nil isWeChatFirst:isWeChatFirst close:^{
         
     }];
     UIButton *skipBtn = [UIButton buttonWithType: UIButtonTypeCustom];
@@ -642,7 +644,7 @@
     bottomText.text = @"*我们不会公开您的手机号，仅用于账号验证与通知";
     bottomText.textColor = TEXT_SIMPLE_COLOR;
     bottomText.textAlignment = NSTextAlignmentCenter;
-    UIButton *phoneBtn = [self setPhoneBtnWithframe:CGRectMake(SCALES(311)/2 - SCALES(65), SCALES(332), SCALES(130), SCALES(20)) user:nil vc:vc isPopWindow:isPopWindow close:^{
+    UIButton *phoneBtn = [self setPhoneBtnWithframe:CGRectMake(SCALES(311)/2 - SCALES(65), SCALES(332), SCALES(130), SCALES(20)) user:nil vc:vc isWeChatFirst:NO close:^{
         close();
     }];
     self.agreementHintIcon.frame = CGRectMake(SCALES(21), SCALES(375), SCALES(160), SCALES(24));
@@ -711,7 +713,7 @@
 }
 
 //如果user数据不为空表示的是登录的手机号绑定，为空表示设置页的手机号绑定
-- (UIButton *)setPhoneBtnWithframe:(CGRect)frame user:(ASUserInfoModel *)user vc:(UIViewController *)vc isPopWindow:(BOOL)isPopWindow close:(VoidBlock)close{
+- (UIButton *)setPhoneBtnWithframe:(CGRect)frame user:(ASUserInfoModel *)user vc:(UIViewController *)vc isWeChatFirst:(BOOL)isWeChatFirst close:(VoidBlock)close{
     kWeakSelf(self);
     CustomButton *button = [[CustomButton alloc]init];
     button.frame = frame;
@@ -729,10 +731,11 @@
         if (kObjectIsEmpty(user)) {
             [TXLoginOauthSDK dismissViewControllerAnimated:NO completion:^{
                 ASLoginBindPhoneController *bindVc = [[ASLoginBindPhoneController alloc] init];//需要处理modal出来的页面无法跳转的问题
+                bindVc.isWeChatFirst = isWeChatFirst;
                 [vc.navigationController pushViewController:bindVc animated:YES];
             }];
         } else {
-            [wself TXLoginBindPhoneWithUser:user];
+            [wself TXLoginBindPhoneWithUser:user isWeChatFirst:isWeChatFirst];
         }
     }];
     return button;

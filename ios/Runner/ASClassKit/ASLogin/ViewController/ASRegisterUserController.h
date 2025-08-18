@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL showNavigation;//进入认证页H5是否显示导航
 @property (nonatomic, copy) NSString *iconurl;
 @property (nonatomic, copy) NSString *name;
+@property (nonatomic, assign) BOOL isWeChatFirst;//是不是微信注册
 @property (nonatomic, copy) void (^backBlock)(void);
 @end
 

@@ -11,6 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ASLoginBindPhoneController : ASBaseViewController
 @property (nonatomic, strong) ASUserInfoModel *userModel;
+@property (nonatomic, assign) BOOL isWeChatFirst;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -78,12 +78,12 @@
 }
 //一键登录方式绑定
 + (void)requestTxOneKeyBindMobileWithTXToken:(NSString *)txToken
-                                  isRegister:(BOOL)isRegister
+                               isWeChatFirst:(BOOL)isWeChatFirst
                                      success:(ResponseSuccess)successBack
                                    errorBack:(ResponseFail)errorBack {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setValue:STRING(txToken) forKey:@"accessToken"];
-    [params setValue:isRegister ? @"register" : @"" forKey:@"scene"];//注册场景传：register，其他不传或者空字符）
+    [params setValue:isWeChatFirst ? @"register" : @"" forKey:@"scene"];//注册场景传：register，其他不传或者空字符）
     [ASBaseRequest postWithUrl:API_OneKeyBindMobile params:params success:^(id  _Nonnull response) {
         ASUserInfoModel *user = [ASUserInfoModel mj_objectWithKeyValues:response[@"userinfo"]];
         if (!kStringIsEmpty(user.mobile)) {
@@ -127,13 +127,13 @@
 //手机号码验证码方式绑定
 + (void)requestPhoneBindMobileWithMobile:(NSString *)mobile
                                     code:(NSString *)code
-                              isRegister:(BOOL)isRegister
+                           isWeChatFirst:(BOOL)isWeChatFirst
                                  success:(ResponseSuccess)successBack
                                errorBack:(ResponseFail)errorBack {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setValue:STRING(mobile) forKey:@"mobile"];
     [params setValue:STRING(code) forKey:@"phone_code"];
-    [params setValue:isRegister ? @"register" : @"" forKey:@"scene"];//注册场景传：register，其他不传或者空字符）
+    [params setValue:isWeChatFirst ? @"register" : @"" forKey:@"scene"];//注册场景传：register，其他不传或者空字符）
     [ASBaseRequest postWithUrl:API_PhoneBindMobile params:params success:^(id  _Nonnull response) {
         ASUserInfoModel *user = [ASUserInfoModel mj_objectWithKeyValues:response[@"userinfo"]];
         if (!kStringIsEmpty(user.mobile)) {
@@ -256,7 +256,7 @@
                         [USER_INFO saveUserDataWithModel:user complete:^{ }];
                     }
                     //进入绑定手机号流程
-                    [[ASLoginManager shared] TX_BindPhoneLoginWithUser:user];
+                    [[ASLoginManager shared] TX_BindPhoneLoginWithUser:user isWeChatFirst:NO];
                 }
             }
         });
@@ -283,6 +283,7 @@
                                      age:(NSString *)age
                               inviteCode:(NSString *)inviteCode
                           showNavigation:(BOOL)showNavigation
+                           isWeChatFirst:(BOOL)isWeChatFirst
                                  success:(ResponseSuccess)successBack
                                errorBack:(ResponseFail)errorBack {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -325,7 +326,7 @@
                         [USER_INFO saveUserDataWithModel:user complete:^{ }];
                     }
                     //进入绑定手机号流程
-                    [[ASLoginManager shared] TX_BindPhoneLoginWithUser:user];
+                    [[ASLoginManager shared] TX_BindPhoneLoginWithUser:user isWeChatFirst:isWeChatFirst];
                 });
             }
         } fail:^(NSInteger code, NSString *msg) {
@@ -366,7 +367,7 @@
                         [USER_INFO saveUserDataWithModel:user complete:^{ }];
                     }
                     //进入绑定手机号流程
-                    [[ASLoginManager shared] TX_BindPhoneLoginWithUser:user];
+                    [[ASLoginManager shared] TX_BindPhoneLoginWithUser:user isWeChatFirst:isWeChatFirst];
                 });
             }
         } fail:^(NSInteger code, NSString *msg) {

@@ -229,6 +229,7 @@
                                                  age:age
                                           inviteCode:self.invitationView.textField.text
                                       showNavigation:self.showNavigation
+                                       isWeChatFirst:self.isWeChatFirst
                                              success:^(id  _Nullable data) {
         [[ASLoginManager shared] loginSuccess];
     } errorBack:^(NSInteger code, NSString *msg) {

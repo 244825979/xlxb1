@@ -16,15 +16,15 @@ NS_ASSUME_NONNULL_BEGIN
                         errorBack:(ResponseFail)errorBack;
 //一键登录页的绑定手机号操作
 + (void)requestTxOneKeyBindMobileWithTXToken:(NSString *)txToken
-                                  isRegister:(BOOL)isRegister
+                               isWeChatFirst:(BOOL)isWeChatFirst
                                      success:(ResponseSuccess)successBack
                                    errorBack:(ResponseFail)errorBack;
 //手机号码绑定手机号操作
 + (void)requestPhoneBindMobileWithMobile:(NSString *)mobile
                                     code:(NSString *)code
-                              isRegister:(BOOL)isRegister
-                                     success:(ResponseSuccess)successBack
-                                   errorBack:(ResponseFail)errorBack;
+                           isWeChatFirst:(BOOL)isWeChatFirst
+                                 success:(ResponseSuccess)successBack
+                               errorBack:(ResponseFail)errorBack;
 //获取验证码
 + (void)requestSmsCodeWithPhone:(NSString *)phone
                            type:(NSString *)type
@@ -53,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
                                      age:(NSString *)age
                               inviteCode:(NSString *)inviteCode
                           showNavigation:(BOOL)showNavigation
+                           isWeChatFirst:(BOOL)isWeChatFirst
                                  success:(ResponseSuccess)successBack
                                errorBack:(ResponseFail)errorBack;
 //退出登录

@@ -113,14 +113,14 @@
     [[self.submitBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         [wself.view endEditing:YES];
         if (!kObjectIsEmpty(wself.userModel)) {
-            [ASLoginRequest requestPhoneBindMobileWithMobile:wself.phoneText code:wself.codeText isRegister:YES success:^(id  _Nonnull response) {
+            [ASLoginRequest requestPhoneBindMobileWithMobile:wself.phoneText code:wself.codeText isWeChatFirst:wself.isWeChatFirst success:^(id  _Nonnull response) {
                 //绑定成功，进入到首页
                 [[ASLoginManager shared] loginSuccess];
             } errorBack:^(NSInteger code, NSString * _Nonnull message) {
                 
             }];
         } else {
-            [ASLoginRequest requestPhoneBindMobileWithMobile:wself.phoneText code:wself.codeText isRegister:NO success:^(id  _Nonnull response) {
+            [ASLoginRequest requestPhoneBindMobileWithMobile:wself.phoneText code:wself.codeText isWeChatFirst:wself.isWeChatFirst success:^(id  _Nonnull response) {
                 //绑定成功，更新一下样式
                 [wself.navigationController popViewControllerAnimated:YES];
                 kShowToast(@"绑定成功，可直接用手机号码登录此账号");

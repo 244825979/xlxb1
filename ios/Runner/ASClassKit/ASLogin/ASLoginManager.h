@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, ASLoginType) {
 //登录成功，设置根控制器
 - (void)loginSuccess;
 //绑定手机号一键登录
-- (void)TX_BindPhoneLoginWithUser:(ASUserInfoModel *)user;
+- (void)TX_BindPhoneLoginWithUser:(ASUserInfoModel *)user isWeChatFirst:(BOOL)isWeChatFirst;
 //微信绑定
 - (void)weChatBindWithSuccess:(ResponseSuccess)success;
 //绑定手机号一键登录弹窗
