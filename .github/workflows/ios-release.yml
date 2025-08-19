@@ -32,18 +32,27 @@ jobs:
           keychain-password: 111111
 
       - name: Use local IPA (skip cloud build)
+        env:
+          LOCAL_IPA_DIR: ios_dist
         run: |
           set -e
-          if [ ! -d build/ios/ipa ]; then
-            echo "build/ios/ipa not found. Please add your prebuilt .ipa there."
+          if [ ! -d "$LOCAL_IPA_DIR" ]; then
+            echo "$LOCAL_IPA_DIR not found. Create it in repo root and add your prebuilt .ipa, then push."
             exit 1
           fi
-          cd build/ios/ipa
-          IPA_FILE=$(ls -1 *.ipa | head -n 1)
+          cd "$LOCAL_IPA_DIR"
+          IPA_FILE=$(ls -1 *.ipa 2>/dev/null | head -n 1 || true)
           if [ -z "$IPA_FILE" ]; then
-            echo "No IPA found in build/ios/ipa. Place your prebuilt .ipa here and push again."
-            ls -la
-            exit 1
+            if compgen -G "splitfile_*" > /dev/null; then
+              echo "No single .ipa found, but detected split parts. Merging splitfile_* -> Runner_merged.ipa ..."
+              cat splitfile_* > Runner_merged.ipa
+              IPA_FILE=Runner_merged.ipa
+              echo "Merged IPA size:" && ls -lah "$IPA_FILE"
+            else
+              echo "No .ipa and no splitfile_* in $LOCAL_IPA_DIR. Place your prebuilt .ipa or split parts here and push again."
+              ls -la
+              exit 1
+            fi
           fi
           echo "IPA_FILE_NAME=$IPA_FILE" >> $GITHUB_ENV
           echo "IPA_DIR=$(pwd)" >> $GITHUB_ENV
@@ -69,5 +78,3 @@ jobs:
           fi
           chmod +x ./itsm/bin/iTMSTransporter
           ./itsm/bin/iTMSTransporter -assetFile "$IPA_FILE_NAME" -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" -m upload -asc_provider "$APPLE_ASC_PROVIDER"
-
-          
