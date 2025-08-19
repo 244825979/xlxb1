@@ -64,7 +64,7 @@ jobs:
           fi
           chmod +x ./itsm/bin/iTMSTransporter
 
-      - name: Diagnostics: List providers
+      - name: "Diagnostics: List providers"
         env:
           APPLE_USERNAME: chixin@lurcohongkong.shop
           APPLE_PASSWORD: debx-pouz-pslg-jruf
@@ -74,7 +74,7 @@ jobs:
           echo "Listing available providers for $APPLE_USERNAME ..."
           ./itsm/bin/iTMSTransporter -m provider -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" || true
 
-      - name: Diagnostics: IPA metadata & provisioning
+      - name: "Diagnostics: IPA metadata & provisioning"
         run: |
           set -e
           cd "$IPA_DIR"
