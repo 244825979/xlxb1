@@ -79,15 +79,15 @@ jobs:
           chmod +x ./itsm/bin/iTMSTransporter
           set +e
           echo "Trying upload with -itc_provider ..."
-          ./itsm/bin/iTMSTransporter -m upload -assetFile "$IPA_FILE_NAME" -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" -itc_provider "$APPLE_ASC_PROVIDER" -v
+          ./itsm/bin/iTMSTransporter -m upload -assetFile "$IPA_FILE_NAME" -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" -itc_provider "$APPLE_ASC_PROVIDER"
           STATUS=$?
           if [ $STATUS -ne 0 ]; then
             echo "Retrying upload with -asc_provider ..."
-            ./itsm/bin/iTMSTransporter -m upload -assetFile "$IPA_FILE_NAME" -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" -asc_provider "$APPLE_ASC_PROVIDER" -v
+            ./itsm/bin/iTMSTransporter -m upload -assetFile "$IPA_FILE_NAME" -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" -asc_provider "$APPLE_ASC_PROVIDER"
             STATUS=$?
           fi
           if [ $STATUS -ne 0 ]; then
             echo "Upload failed with both provider flags. Running verify for diagnostics..."
-            ./itsm/bin/iTMSTransporter -m verify -assetFile "$IPA_FILE_NAME" -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" -v || true
+            ./itsm/bin/iTMSTransporter -m verify -assetFile "$IPA_FILE_NAME" -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" || true
             exit $STATUS
           fi
