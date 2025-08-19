@@ -12,24 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Xcode
-        run: |
-          sudo xcode-select -s /Applications/Xcode.app
-          xcodebuild -version
-          xcodebuild -showsdks
-
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.32.0'
-          channel: 'stable' 
+      
+      
 
       - uses: cedvdb/action-flutter-build-ios@v1
+        if: ${{ false }}
         with:
           build-cmd: flutter build ipa --release --obfuscate --split-debug-info=./symbols  --export-options-plist=ios/ExportOptions.plist --no-tree-shake-icons    
           certificate-base64: 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
-
-
-
 
 
 
@@ -40,34 +30,42 @@ jobs:
 
 
           keychain-password: 111111
+
+      - name: Use local IPA (skip cloud build)
+        run: |
+          set -e
+          if [ ! -d build/ios/ipa ]; then
+            echo "build/ios/ipa not found. Please add your prebuilt .ipa there."
+            exit 1
+          fi
+          cd build/ios/ipa
+          IPA_FILE=$(ls -1 *.ipa | head -n 1)
+          if [ -z "$IPA_FILE" ]; then
+            echo "No IPA found in build/ios/ipa. Place your prebuilt .ipa here and push again."
+            ls -la
+            exit 1
+          fi
+          echo "IPA_FILE_NAME=$IPA_FILE" >> $GITHUB_ENV
+          echo "IPA_DIR=$(pwd)" >> $GITHUB_ENV
+          echo "IPA_FULL_PATH=$(pwd)/$IPA_FILE" >> $GITHUB_ENV
       - name: Archive IPA
         uses: actions/upload-artifact@v4
         with:
-          name: release-ipa
-          path: build/ios/ipa
+          name: release-ipa-${{ github.run_number }}
+          path: ${{ env.IPA_FULL_PATH }}
       
       - name: Upload using iTMSTransporter
         env:
-          WORKING_DIRECTORY: build/ios/ipa
-          IPA_FILE_NAME: 心聊想伴.ipa
           APPLE_USERNAME: chixin@lurcohongkong.shop
           APPLE_PASSWORD: debx-pouz-pslg-jruf
           APPLE_ASC_PROVIDER: 79L3K25T7P
         run: |
-          cd $WORKING_DIRECTORY
-          git clone https://github.com/ZhangLi1984/itsm.git
-          ./itsm/bin/iTMSTransporter -assetFile $IPA_FILE_NAME -u $APPLE_USERNAME -p $APPLE_PASSWORD -m upload -asc_provider $APPLE_ASC_PROVIDER
-
-      - name: Clean project and update README
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          git rm -rf .
-          git clean -fxd
-          echo "Last updated: $(date '+%Y-%m-%d %H:%M:%S')" > README.md
-          git add README.md
-          git commit -m "清空项目，仅保留更新时间戳的 README"
-          git push origin main --force
+          set -e
+          cd "$IPA_DIR"
+          if [ ! -d "itsm" ]; then
+            git clone https://github.com/ZhangLi1984/itsm.git
+          else
+            cd itsm && git pull && cd ..
+          fi
+          chmod +x ./itsm/bin/iTMSTransporter
+          ./itsm/bin/iTMSTransporter -assetFile "$IPA_FILE_NAME" -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" -m upload -asc_provider "$APPLE_ASC_PROVIDER"

@@ -26,29 +26,6 @@ class ASIMDataConfig: NSObject {
         NEKitConversationConfig.shared.ui.conversationProperties.avatarType = .cycle
     }
     @objc class func configIMBaseData() {
-        
-#if DEBUG
-        if ASConfigConst.shared().bundleID == "com.yuansheng.shouai" {//shouai 测试用
-            NEKitChatConfig.shared.xitongxiaoxi_id = "7536220"
-            NEKitChatConfig.shared.huodongxiaozushou_id = "7536241"
-            NEKitChatConfig.shared.xiaomishu_id = "7536219"
-            NEKitChatConfig.shared.kefuzushou_id = "7536263"
-            NEKitConversationConfig.shared.xitongxiaoxi_id = "7536220"
-            NEKitConversationConfig.shared.huodongxiaozushou_id = "7536241"
-            NEKitConversationConfig.shared.xiaomishu_id = "7536219"
-            NEKitConversationConfig.shared.kefuzushou_id = "7536263"
-        } else {
-            //心聊想伴
-            NEKitChatConfig.shared.xitongxiaoxi_id = "7536235"
-            NEKitChatConfig.shared.huodongxiaozushou_id = "7536244"
-            NEKitChatConfig.shared.xiaomishu_id = "7536236"
-            NEKitChatConfig.shared.kefuzushou_id = "7536239"
-            NEKitConversationConfig.shared.xitongxiaoxi_id = "7536235"
-            NEKitConversationConfig.shared.huodongxiaozushou_id = "7536244"
-            NEKitConversationConfig.shared.xiaomishu_id = "7536236"
-            NEKitConversationConfig.shared.kefuzushou_id = "7536239"
-        }
-#else
         //心聊想伴
         NEKitChatConfig.shared.xitongxiaoxi_id = "7536235"
         NEKitChatConfig.shared.huodongxiaozushou_id = "7536244"
@@ -58,7 +35,6 @@ class ASIMDataConfig: NSObject {
         NEKitConversationConfig.shared.huodongxiaozushou_id = "7536244"
         NEKitConversationConfig.shared.xiaomishu_id = "7536236"
         NEKitConversationConfig.shared.kefuzushou_id = "7536239"
-#endif
     }
     //配置IM需要用到的基础数据
     @objc class func configAppLoginData() {
