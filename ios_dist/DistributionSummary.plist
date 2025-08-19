@@ -10,7 +10,7 @@
 				<string>arm64</string>
 			</array>
 			<key>buildNumber</key>
-			<string>2.2.4</string>
+			<string>2.5.2</string>
 			<key>certificate</key>
 			<dict>
 				<key>SHA1</key>
@@ -41,13 +41,13 @@
 					<key>name</key>
 					<string>AFNetworking.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>4.0.1</string>
@@ -71,13 +71,13 @@
 					<key>name</key>
 					<string>AliyunOSSiOS.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>2.10.22</string>
@@ -101,13 +101,13 @@
 					<key>name</key>
 					<string>App.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.0</string>
@@ -131,13 +131,13 @@
 					<key>name</key>
 					<string>BDASignalSDK.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.0.6</string>
@@ -161,13 +161,13 @@
 					<key>name</key>
 					<string>CocoaLumberjack.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>3.9.0</string>
@@ -191,13 +191,13 @@
 					<key>name</key>
 					<string>DZNEmptyDataSet.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.8.1</string>
@@ -221,13 +221,13 @@
 					<key>name</key>
 					<string>FGIAPService.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>0.5.0</string>
@@ -251,13 +251,13 @@
 					<key>name</key>
 					<string>FURenderKit.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>8.11.1</string>
@@ -281,13 +281,13 @@
 					<key>name</key>
 					<string>Flutter.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.0</string>
@@ -311,13 +311,13 @@
 					<key>name</key>
 					<string>FreeStreamer.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>4.0.0</string>
@@ -341,13 +341,13 @@
 					<key>name</key>
 					<string>GKLivePhotoManager.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.0.7</string>
@@ -371,13 +371,13 @@
 					<key>name</key>
 					<string>GKSliderView.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.2.3</string>
@@ -401,13 +401,13 @@
 					<key>name</key>
 					<string>JXCategoryView.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.6.8</string>
@@ -431,13 +431,13 @@
 					<key>name</key>
 					<string>JXPagingView.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>2.1.3</string>
@@ -461,13 +461,13 @@
 					<key>name</key>
 					<string>Lottie.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>2.5.3</string>
@@ -491,13 +491,13 @@
 					<key>name</key>
 					<string>MBProgressHUD.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.2.0</string>
@@ -521,13 +521,13 @@
 					<key>name</key>
 					<string>MJExtension.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>3.4.2</string>
@@ -551,13 +551,13 @@
 					<key>name</key>
 					<string>MJRefresh.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>3.7.9</string>
@@ -581,13 +581,13 @@
 					<key>name</key>
 					<string>Masonry.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.1.0</string>
@@ -611,13 +611,13 @@
 					<key>name</key>
 					<string>NEChatKit.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>9.7.3</string>
@@ -641,13 +641,13 @@
 					<key>name</key>
 					<string>NEChatUIKit.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>9.7.0</string>
@@ -671,13 +671,13 @@
 					<key>name</key>
 					<string>NECommonKit.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>9.6.6</string>
@@ -701,13 +701,13 @@
 					<key>name</key>
 					<string>NECommonUIKit.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>9.7.1</string>
@@ -731,13 +731,13 @@
 					<key>name</key>
 					<string>NEConversationUIKit.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>9.7.0</string>
@@ -761,13 +761,13 @@
 					<key>name</key>
 					<string>NECoreIMKit.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>9.6.8</string>
@@ -791,13 +791,13 @@
 					<key>name</key>
 					<string>NECoreKit.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>9.5.6</string>
@@ -821,13 +821,13 @@
 					<key>name</key>
 					<string>NERtcCallKit.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>2.5.2</string>
@@ -851,13 +851,13 @@
 					<key>name</key>
 					<string>NERtcSDK.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>5.8.10</string>
@@ -881,13 +881,13 @@
 					<key>name</key>
 					<string>NIMNOS.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.0</string>
@@ -911,13 +911,13 @@
 					<key>name</key>
 					<string>NIMQuic.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>9.19.3</string>
@@ -941,13 +941,13 @@
 					<key>name</key>
 					<string>NIMSDK.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>9.20.12</string>
@@ -971,13 +971,13 @@
 					<key>name</key>
 					<string>NIMSocketRocket.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>9.19.3</string>
@@ -1001,13 +1001,13 @@
 					<key>name</key>
 					<string>Protobuf.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>3.29.5</string>
@@ -1031,13 +1031,13 @@
 					<key>name</key>
 					<string>Reachability.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>3.7.6</string>
@@ -1061,13 +1061,13 @@
 					<key>name</key>
 					<string>ReactiveObjC.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>3.1.1</string>
@@ -1091,13 +1091,13 @@
 					<key>name</key>
 					<string>SDCycleScrollView.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.82.0</string>
@@ -1121,13 +1121,13 @@
 					<key>name</key>
 					<string>SDWebImage.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>5.21.1</string>
@@ -1151,13 +1151,13 @@
 					<key>name</key>
 					<string>SDWebImageSVGKitPlugin.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.4.0</string>
@@ -1181,13 +1181,13 @@
 					<key>name</key>
 					<string>SDWebImageWebPCoder.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>0.14.6</string>
@@ -1211,13 +1211,13 @@
 					<key>name</key>
 					<string>SSZipArchive.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>2.4.3</string>
@@ -1241,13 +1241,13 @@
 					<key>name</key>
 					<string>SVGAPlayer.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>2.5.7</string>
@@ -1271,13 +1271,13 @@
 					<key>name</key>
 					<string>SVGKit.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>3.0.0</string>
@@ -1301,13 +1301,13 @@
 					<key>name</key>
 					<string>SocketRocket.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>0.7.1</string>
@@ -1331,13 +1331,13 @@
 					<key>name</key>
 					<string>TXFFmpeg.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.0</string>
@@ -1361,13 +1361,13 @@
 					<key>name</key>
 					<string>TXSoundTouch.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.0</string>
@@ -1391,13 +1391,13 @@
 					<key>name</key>
 					<string>Tquic.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>83.4100.3</string>
@@ -1421,13 +1421,13 @@
 					<key>name</key>
 					<string>YXAlog_iOS.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.0.6</string>
@@ -1451,13 +1451,13 @@
 					<key>name</key>
 					<string>YXArtemis.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.0</string>
@@ -1481,13 +1481,13 @@
 					<key>name</key>
 					<string>YYKit.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.0.9</string>
@@ -1511,13 +1511,13 @@
 					<key>name</key>
 					<string>audioplayers_darwin.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>0.0.1</string>
@@ -1541,13 +1541,13 @@
 					<key>name</key>
 					<string>image_picker_ios.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>0.0.1</string>
@@ -1571,13 +1571,13 @@
 					<key>name</key>
 					<string>in_app_purchase_storekit.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>0.0.1</string>
@@ -1601,13 +1601,13 @@
 					<key>name</key>
 					<string>libwebp.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>1.5.0</string>
@@ -1631,13 +1631,13 @@
 					<key>name</key>
 					<string>path_provider_foundation.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>0.0.1</string>
@@ -1661,13 +1661,13 @@
 					<key>name</key>
 					<string>shared_preferences_foundation.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>0.0.1</string>
@@ -1691,13 +1691,13 @@
 					<key>name</key>
 					<string>sign_in_with_apple.framework</string>
 					<key>symbols</key>
-					<true/>
+					<false/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
 						<string>79L3K25T7P</string>
 						<key>name</key>
-						<string>xin chi</string>
+						<string></string>
 					</dict>
 					<key>versionNumber</key>
 					<string>0.0.1</string>
@@ -1734,16 +1734,16 @@
 				<string>79L3K25T7P.com.aoyou.xinbo</string>
 			</dict>
 			<key>symbols</key>
-			<true/>
+			<false/>
 			<key>team</key>
 			<dict>
 				<key>id</key>
 				<string>79L3K25T7P</string>
 				<key>name</key>
-				<string>xin chi</string>
+				<string></string>
 			</dict>
 			<key>versionNumber</key>
-			<string>2.2.4</string>
+			<string>2.5.2</string>
 		</dict>
 	</array>
 </dict>

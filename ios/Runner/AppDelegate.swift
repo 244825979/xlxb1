@@ -74,22 +74,31 @@ import AppTrackingTransparency
             return true
         }
     }
-    //app程序程序从后台回到前台就会调用
+    //进入前台流程
+    //应用从后台切换至前台前（如用户解锁屏幕或切换回应用）。恢复后台暂停的任务（如重新建立网络连接、刷新数据）
     override func applicationWillEnterForeground(_ application: UIApplication) {
         if checkData() && validateDeviceSettings() {
             ASMyAppRegister.shared().myApplicationWillEnterForeground(application)
         }
     }
+    //应用已进入前台并处于活动状态。
+    override func applicationDidBecomeActive(_ application: UIApplication) {
+        if checkData() && validateDeviceSettings() {
+            ASMyAppRegister.shared().myApplicationDidBecomeActive(application)
+        }
+    }
+    
+    //进入后台流程
     //退到后台调用
     override func applicationWillResignActive(_ application: UIApplication) {
         if checkData() && validateDeviceSettings() {
             ASMyAppRegister.shared().myApplicationWillResignActive(application)
         }
     }
-    //app程序获取焦点就会调用
-    override func applicationDidBecomeActive(_ application: UIApplication) {
+    //应用已完全进入后台
+    override func applicationDidEnterBackground(_ application: UIApplication) {
         if checkData() && validateDeviceSettings() {
-            ASMyAppRegister.shared().myApplicationDidBecomeActive(application)
+            ASMyAppRegister.shared().myApplicationDidEnterBackground(application)
         }
     }
 }

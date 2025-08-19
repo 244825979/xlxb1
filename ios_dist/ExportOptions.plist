@@ -4,8 +4,10 @@
 <dict>
 	<key>destination</key>
 	<string>export</string>
+	<key>generateAppStoreInformation</key>
+	<false/>
 	<key>manageAppVersionAndBuildNumber</key>
-	<true/>
+	<false/>
 	<key>method</key>
 	<string>app-store-connect</string>
 	<key>provisioningProfiles</key>
@@ -21,7 +23,9 @@
 	<true/>
 	<key>teamID</key>
 	<string>79L3K25T7P</string>
+	<key>testFlightInternalTestingOnly</key>
+	<false/>
 	<key>uploadSymbols</key>
-	<true/>
+	<false/>
 </dict>
 </plist>

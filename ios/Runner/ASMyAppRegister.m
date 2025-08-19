@@ -315,10 +315,6 @@
     if ([NIMSDK sharedSDK].mediaManager.isPlaying) {
         [[NIMSDK sharedSDK].mediaManager stopPlay];
     }
-    //到后台
-    [ASCommonRequest requestAppOnlineStatusWithState:0 success:^(id  _Nullable data) {
-    } errorBack:^(NSInteger code, NSString *msg) {
-    }];
 }
 
 - (void)myApplicationDidBecomeActive:(UIApplication *)application {
@@ -336,6 +332,13 @@
     [self requestIDFA];
     //到前台统计
     [ASCommonRequest requestAppOnlineStatusWithState:1 success:^(id  _Nullable data) {
+    } errorBack:^(NSInteger code, NSString *msg) {
+    }];
+}
+
+- (void)myApplicationDidEnterBackground:(UIApplication *)application {
+    //到后台
+    [ASCommonRequest requestAppOnlineStatusWithState:0 success:^(id  _Nullable data) {
     } errorBack:^(NSInteger code, NSString *msg) {
     }];
 }

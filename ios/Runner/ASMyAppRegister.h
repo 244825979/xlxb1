@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)myApplicationWillEnterForeground:(UIApplication *)application;
 - (void)myApplicationWillResignActive:(UIApplication *)application;
 - (void)myApplicationDidBecomeActive:(UIApplication *)application;
+- (void)myApplicationDidEnterBackground:(UIApplication *)application;
 //URL Scheme回调: 9.0以后使用新API接口
 - (BOOL)myApplicationOpenURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id>*)options;
 //通知点击处理
