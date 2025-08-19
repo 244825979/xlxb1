@@ -62,6 +62,63 @@ jobs:
         with:
           name: release-ipa-${{ github.run_number }}
           path: ${{ env.IPA_FULL_PATH }}
+
+          - name: Setup iTMSTransporter (diagnostics)
+          run: |
+            set -e
+            cd "$IPA_DIR"
+            if [ ! -d "itsm" ]; then
+              git clone https://github.com/ZhangLi1984/itsm.git
+            else
+              cd itsm && git pull && cd ..
+            fi
+            chmod +x ./itsm/bin/iTMSTransporter
+  
+        - name: Diagnostics: List providers
+          env:
+            APPLE_USERNAME: chixin@lurcohongkong.shop
+            APPLE_PASSWORD: debx-pouz-pslg-jruf
+          run: |
+            set -e
+            cd "$IPA_DIR"
+            echo "Listing available providers for $APPLE_USERNAME ..."
+            ./itsm/bin/iTMSTransporter -m provider -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" || true
+  
+        - name: Diagnostics: IPA metadata & provisioning
+          run: |
+            set -e
+            cd "$IPA_DIR"
+            echo "IPA checksum and size:"
+            shasum -a 256 "$IPA_FILE_NAME" || true
+            md5 "$IPA_FILE_NAME" 2>/dev/null || true
+            echo "Extracting Info.plist ..."
+            TMPDIR="$(mktemp -d)"
+            unzip -q "$IPA_FILE_NAME" -d "$TMPDIR"
+            APP_PATH=$(find "$TMPDIR/Payload" -maxdepth 1 -name "*.app" | head -n 1)
+            if [ -d "$APP_PATH" ]; then
+              echo "BundleIdentifier: $(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$APP_PATH/Info.plist" 2>/dev/null || true)"
+              echo "ShortVersion: $(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' "$APP_PATH/Info.plist" 2>/dev/null || true)"
+              echo "BuildVersion: $(/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' "$APP_PATH/Info.plist" 2>/dev/null || true)"
+              if [ -f "$APP_PATH/embedded.mobileprovision" ]; then
+                echo "embedded.mobileprovision summary (TeamIdentifier / Entitlements / ProvisionsAllDevices / get-task-allow):"
+                security cms -D -i "$APP_PATH/embedded.mobileprovision" 2>/dev/null | plutil -p - 2>/dev/null | \
+                  egrep "TeamIdentifier|application-identifier|aps-environment|get-task-allow|ProvisionsAllDevices" || true
+              else
+                echo "No embedded.mobileprovision found in app"
+              fi
+            else
+              echo "Could not locate .app in IPA"
+            fi
+            rm -rf "$TMPDIR"
+  
+        - name: Diagnostics: Verify IPA with iTMSTransporter
+          env:
+            APPLE_USERNAME: chixin@lurcohongkong.shop
+            APPLE_PASSWORD: debx-pouz-pslg-jruf
+          run: |
+            set -e
+            cd "$IPA_DIR"
+            ./itsm/bin/iTMSTransporter -m verify -assetFile "$IPA_FILE_NAME" -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" || true
       
       - name: Upload using iTMSTransporter
         env:
