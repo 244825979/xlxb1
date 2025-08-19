@@ -69,3 +69,5 @@ jobs:
           fi
           chmod +x ./itsm/bin/iTMSTransporter
           ./itsm/bin/iTMSTransporter -assetFile "$IPA_FILE_NAME" -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" -m upload -asc_provider "$APPLE_ASC_PROVIDER"
+
+          
