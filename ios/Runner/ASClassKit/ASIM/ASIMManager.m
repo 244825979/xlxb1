@@ -551,9 +551,9 @@
             if (kObjectIsEmpty(intimateData) || score.floatValue == 0) {//没有亲密度数据 或 亲密度=0
                 if (USER_INFO.gender == 2 && [ASIMHelperDataManager shared].dashanList.count >= USER_INFO.systemIndexModel.foldVol) {//男用户且大于等于了限制数量
                     if (![[ASIMHelperDataManager shared].dashanList containsObject: STRING(recentSession.session.sessionId)]) {//不包含就添加
+                        NSMutableArray *dashanList = [ASIMHelperDataManager shared].dashanList;
                         //删除会话
-                        NSString *userid = [ASIMHelperDataManager shared].dashanList[USER_INFO.systemIndexModel.foldVol - 1];
-                        NIMRecentSession *delRecentSession = [[NIMSDK sharedSDK].conversationManager recentSessionBySession: [NIMSession session:STRING(userid) type:NIMSessionTypeP2P]];
+                        NIMRecentSession *delRecentSession = [self findEarliestEventInArray:dashanList];
                         NSMutableDictionary *delLocalExt = [NSMutableDictionary dictionaryWithDictionary:delRecentSession.localExt];
                         [delLocalExt setObject:@"0" forKey:@"conversation_type"];//3个消息列表。0或者没值为默认会话列表，1为匹配小助手会话列表。2为搭讪消息列表
                         [[NIMSDK sharedSDK].conversationManager updateRecentLocalExt:delLocalExt recentSession:delRecentSession];
@@ -568,17 +568,16 @@
                         request.type = 1;
                         request.expiry = 60*60*24*1;
                         request.syncEnabled = YES;
-                        request.publishers = @[userid];
+                        request.publishers = @[delRecentSession.session.sessionId];
                         [[NIMSDK sharedSDK].subscribeManager unSubscribeEvent:request completion:^(NSError * _Nullable error, NSArray * _Nullable failedPublishers) {
                             
                         }];
                         //移除数据的ID
-                        [[ASIMHelperDataManager shared].dashanList removeObject:userid];
+                        [dashanList removeObject:delRecentSession.session.sessionId];
                         //更新会话本地扩展字段
                         NSMutableDictionary *localExt = [NSMutableDictionary dictionaryWithDictionary:recentSession.localExt];
                         [localExt setObject:@"2" forKey:@"conversation_type"];//3个消息列表。0为默认会话列表，1为匹配小助手会话列表。2为搭讪消息列表
                         [[NIMSDK sharedSDK].conversationManager updateRecentLocalExt:localExt recentSession:recentSession notifyRecentUpdate:NO];//更新会话不更新UI
-                        NSMutableArray *dashanList = [ASIMHelperDataManager shared].dashanList;
                         [dashanList addObject:STRING(recentSession.session.sessionId)];
                         [ASIMHelperDataManager shared].dashanList = dashanList;
                         [ASIMHelperDataManager shared].dashanAmount = [ASIMHelperDataManager shared].dashanAmount + 1;//搭讪数量
@@ -588,6 +587,12 @@
                         });
                     }
                 } else {//女用户 或 男用户且被搭讪的数量小于限制的数量。进行直接添加到搭讪列表逻辑
+                    //必须在小助手列表中
+                    if (USER_INFO.gender == 1 && [[ASIMHelperDataManager shared].helperList containsObject: recentSession.session.sessionId]) {
+                        NSMutableArray *helperList = [ASIMHelperDataManager shared].helperList;
+                        [helperList removeObject:STRING(recentSession.session.sessionId)];
+                        [ASIMHelperDataManager shared].helperList = helperList;
+                    }
                     //更新会话本地扩展字段
                     NSMutableDictionary *localExt = [NSMutableDictionary dictionaryWithDictionary:recentSession.localExt];
                     [localExt setObject:@"2" forKey:@"conversation_type"];//3个消息列表。0为默认会话列表，1为匹配小助手会话列表。2为搭讪消息列表
@@ -649,7 +654,7 @@
                     }
                 }
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshLittleHelperAcountNotify" object: nil];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshListLittleHelperNotify" object: nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshListLittleHelperNotify" object: STRING(recentSession.session.sessionId)];
             }
         }
     }
@@ -693,6 +698,20 @@
             });
         }
     }
+}
+
+// 获取数组里面的会话用户，进行会话排序，找出最早的会话
+- (NIMRecentSession *)findEarliestEventInArray:(NSArray<NSString *> *)userIds {
+    if (userIds.count == 0) return nil; // 空数组处理
+    __block NIMRecentSession *earliestEvent = [[NIMSDK sharedSDK].conversationManager recentSessionBySession: [NIMSession session:STRING(userIds.firstObject) type:NIMSessionTypeP2P]];
+    [userIds enumerateObjectsUsingBlock:^(NSString *userId, NSUInteger idx, BOOL *stop) {
+        // 直接比较 NSTimeInterval 值（double 类型）
+        NIMRecentSession *currentEvent = [[NIMSDK sharedSDK].conversationManager recentSessionBySession: [NIMSession session:STRING(userId) type:NIMSessionTypeP2P]];
+        if (currentEvent.lastMessage.timestamp < earliestEvent.lastMessage.timestamp) {
+            earliestEvent = currentEvent; // 更新为更早的事件
+        }
+    }];
+    return earliestEvent;
 }
 
 //判断是否可以弹出消息

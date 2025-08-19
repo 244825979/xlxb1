@@ -121,7 +121,7 @@ class ASIMConversationListController: ConversationController, JXCategoryListCont
                 for userid in ASIMHelperDataManager.shared().dashanList {
                     let session = NIMSession.init(userid as? String ?? "", type: .P2P)
                     //获取亲密度判断，有亲密度不处理
-                    let intimateKey = ASUserDataManager.shared().user_id + "_intimate_" + session.sessionId
+                    let intimateKey = ASUserDataManager.shared().user_id + "_intimate_" + (userid as? String ?? "")
                     let intimateData = UserDefaults.standard.value(forKey: intimateKey) as? NSDictionary ?? [:]
                     let score = intimateData["score"] as? NSString ?? ""
                     if score.floatValue > 0 {
@@ -129,6 +129,11 @@ class ASIMConversationListController: ConversationController, JXCategoryListCont
                     }
                     let recentSession = NIMSDK.shared().conversationManager.recentSession(by: session)
                     if let rs = recentSession, Int(timeStr) - Int(rs.lastMessage?.timestamp ?? 0.0) > 43200 {
+                        //刷新一下本地保存的状态
+                        if var localExt = rs.localExt {
+                            localExt["conversation_type"] = "0"
+                            NIMSDK.shared().conversationManager.updateRecentLocalExt(localExt, recentSession: rs)
+                        }
                         //清空聊天内容，删除会话消息
                         let messagesOption = NIMDeleteMessagesOption()
                         messagesOption.removeSession = true
@@ -153,7 +158,6 @@ class ASIMConversationListController: ConversationController, JXCategoryListCont
                 }
                 //同步搭讪列表的用户数据
                 ASIMHelperDataManager.shared().dashanList = dashanList
-                ASUserDefaults.setValue(dashanList, forKey: "userinfo_dashan_list_" + ASUserDataManager.shared().user_id)
             }
             if let conversationListArray = self.viewModel.conversationListArray, conversationListArray.count > 0 {
                 for n in 0 ..< conversationListArray.count {

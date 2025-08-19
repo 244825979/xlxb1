@@ -334,7 +334,7 @@
 
 //新人礼包
 - (void)requestNewUserGiftWithVc:(UIViewController *)vc complete:(VoidBlock)complete {
-    if (USER_INFO.gender == 2) {
+    if (USER_INFO.gender == 1) {
         complete();
         return;
     }

@@ -229,12 +229,6 @@
             }
             wself.tableView.hidden = NO;
             [wself.tableView reloadData];
-        } else {
-            kShowToast(@"暂无更多缘分用户~");
-            if (wself.cancelBlock) {
-                wself.cancelBlock();
-                [wself removeView];
-            }
         }
     } errorBack:^(NSInteger code, NSString *msg) {
         
@@ -268,8 +262,16 @@
             [ASCommonRequest requestRecommendUserWithScene:1 isHUD:YES success:^(id _Nullable data) {
                 ASRecommendUserListModel *model = data;
                 wself.model = model;
-                [wself setItemUI];
-                [wself modelDataDispose];
+                if (model.list.count > 0) {
+                    [wself setItemUI];
+                    [wself modelDataDispose];
+                } else {
+                    kShowToast(@"暂无更多缘分用户~");
+                    if (wself.cancelBlock) {
+                        wself.cancelBlock();
+                        [wself removeView];
+                    }
+                }
             } errorBack:^(NSInteger code, NSString *msg) {
                 
             }];
