@@ -28,6 +28,18 @@
             itemView.image = [UIImage imageNamed:icons[i]];
             itemView.userInteractionEnabled = YES;
             [self addSubview:itemView];
+            if (i == 3) {
+                UILabel *text = [[UILabel alloc]init];
+                text.font = TEXT_FONT_10;
+                text.text = STRING(USER_INFO.systemIndexModel.customerOnline);
+                text.textColor = UIColorRGB(0xFF3F95);
+                [itemView addSubview:text];
+                [text mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.bottom.equalTo(itemView.mas_bottom).offset(SCALES(-10));
+                    make.centerX.equalTo(itemView);
+                    make.height.mas_equalTo(SCALES(10));
+                }];
+            }
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
             [itemView addGestureRecognizer:tap];
             [[tap rac_gestureSignal] subscribeNext:^(__kindof UIGestureRecognizer * _Nullable x) {

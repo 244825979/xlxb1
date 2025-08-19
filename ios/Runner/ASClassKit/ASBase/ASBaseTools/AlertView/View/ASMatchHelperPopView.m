@@ -108,13 +108,15 @@
 
 //列表数据刷新
 - (void)refreshList {
+    [self.userIDs removeAllObjects];
+    [self.lists removeAllObjects];
     if ([ASIMHelperDataManager shared].helperList.count > 0) {
         //获取启动的时间
         NSString *startTime = [ASUserDefaults valueForKey:@"littleHelperClearTime"];
         self.oneClickLoginBtn.hidden = NO;
-        NSArray *lists = [ASIMHelperDataManager shared].helperList;
+        NSMutableArray *lists = [NSMutableArray arrayWithArray:[ASIMHelperDataManager shared].helperList];
         BOOL isClearMsg = NO;
-        for (NSString *userid in lists) {
+        for (NSString *userid in [ASIMHelperDataManager shared].helperList) {
             //删除会话
             NIMSession *session = [NIMSession session:userid type:NIMSessionTypeP2P];
             NIMRecentSession *recentSession = [[NIMSDK sharedSDK].conversationManager recentSessionBySession:session];
@@ -138,8 +140,8 @@
                     
                 }];
                 //删除本地保存的小助手数据
-                if ([[ASIMHelperDataManager shared].helperList containsObject:userid]) {
-                    [[ASIMHelperDataManager shared].helperList removeObject:STRING(userid)];
+                if ([lists containsObject:userid]) {
+                    [lists removeObject:userid];
                 }
                 if ([self.userIDs containsObject:userid]) {
                     [self.userIDs removeObject:userid];
@@ -154,7 +156,7 @@
         //清理提示
         if (isClearMsg) {
             //同步本地数据
-            [ASUserDefaults setValue:[ASIMHelperDataManager shared].helperList forKey:[NSString stringWithFormat:@"userinfo_helper_list_%@",STRING(USER_INFO.user_id)]];
+            [ASIMHelperDataManager shared].helperList = lists;
             [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshLittleHelperAcountNotify" object: nil];
             dispatch_async(dispatch_get_main_queue(), ^{
                 kShowToast(STRING(USER_INFO.systemIndexModel.last_fate_helper_show_message));
@@ -169,7 +171,7 @@
             [self.oneClickLoginBtn setBackgroundImage:[UIImage imageNamed:@"button_bg1"] forState:UIControlStateNormal];
             [self.oneClickLoginBtn setTitleColor:TEXT_SIMPLE_COLOR forState:UIControlStateNormal];
         }
-        self.lists = [NSMutableArray arrayWithArray:[ASIMHelperDataManager shared].helperList];
+        self.lists = lists;
         [self.tableView reloadData];
     } else {
         self.oneClickLoginBtn.hidden = YES;
@@ -445,7 +447,6 @@
 @interface ASMatchHelperListCell()
 @property (nonatomic, strong) UIButton *selectBtn;//是否选中
 @property (nonatomic, strong) UIImageView *header;
-@property (nonatomic, strong) UIView *onLineState;//在线状态
 @property (nonatomic, strong) UILabel *nickName;
 @property (nonatomic, strong) UILabel *content;
 @property (nonatomic, strong) UILabel *time;
@@ -459,31 +460,11 @@
         self.backgroundColor = UIColor.clearColor;
         [self.contentView addSubview:self.selectBtn];
         [self.contentView addSubview:self.header];
-        [self.header addSubview:self.onLineState];
         [self.contentView addSubview:self.nickName];
         [self.contentView addSubview:self.content];
         [self.contentView addSubview:self.time];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshLineState:) name:@"userStatusNotification" object:nil];
     }
     return self;
-}
-
-- (void)refreshLineState:(NSNotification *)notification {
-    NSArray<NIMSubscribeEvent *> *events = (NSArray<NIMSubscribeEvent *> *)notification.object;
-    for (NIMSubscribeEvent *state in events) {
-        if ([state.from isEqualToString:STRING(self.session.session.sessionId)]) {
-            if (state.value == 1) {
-                //检查是否在隐藏列表中
-                if ([[ASUserDataManager shared].usesHiddenListModel.hiddenMeUsersID containsObject:STRING(self.session.session.sessionId)]) {
-                    self.onLineState.hidden = YES;
-                } else {
-                    self.onLineState.hidden = NO;
-                }
-            } else {
-                self.onLineState.hidden = YES;
-            }
-        }
-    }
 }
 
 - (void)layoutSubviews {
@@ -497,10 +478,6 @@
         make.left.equalTo(self.selectBtn.mas_right).offset(SCALES(4));
         make.centerY.equalTo(self.contentView);
         make.width.height.mas_equalTo(SCALES(56));
-    }];
-    [self.onLineState mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.right.equalTo(self.header);
-        make.width.height.mas_equalTo(SCALES(10));
     }];
     [self.nickName mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.header.mas_right).offset(SCALES(12));
@@ -536,17 +513,6 @@
         [self.header setImageWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@%@",SERVER_IMAGE_URL, STRING(user.userInfo.avatarUrl)]] placeholder:nil];
     }
     self.time.text = [ASCommonFunc getTimeStrWithTimeInterval: lastMessage.timestamp];
-    NSString *statusValue = [ASUserDefaults objectForKey:[NSString stringWithFormat:@"event_state_%@", STRING(session.session.sessionId)]];
-    if (statusValue.integerValue == 1) {
-        // 检查用户ID是否在隐藏列表中
-        if ([[ASUserDataManager shared].usesHiddenListModel.hiddenMeUsersID containsObject:STRING(session.session.sessionId)]) {
-            self.onLineState.hidden = YES;
-        } else {
-            self.onLineState.hidden = NO;
-        }
-    } else {
-        self.onLineState.hidden = YES;
-    }
 }
 
 - (void)setIsSelect:(BOOL)isSelect {
@@ -579,19 +545,6 @@
         _header.layer.masksToBounds = YES;
     }
     return _header;
-}
-
-- (UIView *)onLineState {
-    if (!_onLineState) {
-        _onLineState = [[UIView alloc] init];
-        _onLineState.backgroundColor = UIColor.greenColor;
-        _onLineState.layer.borderColor = UIColor.whiteColor.CGColor;
-        _onLineState.layer.borderWidth = SCALES(1);
-        _onLineState.layer.masksToBounds = YES;
-        _onLineState.layer.cornerRadius = SCALES(5);
-        _onLineState.hidden = YES;
-    }
-    return _onLineState;
 }
 
 - (UILabel *)nickName {
