@@ -101,7 +101,7 @@ jobs:
           fi
           rm -rf "$TMPDIR"
 
-      - name: Diagnostics: Verify IPA with iTMSTransporter
+      - name: "Diagnostics: Verify IPA with iTMSTransporter"
         env:
           APPLE_USERNAME: chixin@lurcohongkong.shop
           APPLE_PASSWORD: debx-pouz-pslg-jruf
