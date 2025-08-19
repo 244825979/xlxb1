@@ -77,4 +77,17 @@ jobs:
             cd itsm && git pull && cd ..
           fi
           chmod +x ./itsm/bin/iTMSTransporter
-          ./itsm/bin/iTMSTransporter -assetFile "$IPA_FILE_NAME" -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" -m upload -asc_provider "$APPLE_ASC_PROVIDER"
+          set +e
+          echo "Trying upload with -itc_provider ..."
+          ./itsm/bin/iTMSTransporter -m upload -assetFile "$IPA_FILE_NAME" -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" -itc_provider "$APPLE_ASC_PROVIDER" -v
+          STATUS=$?
+          if [ $STATUS -ne 0 ]; then
+            echo "Retrying upload with -asc_provider ..."
+            ./itsm/bin/iTMSTransporter -m upload -assetFile "$IPA_FILE_NAME" -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" -asc_provider "$APPLE_ASC_PROVIDER" -v
+            STATUS=$?
+          fi
+          if [ $STATUS -ne 0 ]; then
+            echo "Upload failed with both provider flags. Running verify for diagnostics..."
+            ./itsm/bin/iTMSTransporter -m verify -assetFile "$IPA_FILE_NAME" -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" -v || true
+            exit $STATUS
+          fi
