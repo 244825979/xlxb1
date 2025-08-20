@@ -342,8 +342,8 @@ static AFHTTPSessionManager *manager;
         {
             if ([url containsString:API_AppleRecharge]) {
                 [ASAlertViewManager popPhoneBindAlertViewWithVc:[ASCommonFunc currentVc] content:STRING(result.message) isPopWindow:YES affirmAction:^{
-                    ASLoginBindPhoneController *vc = [[ASLoginBindPhoneController alloc] init];
-                    [[ASCommonFunc currentVc].navigationController pushViewController:vc animated:YES];
+//                    ASLoginBindPhoneController *vc = [[ASLoginBindPhoneController alloc] init];
+//                    [[ASCommonFunc currentVc].navigationController pushViewController:vc animated:YES];
                 } cancelBlock:^{
                 }];
             }
