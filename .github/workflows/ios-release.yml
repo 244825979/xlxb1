@@ -10,7 +10,7 @@ jobs:
     name: build
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Use local IPA (skip cloud build)
         env:
@@ -44,8 +44,8 @@ jobs:
               unzip -tq "$IPA_FILE"
             else
               echo "No .ipa and no splitfile_* in $LOCAL_IPA_DIR. Place your prebuilt .ipa or split parts here and push again."
-              ls -la
-              exit 1
+          ls -la
+          exit 1
             fi
           fi
           echo "IPA_FILE_NAME=$IPA_FILE" >> $GITHUB_ENV
