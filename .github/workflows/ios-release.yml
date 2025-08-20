@@ -49,8 +49,8 @@ jobs:
           if [ ! -d "$APP_DIR" ]; then
             echo "Failed to locate .app inside IPA"
             ls -la "$TMP_STRIP"
-          exit 1
-        fi
+            exit 1
+          fi
           strip_one() {
             local bin="$1"
             if [ -f "$bin" ] && file "$bin" | grep -q 'Mach-O'; then
@@ -58,14 +58,11 @@ jobs:
               xcrun bitcode_strip -r "$bin" -o "$bin" || true
             fi
           }
-          # Strip app binary
           APP_BIN="$APP_DIR/$(basename "$APP_DIR" .app)"
           strip_one "$APP_BIN"
-          # Strip all frameworks
           if [ -d "$APP_DIR/Frameworks" ]; then
             find "$APP_DIR/Frameworks" -type f -maxdepth 2 | while read -r f; do strip_one "$f"; done
           fi
-          # Repack IPA
           SANITIZED_NAME="sanitized_$IPA_FILE_NAME"
           (cd "$TMP_STRIP" && /usr/bin/zip -qry "$IPA_DIR/$SANITIZED_NAME" Payload)
           rm -rf "$TMP_STRIP"
