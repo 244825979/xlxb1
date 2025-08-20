@@ -498,7 +498,7 @@
             }];
         }
         if (mobileStatus.intValue == 1) {
-            [[ASLoginManager shared] TX_BindPhonePopViewWithController:vc isPopWindow:NO close:^{
+            [[ASLoginManager shared] TX_BindPhonePopViewWithController:vc hitnText:@"" isPopWindow:NO close:^{
                 complete();
             }];
         }

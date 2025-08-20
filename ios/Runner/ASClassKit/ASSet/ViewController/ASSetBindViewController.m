@@ -91,7 +91,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (indexPath.row == 0 && kStringIsEmpty(self.model.mobile)) {
         //去绑定手机号
-        [[ASLoginManager shared] TX_BindPhonePopViewWithController:self isPopWindow:YES close:^{
+        [[ASLoginManager shared] TX_BindPhonePopViewWithController:self hitnText:@"" isPopWindow:YES close:^{
             
         }];
     }

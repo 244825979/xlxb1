@@ -213,10 +213,13 @@
 }
 
 //绑定手机号一键登录弹窗
-- (void)TX_BindPhonePopViewWithController:(UIViewController *)vc isPopWindow:(BOOL)isPopWindow close:(VoidBlock)close {
+- (void)TX_BindPhonePopViewWithController:(UIViewController *)vc
+                                 hitnText:(NSString *)hitnText
+                              isPopWindow:(BOOL)isPopWindow
+                                    close:(VoidBlock)close {
     [ASMsgTool showLoading];
     [TXLoginOauthSDK loginWithController:vc
-                              andUIModel:[self bindPopViewUIWithIsPopWindow:isPopWindow vc:vc close:^{
+                              andUIModel:[self bindPopViewUIWithIsPopWindow:isPopWindow hitnText:hitnText vc:vc close:^{
         close();
     }]
                             successBlock:^(NSDictionary * _Nonnull resultDic) {
@@ -241,7 +244,7 @@
         [ASMsgTool hideMsg];
         [TXLoginOauthSDK delectScrip];
         //执行普通绑定手机号方式的弹窗
-        [ASAlertViewManager popPhoneBindAlertViewWithVc:vc content:@"" isPopWindow:isPopWindow affirmAction:^{
+        [ASAlertViewManager popPhoneBindAlertViewWithVc:vc content:hitnText isPopWindow:isPopWindow affirmAction:^{
             ASLoginBindPhoneController *bindVc = [[ASLoginBindPhoneController alloc] init];
             [vc.navigationController pushViewController:bindVc animated:YES];
         } cancelBlock:^{
@@ -555,7 +558,7 @@
     return self.bindModel;
 }
 
-- (TXLoginUIModel *)bindPopViewUIWithIsPopWindow:(BOOL)isPopWindow vc:(UIViewController *)vc close:(VoidBlock)close {
+- (TXLoginUIModel *)bindPopViewUIWithIsPopWindow:(BOOL)isPopWindow hitnText:(NSString *)hitnText vc:(UIViewController *)vc close:(VoidBlock)close {
     self.windowBindModel = [[TXLoginUIModel alloc] init];
     /**状态栏设置*/
     self.windowBindModel.logoHidden = YES;
@@ -634,7 +637,7 @@
     UILabel *hintText = [[UILabel alloc] init];
     hintText.frame = CGRectMake(SCALES(20), SCALES(157), SCALES(311) - SCALES(40), SCALES(72));
     hintText.font = TEXT_FONT_14;
-    hintText.attributedText = [ASCommonFunc attributedWithString:@"根据国家政策及法律规定，为保障您的账号安全丢失及找回，建议您绑定手机号码，绑定后支持手机号快捷登录" lineSpacing:SCALES(4)];
+    hintText.attributedText = [ASCommonFunc attributedWithString:!kStringIsEmpty(hitnText) ? hitnText : @"根据国家政策及法律规定，为保障您的账号安全丢失及找回，建议您绑定手机号码，绑定后支持手机号快捷登录" lineSpacing:SCALES(4)];
     hintText.textColor = UIColorRGB(0x333333);
     hintText.numberOfLines = 0;
     hintText.textAlignment = NSTextAlignmentCenter;

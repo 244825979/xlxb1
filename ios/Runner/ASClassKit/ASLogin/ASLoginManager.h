@@ -43,7 +43,7 @@ typedef NS_ENUM(NSInteger, ASLoginType) {
 //微信绑定
 - (void)weChatBindWithSuccess:(ResponseSuccess)success;
 //绑定手机号一键登录弹窗
-- (void)TX_BindPhonePopViewWithController:(UIViewController *)vc isPopWindow:(BOOL)isPopWindow close:(VoidBlock)close;
+- (void)TX_BindPhonePopViewWithController:(UIViewController *)vc hitnText:(NSString *)hitnText isPopWindow:(BOOL)isPopWindow close:(VoidBlock)close;
 @end
 
 NS_ASSUME_NONNULL_END
