@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		124A46CB2DFBBC5B008BADF0 /* ExportOptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12CCBB932DFAE419004A4337 /* ExportOptions.plist */; };
+		12A421092E55624D0088E93C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 12A41F5B2E55624D0088E93C /* PrivacyInfo.xcprivacy */; };
 		12A67B232E44895700DC1A8E /* ASMyAppRegister.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A67B222E44895700DC1A8E /* ASMyAppRegister.m */; };
 		12A686142E44990600DC1A8E /* Network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A686132E44990600DC1A8E /* Network.framework */; };
 		12A686162E44991100DC1A8E /* PhotosUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A686152E44991100DC1A8E /* PhotosUI.framework */; };
@@ -45,6 +46,7 @@
 
 /* Begin PBXFileReference section */
 		0ABDAA54C24D47C984B40CB9 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
+		12A41F5B2E55624D0088E93C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		12A67B212E44895700DC1A8E /* ASMyAppRegister.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ASMyAppRegister.h; sourceTree = "<group>"; };
 		12A67B222E44895700DC1A8E /* ASMyAppRegister.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASMyAppRegister.m; sourceTree = "<group>"; };
 		12A686132E44990600DC1A8E /* Network.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Network.framework; path = System/Library/Frameworks/Network.framework; sourceTree = SDKROOT; };
@@ -168,6 +170,7 @@
 				12A67B212E44895700DC1A8E /* ASMyAppRegister.h */,
 				12A67B222E44895700DC1A8E /* ASMyAppRegister.m */,
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
+				12A41F5B2E55624D0088E93C /* PrivacyInfo.xcprivacy */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
 			);
 			path = Runner;
@@ -276,6 +279,7 @@
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
+				12A421092E55624D0088E93C /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

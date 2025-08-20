@@ -35,42 +35,43 @@ jobs:
           exit 1
             fi
           fi
-          # 依据 Info.plist 生成规范文件名：{AppName}-{version}-{build}.ipa（ASCII、无空格）
-          TMPDIR_RENAME="$(mktemp -d)"
-          unzip -q "$IPA_FILE" -d "$TMPDIR_RENAME"
-          APP_PATH_RENAME=$(find "$TMPDIR_RENAME/Payload" -maxdepth 1 -name "*.app" | head -n 1)
-          if [ -d "$APP_PATH_RENAME" ]; then
-            BUNDLE_ID=$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$APP_PATH_RENAME/Info.plist" 2>/dev/null || true)
-            SHORT_VER=$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' "$APP_PATH_RENAME/Info.plist" 2>/dev/null || true)
-            BUILD_VER=$(/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' "$APP_PATH_RENAME/Info.plist" 2>/dev/null || true)
-            # App 名称优先使用 CFBundleDisplayName 其次 CFBundleName，否则取 bundleId 尾段
-            APP_NAME=$(/usr/libexec/PlistBuddy -c 'Print CFBundleDisplayName' "$APP_PATH_RENAME/Info.plist" 2>/dev/null || true)
-            if [ -z "$APP_NAME" ]; then
-              APP_NAME=$(/usr/libexec/PlistBuddy -c 'Print CFBundleName' "$APP_PATH_RENAME/Info.plist" 2>/dev/null || true)
-            fi
-            if [ -z "$APP_NAME" ]; then
-              APP_NAME=${BUNDLE_ID##*.}
-            fi
-            # 仅保留 ASCII 安全字符，统一用短横线
-            SAFE_APP=${APP_NAME//[^A-Za-z0-9_.-]/-}
-            if [ -z "$SAFE_APP" ]; then
-              SAFE_APP="App"
-            fi
-            SAFE_SHORT=${SHORT_VER//[^A-Za-z0-9_.-]/-}
-            SAFE_BUILD=${BUILD_VER//[^A-Za-z0-9_.-]/-}
-            NEW_IPA_NAME="$SAFE_APP-$SAFE_SHORT-$SAFE_BUILD.ipa"
-            # 避免文件名以 '-' 开头导致命令误判为选项
-            case "$NEW_IPA_NAME" in
-              -*) NEW_IPA_NAME="App${NEW_IPA_NAME}" ;;
-            esac
-            mv "$IPA_FILE" "$NEW_IPA_NAME" || cp "$IPA_FILE" "$NEW_IPA_NAME"
-            IPA_FILE="$NEW_IPA_NAME"
-          fi
-          rm -rf "$TMPDIR_RENAME"
-          echo "Using IPA file: $IPA_FILE"
           echo "IPA_FILE_NAME=$IPA_FILE" >> $GITHUB_ENV
           echo "IPA_DIR=$(pwd)" >> $GITHUB_ENV
           echo "IPA_FULL_PATH=$(pwd)/$IPA_FILE" >> $GITHUB_ENV
+
+      - name: Sanitize IPA (strip bitcode)
+        run: |
+          set -e
+          cd "$IPA_DIR"
+          TMP_STRIP="$(mktemp -d)"
+          unzip -q "$IPA_FILE_NAME" -d "$TMP_STRIP"
+          APP_DIR=$(find "$TMP_STRIP/Payload" -maxdepth 1 -name "*.app" | head -n 1)
+          if [ ! -d "$APP_DIR" ]; then
+            echo "Failed to locate .app inside IPA"
+            ls -la "$TMP_STRIP"
+          exit 1
+        fi
+          strip_one() {
+            local bin="$1"
+            if [ -f "$bin" ] && file "$bin" | grep -q 'Mach-O'; then
+              echo "Stripping bitcode: $bin"
+              xcrun bitcode_strip -r "$bin" -o "$bin" || true
+            fi
+          }
+          # Strip app binary
+          APP_BIN="$APP_DIR/$(basename "$APP_DIR" .app)"
+          strip_one "$APP_BIN"
+          # Strip all frameworks
+          if [ -d "$APP_DIR/Frameworks" ]; then
+            find "$APP_DIR/Frameworks" -type f -maxdepth 2 | while read -r f; do strip_one "$f"; done
+          fi
+          # Repack IPA
+          SANITIZED_NAME="sanitized_$IPA_FILE_NAME"
+          (cd "$TMP_STRIP" && /usr/bin/zip -qry "$IPA_DIR/$SANITIZED_NAME" Payload)
+          rm -rf "$TMP_STRIP"
+          mv "$SANITIZED_NAME" "$IPA_FILE_NAME"
+          echo "Sanitized IPA ready: $IPA_FILE_NAME"
+          echo "IPA_FULL_PATH=$(pwd)/$IPA_FILE_NAME" >> $GITHUB_ENV
 
       - name: Setup iTMSTransporter (diagnostics)
         run: |
