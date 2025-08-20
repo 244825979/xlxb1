@@ -26,13 +26,26 @@ jobs:
           if [ -z "$IPA_FILE" ]; then
             if compgen -G "splitfile_*" > /dev/null; then
               echo "No single .ipa found, but detected split parts. Merging splitfile_* -> Runner_merged.ipa ..."
-              cat splitfile_* > Runner_merged.ipa
+              PARTS=$(ls -1 splitfile_* | LC_ALL=C sort)
+              cat $PARTS > Runner_merged.ipa
               IPA_FILE=Runner_merged.ipa
               echo "Merged IPA size:" && ls -lah "$IPA_FILE"
+              if [ -f "Runner.ipa.sha256" ]; then
+                EXPECTED=$(awk '{print $1}' Runner.ipa.sha256)
+                ACTUAL=$(shasum -a 256 "$IPA_FILE" | awk '{print $1}')
+                echo "Expected SHA256: $EXPECTED"
+                echo "Actual   SHA256: $ACTUAL"
+                if [ "$EXPECTED" != "$ACTUAL" ]; then
+                  echo "Checksum mismatch after merge. Abort."
+                  exit 2
+                fi
+              fi
+              echo "Testing ZIP integrity ..."
+              unzip -tq "$IPA_FILE"
             else
               echo "No .ipa and no splitfile_* in $LOCAL_IPA_DIR. Place your prebuilt .ipa or split parts here and push again."
-          ls -la
-          exit 1
+              ls -la
+              exit 1
             fi
           fi
           echo "IPA_FILE_NAME=$IPA_FILE" >> $GITHUB_ENV
@@ -94,7 +107,7 @@ jobs:
         run: |
           set -e
           cd "$IPA_DIR"
-          ./itsm/bin/iTMSTransporter -m verify -assetFile "$IPA_FILE_NAME" -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" || true
+          ./itsm/bin/iTMSTransporter -m verify -f "$IPA_FILE_NAME" -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" || true
 
       - name: Archive IPA
         uses: actions/upload-artifact@v4
