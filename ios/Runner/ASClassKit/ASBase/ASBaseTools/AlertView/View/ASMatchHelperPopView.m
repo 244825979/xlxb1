@@ -58,7 +58,9 @@
     if (kObjectIsEmpty(self.lists)) {
         self.lists = [NSMutableArray arrayWithArray:@[userid]];
     } else {
-        [self.lists addObject:userid];
+        if (![self.lists containsObject:userid]) {
+            [self.lists addObject:userid];
+        }
     }
     if (![self.userIDs containsObject:userid]) {
         [self.userIDs addObject:userid];

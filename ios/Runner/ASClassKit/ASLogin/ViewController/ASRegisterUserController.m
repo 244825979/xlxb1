@@ -10,8 +10,9 @@
 #import "ASRegisterGenderView.h"
 #import "ASRegisterTextView.h"
 #import "ASManNameListModel.h"
+#import <UMLink/UMLink.h>
 
-@interface ASRegisterUserController ()
+@interface ASRegisterUserController ()<MobClickLinkDelegate>
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *upHeader;
 @property (nonatomic, strong) ASRegisterGenderView *manView;
@@ -36,6 +37,21 @@
     self.isMan = YES;
     [self createUI];
     [self requestManNameList];
+}
+
+- (void)popVC {
+    kWeakSelf(self);
+    [self.view endEditing:YES];
+    [ASAlertViewManager defaultPopTitle:@"是否放弃注册" content:@"" left:@"确定" right:@"取消" isTouched:YES affirmAction:^{
+        [wself.navigationController popViewControllerAnimated:YES];
+    } cancelAction:^{
+        
+    }];
+}
+
+#pragma mark - MobClickLinkDelegate
+- (void)getLinkPath:(NSString *)path params:(NSDictionary *)params {
+    self.invitationView.textField.text = params[@"userCode"];
 }
 
 - (void)createUI {
@@ -174,6 +190,16 @@
         make.top.equalTo(self.loginBtn.mas_bottom).offset(SCALES(16));
         make.centerX.equalTo(self.scrollView);
         make.bottom.equalTo(self.scrollView.mas_bottom).offset(SCALES(-30));
+    }];
+    //获取一下用户的userCode
+    [MobClickLink getInstallParams:^(NSDictionary *params, NSURL *URL, NSError *error) {
+        ASLog(@"--------------getInstallParams = %@ = URL = %@", params, URL);
+        if (error) {
+            return;
+        }
+        if (URL.absoluteString.length > 0 || params.count > 0) {
+            [MobClickLink handleLinkURL:URL delegate:self];
+        }
     }];
 }
 

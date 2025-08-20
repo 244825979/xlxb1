@@ -33,6 +33,8 @@
     self.shouldNavigationBarHidden = YES;
     [self createUI];
     [self homeData];
+    self.categoryView.dotStates = @[@0,[[ASIMManager shared] miyouIsUnread] == YES ? @1 : @0];
+    [self.categoryView reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -40,8 +42,6 @@
     if ([ASPopViewManager shared].popGoodAnchorState == 2 || [ASPopViewManager shared].popGoodAnchorState == 1) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goodAnchorConfigNotification" object:nil];
     }
-    self.categoryView.dotStates = @[@0,[[ASIMManager shared] miyouIsUnread] == YES ? @1 : @0];
-    [self.categoryView reloadData];
     if (USER_INFO.gender == 1 && kAppType == 0 && USER_INFO.systemIndexModel.is_fate_helper_show == 1) {
         [self requestMatchHelperData];
     }

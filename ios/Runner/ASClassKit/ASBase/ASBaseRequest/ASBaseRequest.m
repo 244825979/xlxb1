@@ -144,7 +144,6 @@ static AFHTTPSessionManager *manager;
     if (showHUD) {
         [ASMsgTool showLoading];
     }
-    
     //检查地址中是否有中文
     AFHTTPSessionManager *manager = [self sharedHTTPSession];
     //manager stary
@@ -164,7 +163,6 @@ static AFHTTPSessionManager *manager;
     [manager.requestSerializer setValue:kAppBundleID forHTTPHeaderField:@"package-name"];
     [manager.requestSerializer setValue:@"AS" forHTTPHeaderField:@"signature"];
     [manager.requestSerializer setValue:STRING(IDFV) forHTTPHeaderField:@"idfv"];
-    
     if (@available(iOS 14, *)) {
         NSString *idfa = [[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString];
         [manager.requestSerializer setValue:STRING(idfa) forHTTPHeaderField:@"idfa"];
