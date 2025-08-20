@@ -39,37 +39,6 @@ jobs:
           echo "IPA_DIR=$(pwd)" >> $GITHUB_ENV
           echo "IPA_FULL_PATH=$(pwd)/$IPA_FILE" >> $GITHUB_ENV
 
-      - name: Sanitize IPA (strip bitcode)
-        run: |
-          set -e
-          cd "$IPA_DIR"
-          TMP_STRIP="$(mktemp -d)"
-          unzip -q "$IPA_FILE_NAME" -d "$TMP_STRIP"
-          APP_DIR=$(find "$TMP_STRIP/Payload" -maxdepth 1 -name "*.app" | head -n 1)
-          if [ ! -d "$APP_DIR" ]; then
-            echo "Failed to locate .app inside IPA"
-            ls -la "$TMP_STRIP"
-            exit 1
-          fi
-          strip_one() {
-            local bin="$1"
-            if [ -f "$bin" ] && file "$bin" | grep -q 'Mach-O'; then
-              echo "Stripping bitcode: $bin"
-              xcrun bitcode_strip -r "$bin" -o "$bin" || true
-            fi
-          }
-          APP_BIN="$APP_DIR/$(basename "$APP_DIR" .app)"
-          strip_one "$APP_BIN"
-          if [ -d "$APP_DIR/Frameworks" ]; then
-            find "$APP_DIR/Frameworks" -type f -maxdepth 2 | while read -r f; do strip_one "$f"; done
-          fi
-          SANITIZED_NAME="sanitized_$IPA_FILE_NAME"
-          (cd "$TMP_STRIP" && /usr/bin/zip -qry "$IPA_DIR/$SANITIZED_NAME" Payload)
-          rm -rf "$TMP_STRIP"
-          mv "$SANITIZED_NAME" "$IPA_FILE_NAME"
-          echo "Sanitized IPA ready: $IPA_FILE_NAME"
-          echo "IPA_FULL_PATH=$(pwd)/$IPA_FILE_NAME" >> $GITHUB_ENV
-
       - name: Setup iTMSTransporter (diagnostics)
         run: |
           set -e
