@@ -26,7 +26,6 @@ class ASIMDataConfig: NSObject {
         NEKitConversationConfig.shared.ui.conversationProperties.avatarType = .cycle
     }
     @objc class func configIMBaseData() {
-        //心聊想伴
         NEKitChatConfig.shared.xitongxiaoxi_id = "7536235"
         NEKitChatConfig.shared.huodongxiaozushou_id = "7536244"
         NEKitChatConfig.shared.xiaomishu_id = "7536236"
