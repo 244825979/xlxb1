@@ -176,7 +176,10 @@
                     
                 }];
             } cancelAction:^{
-                
+                if (wself.cancelBlock) {
+                    wself.cancelBlock();
+                    [wself removeView];
+                }
             }];
         }];
     }

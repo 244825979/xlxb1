@@ -15,7 +15,7 @@ jobs:
       - name: Use local IPA (skip cloud build)
         env:
           LOCAL_IPA_DIR: ios_dist
-        run: |
+        run: | 
           set -e
           if [ ! -d "$LOCAL_IPA_DIR" ]; then
             echo "$LOCAL_IPA_DIR not found. Create it in repo root and add your prebuilt .ipa, then push."
@@ -31,8 +31,8 @@ jobs:
               echo "Merged IPA size:" && ls -lah "$IPA_FILE"
             else
               echo "No .ipa and no splitfile_* in $LOCAL_IPA_DIR. Place your prebuilt .ipa or split parts here and push again."
-              ls -la
-              exit 1
+          ls -la
+          exit 1
             fi
           fi
           # 依据 Info.plist 生成规范文件名：{AppName}-{version}-{build}.ipa（ASCII、无空格）
@@ -53,9 +53,16 @@ jobs:
             fi
             # 仅保留 ASCII 安全字符，统一用短横线
             SAFE_APP=${APP_NAME//[^A-Za-z0-9_.-]/-}
+            if [ -z "$SAFE_APP" ]; then
+              SAFE_APP="App"
+            fi
             SAFE_SHORT=${SHORT_VER//[^A-Za-z0-9_.-]/-}
             SAFE_BUILD=${BUILD_VER//[^A-Za-z0-9_.-]/-}
             NEW_IPA_NAME="$SAFE_APP-$SAFE_SHORT-$SAFE_BUILD.ipa"
+            # 避免文件名以 '-' 开头导致命令误判为选项
+            case "$NEW_IPA_NAME" in
+              -*) NEW_IPA_NAME="App${NEW_IPA_NAME}" ;;
+            esac
             mv "$IPA_FILE" "$NEW_IPA_NAME" || cp "$IPA_FILE" "$NEW_IPA_NAME"
             IPA_FILE="$NEW_IPA_NAME"
           fi

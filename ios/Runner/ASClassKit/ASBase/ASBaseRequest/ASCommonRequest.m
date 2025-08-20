@@ -236,13 +236,15 @@
     } fail:^(NSInteger code, NSString *msg) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [ASMsgTool hideMsg];
-            [ASAlertViewManager defaultPopTitle:@"温馨提示" content:STRING(msg) left:@"联系客服" right:@"取消" isTouched:YES affirmAction:^{
-                ASBaseWebViewController *vc = [[ASBaseWebViewController alloc]init];
-                vc.webUrl = [NSString stringWithFormat:@"%@%@",SERVER_AGREEMENT_URL, Web_URL_Customer];
-                [[ASCommonFunc currentVc].navigationController pushViewController:vc animated:YES];
-            } cancelAction:^{
-                
-            }];
+            if (code != 1013) {
+                [ASAlertViewManager defaultPopTitle:@"温馨提示" content:STRING(msg) left:@"联系客服" right:@"取消" isTouched:YES affirmAction:^{
+                    ASBaseWebViewController *vc = [[ASBaseWebViewController alloc]init];
+                    vc.webUrl = [NSString stringWithFormat:@"%@%@",SERVER_AGREEMENT_URL, Web_URL_Customer];
+                    [[ASCommonFunc currentVc].navigationController pushViewController:vc animated:YES];
+                } cancelAction:^{
+                    
+                }];
+            }
             errorBack(code, msg);
         });
     } showHUD:NO];

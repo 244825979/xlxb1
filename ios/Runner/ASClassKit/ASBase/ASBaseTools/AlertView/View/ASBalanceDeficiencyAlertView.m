@@ -134,7 +134,12 @@
                                                toUserID:@""
                                                 success:^(ASPayTopUpModel * model) {
                 [ASFGIAPVerifyTransactionManager goPayWithFilter:wself.filter productID:wself.selectGood.ios_product_id orderNo:model.order_no];
-            } errorBack:^(NSInteger code) { }];
+            } errorBack:^(NSInteger code) {
+                if (wself.cancelBlock) {
+                    wself.cancelBlock();
+                    [wself removeView];
+                }
+            }];
         }];
         [bgView addSubview:payBtn];
         [payBtn mas_makeConstraints:^(MASConstraintMaker *make) {
