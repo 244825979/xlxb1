@@ -54,6 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger you_like_switch_dynamic;//猜你喜欢，动态
 @property (nonatomic, assign) NSInteger last_fate_helper_show_time;//小助手匹配列表过期时间，单位分钟
 @property (nonatomic, copy) NSString *last_fate_helper_show_message;//小助手匹配列表过期消息内容
+@property (nonatomic, assign) NSInteger day_number_logout;//注销时间
 @end
 
 NS_ASSUME_NONNULL_END

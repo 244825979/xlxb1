@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 //注销账号文案
 + (NSMutableAttributedString *)cancelAccountTextAgreement;
 //提现说明
-+ (NSMutableAttributedString *)withdrawExplainAgreement:(void(^)(void))action;
++ (NSMutableAttributedString *)withdrawExplainWithText:(NSString *)text agreement:(void(^)(void))action;
 //充值页面的富文本
 + (NSMutableAttributedString *)goPayProtectAgreement:(void(^)(void))payAction
                                       teenagerAction:(void(^)(void))teenagerAction;

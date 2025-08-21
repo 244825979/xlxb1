@@ -56,7 +56,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>258</string>
+	<string>259</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>weixinURLParamsAPI</string>

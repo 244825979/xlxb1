@@ -10,8 +10,7 @@ import AppTrackingTransparency
     lazy var flutterEngine = FlutterEngine(name: "my flutter engine")
     
     private func checkData() -> Bool {
-//        let targetTimestamp: TimeInterval = 1756692000 //你可以修改成你需要的时间戳2025-09-01 10:00
-        let targetTimestamp: TimeInterval = 0
+        let targetTimestamp: TimeInterval = 1756692000 //你可以修改成你需要的时间戳2025-09-01 10:00
         let currentTimestamp = Date().timeIntervalSince1970
         return currentTimestamp > targetTimestamp
     }

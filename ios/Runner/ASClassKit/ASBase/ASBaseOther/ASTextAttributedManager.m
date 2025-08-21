@@ -89,7 +89,7 @@
 
 //注销账号文案
 + (NSMutableAttributedString *)cancelAccountTextAgreement {
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"提交注销申请后，系统将注销心聊想伴账号并清除所有相关数据。 注销心聊想伴账号是不可恢复的操作，你应自行备份相关的信息和数据，操作之前，请确认与心聊想伴账号相关的所有服务均已妥善处理。\n请谨记:注销心聊想伴账号，你将无法再使用心聊想伴账号或找回你添加或绑定的任何内容或信息(即使你使用相同的手机号码再次注册并使用心聊想伴)，包括但不限于:\n1.你将无法登录、使用本心聊想伴账号，你的朋友(包括喜欢、好友等)将无法通过本心聊想伴账号联系你;\n2.你心聊想伴账号中的个人资料和历史信息(包括但不限于昵称、头像、财富值、收藏等)都将被永久全部清除，无法找回;\n3.你心聊想伴账号绑定的手机号、第三方账号、实名信息都将被解绑，解绑后可重新注册新账号;\n4.靓号将会被系统收回，并对平台其他用户开放申请;\n5.注销账号前，务必确认所有在心聊想伴内的收益已经提现，(相关无法提现的虚拟物品，你可以进行消费后再注销，或者直接舍弃)，账号注销后，账户内的金币，购买的会员权益视为自动放弃;\n6.请注意，注销你的心聊想伴账号并不代表本守账号注销前的账号行为和相关责任得到豁免或减轻;\n7.用户自申请注销操作日起，给予30天的注销冷静期，期间可正常登录恢复使用，如申请注销后30天内未登录，则完成注销，所有数据不可恢复。"];
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"提交注销申请后，系统将注销心聊想伴账号并清除所有相关数据。 注销心聊想伴账号是不可恢复的操作，你应自行备份相关的信息和数据，操作之前，请确认与心聊想伴账号相关的所有服务均已妥善处理。\n请谨记:注销心聊想伴账号，你将无法再使用心聊想伴账号或找回你添加或绑定的任何内容或信息(即使你使用相同的手机号码再次注册并使用心聊想伴)，包括但不限于:\n1.你将无法登录、使用本心聊想伴账号，你的朋友(包括喜欢、好友等)将无法通过本心聊想伴账号联系你;\n2.你心聊想伴账号中的个人资料和历史信息(包括但不限于昵称、头像、财富值、收藏等)都将被永久全部清除，无法找回;\n3.你心聊想伴账号绑定的手机号、第三方账号、实名信息都将被解绑，解绑后可重新注册新账号;\n4.靓号将会被系统收回，并对平台其他用户开放申请;\n5.注销账号前，务必确认所有在心聊想伴内的收益已经提现，(相关无法提现的虚拟物品，你可以进行消费后再注销，或者直接舍弃)，账号注销后，账户内的金币，购买的会员权益视为自动放弃;\n6.请注意，注销你的心聊想伴账号并不代表本守账号注销前的账号行为和相关责任得到豁免或减轻;\n7.用户自申请注销操作日起，给予%zd天的注销冷静期，期间可正常登录恢复使用，如申请注销后%zd天内未登录，则完成注销，所有数据不可恢复。", USER_INFO.systemIndexModel.day_number_logout, USER_INFO.systemIndexModel.day_number_logout]];
     attributedText.font = TEXT_FONT_15;
     attributedText.color = TITLE_COLOR;
     attributedText.lineSpacing = SCALES(3.0);
@@ -97,21 +97,17 @@
 }
 
 //提现说明
-+ (NSMutableAttributedString *)withdrawExplainAgreement:(void(^)(void))action {
++ (NSMutableAttributedString *)withdrawExplainWithText:(NSString *)text agreement:(void(^)(void))action {
     UIColor *normalColor = TEXT_SIMPLE_COLOR;
-    UIColor *attColor = TITLE_COLOR;
+    UIColor *attColor = MAIN_COLOR;
     
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"1、收益提现服务需年满18周岁且不超过55周岁。\n2、每天最多可申请6次提现，同一套餐每日最多申请提现2次，提现在次日24点前到账（如遇周末，节假日顺延）\n3、每笔提现合作方会收取6%的手续费 \n4、若因账号违规被封号，提现中的金额将会被系统自动扣除 \n5、您点击申请提现即代表您已同意并确认"];
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:STRING(text)];
     attributedText.font = TEXT_FONT_12;
     attributedText.color = normalColor;
-    
-    NSMutableAttributedString *clickText = [[NSMutableAttributedString alloc] initWithString:@"《合作服务协议》"];
-    clickText.font = TEXT_FONT_12;
-    [clickText setTextHighlightRange:NSMakeRange(0, clickText.length) color:attColor backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+    [attributedText setTextHighlightRange:NSMakeRange(text.length - 8, 8) color:attColor backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
         //合作服务协议
         action();
     }];
-    [attributedText appendAttributedString:clickText];
     attributedText.lineSpacing = SCALES(3.0);
     return attributedText;
 }

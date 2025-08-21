@@ -112,6 +112,11 @@
             });
         }
     }
+    self.agreementView.attributedText = [ASTextAttributedManager withdrawExplainWithText:model.des agreement:^{
+        if (wself.clikedBlock) {
+            wself.clikedBlock(@"合作协议");
+        }
+    }];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -195,10 +200,8 @@
         _agreementView.numberOfLines = 0;
         _agreementView.preferredMaxLayoutWidth = floorf(SCREEN_WIDTH - SCALES(56));
         kWeakSelf(self);
-        _agreementView.attributedText = [ASTextAttributedManager withdrawExplainAgreement:^{
-            if (wself.clikedBlock) {
-                wself.clikedBlock(@"合作协议");
-            }
+        _agreementView.attributedText = [ASTextAttributedManager withdrawExplainWithText:@"1、收益提现服务需年满18周岁且不超过55周岁。\n2、每天最多可申请12次提现，同一套餐每日最多申请提现4次，提现在次日24点前到账（如遇周末，节假日顺延）\n3、每笔提现合作方会收取8%的手续费 \n4、若因账号违规被封号，提现中的金额将会被系统自动扣除 \n5、您点击申请提现即代表您已同意并确认《合作服务协议》" agreement:^{
+            
         }];
     }
     return _agreementView;
