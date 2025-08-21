@@ -148,9 +148,3 @@ jobs:
             ./itsm/bin/iTMSTransporter -m verify -f "$IPA_FILE_NAME" -u "$APPLE_USERNAME" -p "$APPLE_PASSWORD" || true
             exit $STATUS
           fi
-
-      - name: Check Upload Status
-        if: ${{ failure() }}
-        run: |
-          echo "❌ Upload failed! Common fixes:"
-          echo " 运行验证命令: /usr/local/itms/bin/iTMSTransporter -m verify -assetFile build/${{ env.IPA_FILE }}"

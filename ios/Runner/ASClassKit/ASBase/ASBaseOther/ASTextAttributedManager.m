@@ -236,7 +236,7 @@
 }
 
 + (NSMutableAttributedString *)sharePosterTitleAgreement {
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n", kAppType == 1 ? @"说走就走，旅途同行" : @"你来我网，互动陪聊"]];
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n", @"你来我网，互动陪聊"]];
     attributedText.font = TEXT_MEDIUM(16);
     attributedText.color = TITLE_COLOR;
     

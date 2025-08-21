@@ -52,13 +52,13 @@
     [self requestData];
     //监听程序进入前台和后台
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(enterBackGround:)
-                                                     name:UIApplicationDidEnterBackgroundNotification
-                                                   object:nil];
+                                             selector:@selector(enterBackGround:)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(enterForeGround:)
-                                                     name:UIApplicationWillEnterForegroundNotification
-                                                   object:nil];
+                                             selector:@selector(enterForeGround:)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

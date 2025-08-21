@@ -189,28 +189,19 @@
     [USER_INFO restartUserData];
     [USER_INFO requestSystemIndex:^(BOOL isSuccess, id  _Nullable data) {
         if (isSuccess && USER_INFO.isLogin) {
-            if (USER_INFO.systemIndexModel.isTourist) {//如果是游客模式，不需要登录云信
+            [[ASIMManager shared] NELoginWithAccount:USER_INFO.user_id token:USER_INFO.im_token succeed:^{
                 isPerformNextStep = YES;
                 [[ASLoginManager shared] loginSuccess];
-            } else {
-                [[ASIMManager shared] NELoginWithAccount:USER_INFO.user_id token:USER_INFO.im_token succeed:^{
-                    isPerformNextStep = YES;
-                    [[ASLoginManager shared] loginSuccess];
-                } fail:^{
-                    isPerformNextStep = YES;
-                    [[ASLoginManager shared] verifyIsLoginWithBlock:^{
-                        
-                    }];
+            } fail:^{
+                isPerformNextStep = YES;
+                [[ASLoginManager shared] verifyIsLoginWithBlock:^{
+                    
                 }];
-            }
+            }];
             [USER_INFO requestAppConfig:^(BOOL isSuccess, id  _Nullable data) { }];
         } else {
             isPerformNextStep = YES;
-            if (USER_INFO.systemIndexModel.isTourist) {//如果是游客模式，且在A面
-                [[ASLoginManager shared] loginSuccess];
-            } else {
-                [USER_INFO removeUserData:^{ }];
-            }
+            [USER_INFO removeUserData:^{ }];
         }
     }];
     //阻塞线程，直到云信回调告登录成功与否，才进行下一步

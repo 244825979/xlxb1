@@ -26,12 +26,8 @@
 }
 
 - (void)createUI {
-    if (kAppType == 0) {
-        self.headTitles = @[@"推荐设置", @"推送设置", @"通知权限设置"];
-        [self.lists addObject:@[[self lotPull]]];
-    } else {
-        self.headTitles = @[@"推送设置", @"通知权限设置"];
-    }
+    self.headTitles = @[@"推荐设置", @"推送设置", @"通知权限设置"];
+    [self.lists addObject:@[[self lotPull]]];
     [self.lists addObject:@[[self topNotify], [self like]]];
     [self.lists addObject:@[[self notificationLimit]]];
     [self.tableView registerClass:[ASBaseCommonCell class] forCellReuseIdentifier:@"baseCommonCell"];

@@ -25,8 +25,17 @@
         [self.stackView addArrangedSubview:self.dazhaohuBtn];
         [self.stackView addArrangedSubview:self.siliaoLongBtn];
         [self.stackView addArrangedSubview:self.siliaoBtn];
+        [self.siliaoBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.width.mas_equalTo(SCALES(48));
+        }];
         [self.stackView addArrangedSubview:self.followBtn];
+        [self.followBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.width.mas_equalTo(SCALES(48));
+        }];
         [self.stackView addArrangedSubview:self.callBtn];
+        [self.callBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.width.mas_equalTo(SCALES(48));
+        }];
         [self.stackView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(SCALES(8));
             make.left.offset(SCALES(16));
@@ -62,13 +71,8 @@
         self.siliaoLongBtn.hidden = NO;
     } else {
         self.dazhaohuBtn.hidden = NO;
-        if (kAppType == 1) {
-            self.siliaoBtn.hidden = YES;
-            self.siliaoLongBtn.hidden = YES;
-        } else {
-            self.siliaoLongBtn.hidden = YES;
-            self.siliaoBtn.hidden = NO;
-        }
+        self.siliaoLongBtn.hidden = YES;
+        self.siliaoBtn.hidden = NO;
     }
     self.isFollow = model.is_follow;
 }
@@ -99,9 +103,6 @@
         [_callBtn setBackgroundImage:[UIImage imageNamed:@"personal_call"] forState:UIControlStateNormal];
         [_callBtn setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];//拉伸权级
         _callBtn.adjustsImageWhenHighlighted = NO;
-        if (kAppType == 1) {
-            _callBtn.hidden = YES;
-        }
         kWeakSelf(self);
         [[_callBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             [ASMyAppCommonFunc callPopViewWithUserID:wself.model.userid scene:Call_Scene_PersonInfo back:^(BOOL isSucceed) {
@@ -182,7 +183,7 @@
         _dazhaohuBtn.hidden = YES;
         kWeakSelf(self);
         [[_dazhaohuBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-            if (wself.model.is_beckon == NO && kAppType == 0) {
+            if (wself.model.is_beckon == NO) {
                 [ASMyAppCommonFunc greetWithUserID:wself.model.userid action:^(id  _Nonnull data) {
                     wself.dazhaohuBtn.hidden = YES;
                     wself.siliaoBtn.hidden = YES;

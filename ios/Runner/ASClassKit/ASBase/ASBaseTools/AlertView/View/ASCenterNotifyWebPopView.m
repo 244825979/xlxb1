@@ -51,7 +51,6 @@
         [dicts setValue:STRING(kAppVersion) forKey:@"appVersion"];
         [dicts setValue:kAppBundleID forKey:@"packageName"];
         [dicts setValue:@(kAppType) forKey:@"mtype"];//环境
-        
         NSMutableString *cookie = [NSMutableString stringWithFormat:@""];
         for (NSString * key in dicts) {
             [cookie appendFormat:@"document.cookie = '%@=%@';\n",key, dicts[key]];

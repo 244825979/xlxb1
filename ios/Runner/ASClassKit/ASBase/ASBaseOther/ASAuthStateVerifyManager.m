@@ -22,10 +22,6 @@
 
 - (void)isCertificationState:(AuthStateType)type succeed:(VoidBlock)succeed {
     [[ASCommonFunc currentVc].view endEditing:YES];
-    if (kAppType == 1) {
-        succeed();
-        return;
-    }
     if (USER_INFO.gender == 1) {//女用户执行
         if (USER_INFO.is_rp_auth != 1) {//真人认证审核中
             switch (type) {

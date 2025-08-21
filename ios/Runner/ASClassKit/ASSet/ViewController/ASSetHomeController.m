@@ -43,26 +43,14 @@
         make.edges.equalTo(self.view);
     }];
     [self.lists addObject:@[[self blackList], [self reportList]]];
-    if (kAppType == 0) {
-        [self.lists addObject:@[[self messageNotification], [self privacySet]]];
-    } else {
-        [self.lists addObject:@[[self messageNotification]]];
-    }
+    [self.lists addObject:@[[self messageNotification], [self privacySet]]];
     if (USER_INFO.gender == 1) {
-        if (kAppType == 0) {
-            [self.lists addObject:@[[self accountBind],
-                                    [self beautySet],
-                                    [self collectFeeSet],
-                                    [self adolescentType],
-                                    [self clearCache],
-                                    [self aboutUs]]];
-        } else {
-            [self.lists addObject:@[[self accountBind],
-                                    [self beautySet],
-                                    [self adolescentType],
-                                    [self clearCache],
-                                    [self aboutUs]]];
-        }
+        [self.lists addObject:@[[self accountBind],
+                                [self beautySet],
+                                [self collectFeeSet],
+                                [self adolescentType],
+                                [self clearCache],
+                                [self aboutUs]]];
     } else {
         [self.lists addObject:@[[self accountBind],
                                 [self beautySet],
