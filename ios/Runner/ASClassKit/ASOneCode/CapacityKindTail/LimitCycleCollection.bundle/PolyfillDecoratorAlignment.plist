@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>anchorAgainstEnvironment</key>
+	<string>monsterExceptFramework</string>
+	<key>animationOfPattern</key>
+	<string>curveCycleEdge</string>
+	<key>grainLayerSaturation</key>
+	<string>collectionViaObserver</string>
+	<key>instructionBeyondStrategy</key>
+	<string>assetAsFacade</string>
+	<key>respectiveScrollInteraction</key>
+	<string>appbarModeContrast</string>
+	<key>routeFormRate</key>
+	<string>baselineContainPhase</string>
+	<key>storePlatformRight</key>
+	<string>composableSegmentRate</string>
+	<key>themeContextTint</key>
+	<string>priorGesturedetectorFeedback</string>
+</dict>
+</plist>

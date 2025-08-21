@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>animatedSizeDelay</key>
+	<string>observerInSingleton</string>
+	<key>columnBridgePadding</key>
+	<string>frameFacadeShape</string>
+	<key>commonErrorStyle</key>
+	<string>animatedNormBound</string>
+	<key>desktopPaddingStyle</key>
+	<string>logNearChain</string>
+	<key>discardedUsecaseBehavior</key>
+	<string>eagerHistogramHue</string>
+	<key>flexibleEffectAlignment</key>
+	<string>anchorWithoutContext</string>
+	<key>interfaceAndStrategy</key>
+	<string>delegateBufferSaturation</string>
+	<key>managerWithoutDecorator</key>
+	<string>equalizationFromSingleton</string>
+	<key>rectStructurePadding</key>
+	<string>entityContainCycle</string>
+	<key>tickerValueBorder</key>
+	<string>storageNearEnvironment</string>
+</dict>
+</plist>

@@ -2585,7 +2585,7 @@ open class ChatViewController: ChatBaseViewController, UINavigationControllerDel
                   let isSend = model?.message?.isOutgoingMsg else {
                 return
             }
-            if let url = audio.url, (url.contains(NEKitChatConfig.shared.imageURL) == true) {
+            if let url = audio.url, (url.contains("nim-nosd.netease.im") == false) {
                 playingModel = nil
                 if NIMSDK.shared().mediaManager.isPlaying() {//如果其他的音频在播放，就先关掉
                     stopPlay()

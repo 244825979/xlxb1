@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>constSkirtTheme</key>
+	<string>disabledTextureColor</string>
+	<key>delegateSystemOrientation</key>
+	<string>concreteCellLeft</string>
+	<key>diffableEventDistance</key>
+	<string>dependencyMementoVelocity</string>
+	<key>managerProcessDelay</key>
+	<string>mapPerForm</string>
+	<key>monsterNumberIndex</key>
+	<string>taskProcessVisibility</string>
+	<key>parallelProgressbarFormat</key>
+	<string>segmentBesideAdapter</string>
+	<key>pivotalRowPosition</key>
+	<string>dedicatedProviderCoord</string>
+	<key>protocolMementoPadding</key>
+	<string>routeWithType</string>
+	<key>reductionWithMethod</key>
+	<string>behaviorShapeOrientation</string>
+	<key>singletonInOperation</key>
+	<string>scrollableFrameAppearance</string>
+</dict>
+</plist>

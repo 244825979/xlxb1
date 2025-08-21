@@ -26,6 +26,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)userNotificationDidReceiveNotificationResponse:(UNNotificationResponse *)response;
 //Universal link的回调:微信QQ用到的回调
 - (BOOL)myApplicationUserActivity:(nonnull NSUserActivity *)userActivity;
+
+- (void)myAppComFuncNotiChange;
+- (void)myAppFuncStartCliked;
 @end
 
 NS_ASSUME_NONNULL_END

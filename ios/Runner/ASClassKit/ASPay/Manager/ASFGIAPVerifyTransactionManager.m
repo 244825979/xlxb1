@@ -12,7 +12,7 @@
 
 + (void)goPayWithFilter:(FGIAPProductsFilter *)filter productID:(NSString *)productID orderNo:(NSString *)orderNo {
     if (kStringIsEmpty(productID)) {
-        kShowToast(@"支付失败");
+        kShowToast(@"支付失败~");
         return;
     }
     /// 2.获取商品信息

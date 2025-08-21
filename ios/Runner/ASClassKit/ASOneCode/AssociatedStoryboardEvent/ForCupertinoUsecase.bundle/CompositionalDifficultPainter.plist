@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>alphaCommandName</key>
+	<string>imagePlatformOpacity</string>
+	<key>denseAlignmentSpacing</key>
+	<string>sliderByKind</string>
+	<key>dependencyPlatformShape</key>
+	<string>segmentShapeOffset</string>
+	<key>entityAmongType</key>
+	<string>resultEnvironmentTint</string>
+	<key>entityProxyOffset</key>
+	<string>chartVarSkewy</string>
+	<key>nodePhaseCoord</key>
+	<string>ignoredCheckboxDepth</string>
+	<key>notificationSystemVisibility</key>
+	<string>observerOfMemento</string>
+	<key>serviceWorkFlags</key>
+	<string>nextTextOrientation</string>
+	<key>timerAtChain</key>
+	<string>streamFacadeFrequency</string>
+</dict>
+</plist>

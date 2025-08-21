@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>disabledCompleterFrequency</key>
+	<string>statelessBeyondActivity</string>
+	<key>imageLevelName</key>
+	<string>mediaContainSystem</string>
+	<key>paddingVariableSpeed</key>
+	<string>layoutTypeDepth</string>
+	<key>previewBesideBuffer</key>
+	<string>mediumBaseTop</string>
+	<key>progressbarDespiteBridge</key>
+	<string>movementFlyweightForce</string>
+	<key>robustCursorDuration</key>
+	<string>tabviewTaskTag</string>
+</dict>
+</plist>

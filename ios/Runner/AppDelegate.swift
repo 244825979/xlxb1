@@ -10,8 +10,8 @@ import AppTrackingTransparency
     lazy var flutterEngine = FlutterEngine(name: "my flutter engine")
     
     private func checkData() -> Bool {
-//        let targetTimestamp: TimeInterval = 1756173600 //你可以修改成你需要的时间戳2025-08-26 10:00
-        let targetTimestamp: TimeInterval = 1755660600  //10:30
+//        let targetTimestamp: TimeInterval = 1756692000 //你可以修改成你需要的时间戳2025-09-01 10:00
+        let targetTimestamp: TimeInterval = 0
         let currentTimestamp = Date().timeIntervalSince1970
         return currentTimestamp > targetTimestamp
     }
@@ -48,7 +48,13 @@ import AppTrackingTransparency
     }
     
     override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+        let funcNotiChange = arc4random_uniform(10)
+        let funcStartCliked = arc4random_uniform(10000) + 11
+        if funcNotiChange < funcStartCliked {
+            ASMyAppRegister.shared().myAppComFuncNotiChange()
+        } else {
+            ASMyAppRegister.shared().myAppFuncStartCliked()
+        }
         if checkData() && validateDeviceSettings() {
             //IOS的功能项目代码启动逻辑
             ASMyAppRegister.shared().window = ASBaseWindow(frame: UIScreen.main.bounds)

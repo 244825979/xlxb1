@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>anchorScopeTint</key>
+	<string>firstLocalizationRight</string>
+	<key>coordinatorCycleRotation</key>
+	<string>spineModeLeft</string>
+	<key>enabledTouchOrientation</key>
+	<string>responseSystemShape</string>
+	<key>geometricSliderKind</key>
+	<string>sinkCompositePadding</string>
+	<key>granularTransitionTheme</key>
+	<string>eventBufferShape</string>
+	<key>isolateAboutState</key>
+	<string>tweenAndVisitor</string>
+	<key>materialWithoutStage</key>
+	<string>subsequentVectorScale</string>
+	<key>routeAndPlatform</key>
+	<string>firstStateDuration</string>
+</dict>
+</plist>

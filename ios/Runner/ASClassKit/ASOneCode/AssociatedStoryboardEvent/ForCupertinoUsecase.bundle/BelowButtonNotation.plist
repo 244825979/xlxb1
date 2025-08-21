@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>actionVisitorFeedback</key>
+	<string>skinStateShape</string>
+	<key>decorationDespiteShape</key>
+	<string>captionIncludeObserver</string>
+	<key>mobileGraphicMode</key>
+	<string>awaitModeState</string>
+	<key>pointParameterOffset</key>
+	<string>allocatorForStructure</string>
+	<key>priorTechniqueBehavior</key>
+	<string>protectedDescriptionScale</string>
+	<key>semanticChecklistOrigin</key>
+	<string>themeAmongShape</string>
+	<key>similarCupertinoDirection</key>
+	<string>granularConstraintVisible</string>
+	<key>subsequentExtensionFormat</key>
+	<string>nodeWorkFeedback</string>
+	<key>uniformSubpixelSaturation</key>
+	<string>methodAtPlatform</string>
+</dict>
+</plist>

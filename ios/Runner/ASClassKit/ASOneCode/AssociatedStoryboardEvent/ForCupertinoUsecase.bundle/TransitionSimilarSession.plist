@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>capsuleLevelSaturation</key>
+	<string>functionalMovementStatus</string>
+	<key>controllerAwayPlatform</key>
+	<string>delegateCompositeFlags</string>
+	<key>equipmentBesidePattern</key>
+	<string>operationFrameworkName</string>
+	<key>loopWithoutTask</key>
+	<string>constGraphBottom</string>
+	<key>priorChartName</key>
+	<string>ternaryPerPattern</string>
+	<key>standaloneLabelCoord</key>
+	<string>textUntilChain</string>
+	<key>stateAboutMode</key>
+	<string>standaloneStatefulIndex</string>
+	<key>taskStrategyBehavior</key>
+	<string>particleVariableDirection</string>
+</dict>
+</plist>

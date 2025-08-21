@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>asynchronousSpotTension</key>
+	<string>bufferPerAction</string>
+	<key>backwardActivitySaturation</key>
+	<string>animationAlongFlyweight</string>
+	<key>intermediateSinkPosition</key>
+	<string>mediumPointSpeed</string>
+	<key>listviewTypeDistance</key>
+	<string>sustainableCubitBottom</string>
+	<key>monsterNearState</key>
+	<string>stampMediatorPadding</string>
+	<key>popupProxyBottom</key>
+	<string>rectLayerStyle</string>
+	<key>storageValueColor</key>
+	<string>taskParameterState</string>
+</dict>
+</plist>

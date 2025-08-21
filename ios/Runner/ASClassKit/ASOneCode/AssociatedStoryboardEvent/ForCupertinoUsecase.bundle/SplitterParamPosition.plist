@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>autoTernaryShape</key>
+	<string>disabledSpriteBorder</string>
+	<key>customCurveSaturation</key>
+	<string>parallelNodeDelay</string>
+	<key>isolateViaPlatform</key>
+	<string>clipperCompositeDensity</string>
+	<key>labelStageVelocity</key>
+	<string>frameIncludeEnvironment</string>
+	<key>vectorFromPrototype</key>
+	<string>viewFlyweightStyle</string>
+</dict>
+</plist>

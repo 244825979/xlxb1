@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>materialLayoutVisibility</key>
+	<string>cartesianUsecaseScale</string>
+	<key>popupFromOperation</key>
+	<string>asyncFrameworkAcceleration</string>
+	<key>resourceFunctionMode</key>
+	<string>dimensionPatternIndex</string>
+	<key>spriteAsShape</key>
+	<string>secondTabviewSpacing</string>
+</dict>
+</plist>

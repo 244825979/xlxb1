@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>challengeAdapterKind</key>
+	<string>pinchableSpriteTop</string>
+	<key>constraintNearVar</key>
+	<string>bulletNearFacade</string>
+	<key>cosineVisitorColor</key>
+	<string>tweenFlyweightHead</string>
+	<key>declarativeEffectShade</key>
+	<string>ternaryBesideProxy</string>
+	<key>hyperbolicTaskTint</key>
+	<string>animationBesideFacade</string>
+	<key>robustCupertinoVelocity</key>
+	<string>fusedVectorDuration</string>
+	<key>substantialModalCoord</key>
+	<string>resourceAndKind</string>
+	<key>viewAroundType</key>
+	<string>builderBesideTemple</string>
+</dict>
+</plist>

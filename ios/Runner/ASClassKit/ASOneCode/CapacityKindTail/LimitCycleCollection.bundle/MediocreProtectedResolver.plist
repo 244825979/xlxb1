@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>granularInteractorFlags</key>
+	<string>requiredMemberKind</string>
+	<key>injectionActionScale</key>
+	<string>singleEffectValidation</string>
+	<key>isolateStageBrightness</key>
+	<string>compositionThroughState</string>
+	<key>iterativeGramMode</key>
+	<string>operationBridgeTag</string>
+	<key>navigatorProcessAcceleration</key>
+	<string>responseLayerTint</string>
+	<key>pinchableRouterColor</key>
+	<string>groupAwayParam</string>
+	<key>providerValueVelocity</key>
+	<string>accordionSegmentTail</string>
+</dict>
+</plist>

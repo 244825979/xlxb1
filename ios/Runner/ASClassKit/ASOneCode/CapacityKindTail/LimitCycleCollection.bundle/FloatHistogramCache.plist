@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>effectLayerRate</key>
+	<string>asynchronousNodeSpacing</string>
+	<key>indicatorPlatformBorder</key>
+	<string>respectiveOffsetInset</string>
+	<key>listviewThroughScope</key>
+	<string>gestureValueVelocity</string>
+	<key>liteSliderAcceleration</key>
+	<string>consumerLayerType</string>
+	<key>positionedBridgeOrigin</key>
+	<string>mediumEntitySkewy</string>
+	<key>statefulSymbolSpeed</key>
+	<string>statelessAccessorySkewy</string>
+	<key>subscriptionMementoVelocity</key>
+	<string>positionedBufferAlignment</string>
+</dict>
+</plist>

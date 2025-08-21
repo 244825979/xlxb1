@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>compositionDuringFramework</key>
+	<string>routeAgainstForm</string>
+	<key>directObserverBehavior</key>
+	<string>granularSegueBound</string>
+	<key>grainExceptKind</key>
+	<string>routeBeyondParameter</string>
+	<key>sharedProjectTop</key>
+	<string>slashThroughVariable</string>
+	<key>skinAdapterMode</key>
+	<string>easyCurveMode</string>
+</dict>
+</plist>

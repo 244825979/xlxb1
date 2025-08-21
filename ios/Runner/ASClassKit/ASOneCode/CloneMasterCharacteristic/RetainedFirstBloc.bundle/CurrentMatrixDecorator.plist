@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>activatedBinaryDensity</key>
+	<string>notifierScopeDirection</string>
+	<key>advancedMissionMargin</key>
+	<string>protocolBridgeName</string>
+	<key>elasticCheckboxDuration</key>
+	<string>resourceKindCenter</string>
+	<key>mediumWidgetBehavior</key>
+	<string>requiredEffectDensity</string>
+	<key>popupPatternOrientation</key>
+	<string>mainTickerTint</string>
+	<key>timerViaJob</key>
+	<string>heapSystemTint</string>
+	<key>visibleRowState</key>
+	<string>checklistModeOrigin</string>
+</dict>
+</plist>

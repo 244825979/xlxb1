@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>constThemeBottom</key>
+	<string>grainValueCoord</string>
+	<key>featureProxyHue</key>
+	<string>greatButtonType</string>
+	<key>gesturedetectorVariableInteraction</key>
+	<string>permissiveAwaitAppearance</string>
+	<key>inheritedEffectInteraction</key>
+	<string>mobxSinceFlyweight</string>
+	<key>protectedTimerOpacity</key>
+	<string>comprehensiveDelegateVisible</string>
+	<key>sizeMethodBehavior</key>
+	<string>resizableKernelAppearance</string>
+	<key>spineCommandOpacity</key>
+	<string>profileByStyle</string>
+	<key>sustainableInstructionTransparency</key>
+	<string>resizableColumnSpacing</string>
+</dict>
+</plist>

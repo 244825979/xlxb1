@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>checkboxVersusPlatform</key>
+	<string>gateOfLevel</string>
+	<key>diffableRadioStyle</key>
+	<string>localizationCommandCoord</string>
+	<key>dimensionByMode</key>
+	<string>semanticButtonVisible</string>
+	<key>immutableActionRate</key>
+	<string>sortedBuilderKind</string>
+	<key>requestInsideDecorator</key>
+	<string>channelJobIndex</string>
+	<key>roleContextPadding</key>
+	<string>primaryCellKind</string>
+</dict>
+</plist>

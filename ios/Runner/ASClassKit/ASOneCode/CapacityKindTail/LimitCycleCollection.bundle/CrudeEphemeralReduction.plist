@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>criticalRouteMargin</key>
+	<string>denseGemSkewy</string>
+	<key>delegateUntilLayer</key>
+	<string>singleMissionRotation</string>
+	<key>disabledCompleterName</key>
+	<string>sizedboxWorkTheme</string>
+	<key>finalResourceMargin</key>
+	<string>titleInsideVisitor</string>
+	<key>nodeForTier</key>
+	<string>pivotalAnimationState</string>
+</dict>
+</plist>

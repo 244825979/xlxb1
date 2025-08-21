@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>certificateAwayType</key>
+	<string>dynamicChannelInterval</string>
+	<key>cubeBufferPosition</key>
+	<string>prevCardIndex</string>
+	<key>prismaticIntegerInset</key>
+	<string>seamlessMasterTransparency</string>
+	<key>textFromActivity</key>
+	<string>lastPopupEdge</string>
+</dict>
+</plist>

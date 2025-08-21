@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>anchorPatternForce</key>
+	<string>modelStrategyValidation</string>
+	<key>controllerCycleValidation</key>
+	<string>transformerActivityDelay</string>
+	<key>effectOfMode</key>
+	<string>disparateLoopInterval</string>
+	<key>flexibleSliderVisibility</key>
+	<string>arithmeticMusicOrientation</string>
+	<key>futureStageBorder</key>
+	<string>normActionDirection</string>
+	<key>gesturedetectorVersusBridge</key>
+	<string>cacheChainDistance</string>
+	<key>topicStrategyKind</key>
+	<string>firstRouteHue</string>
+</dict>
+</plist>
