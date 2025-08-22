@@ -89,7 +89,7 @@ class _MyReportsScreenState extends State<MyReportsScreen> {
           ),
           SizedBox(height: 16),
           Text(
-            '加载中...',
+            '内容准备中...',
             style: TextStyle(
               color: AppColors.textSecondary,
               fontSize: 14,

@@ -14,6 +14,10 @@ class AudioService {
   Duration _currentPosition = Duration.zero;
   Duration _totalDuration = Duration.zero;
 
+  // 回调函数
+  Function()? onStateChanged;
+  Function()? onTrackComplete;
+
   // Getters
   bool get isInitialized => _isInitialized;
   bool get isPlaying => _isPlaying;
@@ -48,13 +52,22 @@ class AudioService {
       });
 
       _player.onPlayerComplete.listen((_) {
-        print('Audio playback completed');
+        print('🎵 AudioService: 播放完成事件触发');
         _isPlaying = false;
         _currentPosition = Duration.zero;
+        final completedPath = _currentPlayingPath;
         _currentPlayingPath = null;
+        
+        print('🎵 AudioService: 准备调用 onTrackComplete 回调...');
+        if (onTrackComplete != null) {
+          print('🎵 AudioService: 调用 onTrackComplete 回调，完成的音乐: $completedPath');
+          onTrackComplete!();
+        } else {
+          print('🎵 AudioService: onTrackComplete 回调为空！');
+        }
       });
 
-      // 设置释放模式
+      // 设置释放模式 - 播放完成后停止
       await _player.setReleaseMode(ReleaseMode.stop);
       
       print('音频服务初始化完成');

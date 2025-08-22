@@ -5,7 +5,7 @@ import '../models/mood_data.dart';
 import '../models/music_track.dart';
 import '../services/audio_service.dart';
 import '../services/storage_service.dart';
-import '../utils/mock_data.dart';
+
 import '../constants/app_assets.dart';
 import '../constants/mood_quotes.dart';
 
@@ -87,6 +87,16 @@ class HomeProvider extends ChangeNotifier {
 
   // 设置音频播放监听
   void _setupAudioListeners() {
+    // 设置音频服务的回调
+    _audioService.onStateChanged = () {
+      _updatePlaybackState();
+    };
+    
+    // 设置轨道播放完成回调 - 自动播放下一首
+    _audioService.onTrackComplete = () {
+      _playNextTrackInLoop();
+    };
+    
     // 启动定时器，定期更新播放状态
     _progressTimer = Timer.periodic(Duration(milliseconds: 300), (timer) {
       if (_audioService.isInitialized) {
@@ -350,26 +360,23 @@ class HomeProvider extends ChangeNotifier {
       if (_musicTracks.isEmpty) return;
 
       final currentTrack = _musicTracks[_currentTrackIndex];
-      print('尝试播放/暂停: ${currentTrack.title}, 路径: ${currentTrack.filePath}');
+      // 播放/暂停音乐
 
       if (_isPlaying && _currentPlayingPath == currentTrack.filePath) {
         // 暂停当前播放
         await _audioService.pauseAudio();
-        print('音乐已暂停');
+        // 音乐已暂停
       } else {
         if (_currentPlayingPath == currentTrack.filePath) {
           // 恢复播放同一首
           await _audioService.resumeAudio();
-          print('音乐已恢复');
+          // 音乐已恢复
         } else {
           // 播放新的音轨
-          print('开始播放新音轨: ${currentTrack.filePath}');
           final success = await _audioService.playAudio(currentTrack.filePath);
           if (success) {
             _currentPlayingPath = currentTrack.filePath;
-            print('音乐播放成功');
           } else {
-            print('音乐播放失败');
             return;
           }
         }
@@ -388,26 +395,60 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  // 播放下一首
+  // 自动播放下一首（循环模式）
+  void _playNextTrackInLoop() {
+    if (_musicTracks.isEmpty) {
+      print('音乐列表为空，无法自动播放下一首');
+      return;
+    }
+    
+    final oldIndex = _currentTrackIndex;
+    final oldTitle = _musicTracks[oldIndex].title;
+    
+    // 移动到下一首，如果是最后一首则回到第一首
+    _currentTrackIndex = (_currentTrackIndex + 1) % _musicTracks.length;
+    final newTitle = _musicTracks[_currentTrackIndex].title;
+    
+    print('🎵 自动循环播放: [$oldTitle] 播放完成 → 开始播放 [$newTitle] (索引: $oldIndex → $_currentTrackIndex)');
+    print('🎵 音乐列表总数: ${_musicTracks.length}');
+    print('🎵 即将播放: ${_musicTracks[_currentTrackIndex].filePath}');
+    
+    // 立即更新UI显示新的音轨信息
+    notifyListeners();
+    
+    // 延迟播放下一首，确保状态清理完成
+    Future.delayed(Duration(milliseconds: 200), () async {
+      print('🎵 开始播放下一首音乐...');
+      await _playCurrentTrack();
+    });
+  }
+
+  // 播放下一首（手动）
   Future<void> playNextTrack() async {
     if (_musicTracks.isEmpty) return;
     
-    if (_currentTrackIndex < _musicTracks.length - 1) {
-      _currentTrackIndex++;
-      notifyListeners(); // 立即更新UI显示新的音轨信息
-      await _playCurrentTrack();
-    }
+    final oldIndex = _currentTrackIndex;
+    // 循环到下一首
+    _currentTrackIndex = (_currentTrackIndex + 1) % _musicTracks.length;
+    
+    print('🎵 手动切换下一首: 第${oldIndex + 1}首 → 第${_currentTrackIndex + 1}首 (${_musicTracks[_currentTrackIndex].title})');
+    
+    notifyListeners();
+    await _playCurrentTrack();
   }
 
-  // 播放上一首
+  // 播放上一首（手动）
   Future<void> playPreviousTrack() async {
     if (_musicTracks.isEmpty) return;
     
-    if (_currentTrackIndex > 0) {
-      _currentTrackIndex--;
-      notifyListeners(); // 立即更新UI显示新的音轨信息
-      await _playCurrentTrack();
-    }
+    final oldIndex = _currentTrackIndex;
+    // 循环到上一首
+    _currentTrackIndex = (_currentTrackIndex - 1 + _musicTracks.length) % _musicTracks.length;
+    
+    print('🎵 手动切换上一首: 第${oldIndex + 1}首 → 第${_currentTrackIndex + 1}首 (${_musicTracks[_currentTrackIndex].title})');
+    
+    notifyListeners();
+    await _playCurrentTrack();
   }
 
   // 播放当前轨道
@@ -416,14 +457,10 @@ class HomeProvider extends ChangeNotifier {
       if (_musicTracks.isEmpty) return;
       
       final currentTrack = _musicTracks[_currentTrackIndex];
-      print('播放当前轨道: ${currentTrack.title}');
       
       final success = await _audioService.playAudio(currentTrack.filePath);
       if (success) {
         _currentPlayingPath = currentTrack.filePath;
-        print('轨道播放成功');
-      } else {
-        print('轨道播放失败');
       }
       
       _updatePlaybackState();

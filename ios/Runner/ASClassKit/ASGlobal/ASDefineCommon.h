@@ -21,7 +21,7 @@
 #define WX_AppKey           @"wx69b3fd56af9da2d3"                                   //微信appKey
 #define WX_AppSecret        @"1382481cd501acf6e9603a205a83f125"                     //微信WX_AppSecret
 #define APP_CHANNEL         @"2585"                                                 //渠道号
-#define NEIM_APNS_DEV       @"xlxb_dev"
+#define NEIM_APNS_DEV       @"test_dev_push"
 #define NEIM_APNS_Rel       @"xlxb_push"
 #define TX_VideoShowKey     @"26936db97cd60c1c143927af2d15a7ef"
 #define TX_VideoShowLicence @"https://license.vod2.myqcloud.com/license/v2/1324494570_1/v_cube.license"

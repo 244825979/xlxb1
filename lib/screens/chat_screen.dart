@@ -212,7 +212,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   }
 
   String _getInputHint() {
-    if (_isLoadingUserData) return '加载中...';
+    if (_isLoadingUserData) return '正在连接...';
     if (!_isLoggedIn) return '请先登录后发送消息';
     if (_isVip) return 'VIP用户，免费无限对话...';
     return '普通用户，每条消息消耗1金币（余额：$_userCoins）';

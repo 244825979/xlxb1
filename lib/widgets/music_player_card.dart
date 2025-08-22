@@ -36,8 +36,7 @@ class MusicPlayerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     if (tracks.isEmpty) return SizedBox.shrink();
 
-    // 添加调试信息
-    print('MusicPlayerCard - 播放状态: $isPlaying, 进度: $progress, 当前时间: ${_formatDuration(currentPosition)}, 总时间: ${_formatDuration(totalDuration)}');
+    // 音乐播放器卡片
 
     return Container(
       padding: EdgeInsets.all(20),
@@ -78,6 +77,26 @@ class MusicPlayerCard extends StatelessWidget {
                         fontSize: 14,
                       ),
                     ),
+                    SizedBox(height: 4),
+                    // 播放模式提示
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.repeat,
+                          size: 12,
+                          color: AppColors.playButton,
+                        ),
+                        SizedBox(width: 4),
+                        Text(
+                          '循环播放 • 后台支持',
+                          style: TextStyle(
+                            color: AppColors.playButton,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -89,15 +108,13 @@ class MusicPlayerCard extends StatelessWidget {
           // 播放控制区域
           Row(
             children: [
-              // 上一曲按钮
+              // 上一曲按钮（循环模式，始终可用）
               if (tracks.length > 1)
                 IconButton(
                   onPressed: onPrevious,
                   icon: Icon(
                     Icons.skip_previous,
-                    color: currentTrackIndex > 0 
-                        ? AppColors.playButton 
-                        : AppColors.textLight,
+                    color: AppColors.playButton, // 始终高亮，支持循环
                     size: 28,
                   ),
                 ),
@@ -127,15 +144,13 @@ class MusicPlayerCard extends StatelessWidget {
                 ),
               ),
 
-              // 下一曲按钮
+              // 下一曲按钮（循环模式，始终可用）
               if (tracks.length > 1)
                 IconButton(
                   onPressed: onNext,
                   icon: Icon(
                     Icons.skip_next,
-                    color: currentTrackIndex < tracks.length - 1 
-                        ? AppColors.playButton 
-                        : AppColors.textLight,
+                    color: AppColors.playButton, // 始终高亮，支持循环
                     size: 28,
                   ),
                 ),
@@ -191,14 +206,14 @@ class MusicPlayerCard extends StatelessWidget {
                   onChanged: totalDuration.inMilliseconds > 0 ? onSeek : null,
                 ),
               ),
-              // 如果没有时长信息，显示提示
+              // 如果没有时长信息，显示舒心提示
               if (totalDuration.inMilliseconds == 0 && isPlaying)
                 Padding(
                   padding: EdgeInsets.only(top: 4),
                   child: Text(
-                    '正在加载音频信息...',
+                    '音乐正在为你响起 ♪',
                     style: TextStyle(
-                      color: AppColors.textSecondary,
+                      color: AppColors.playButton,
                       fontSize: 12,
                       fontStyle: FontStyle.italic,
                     ),
