@@ -39,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *avatar;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, assign) CGFloat titleHeight;
+@property (nonatomic, assign) CGFloat showDuration;//chat页面视频秀倒计时隐藏时间
 @end
 
 NS_ASSUME_NONNULL_END

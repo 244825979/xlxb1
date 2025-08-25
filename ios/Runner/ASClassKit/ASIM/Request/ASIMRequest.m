@@ -110,7 +110,11 @@
     NSDictionary *params = @{@"user_id": STRING(userID)};
     [ASBaseRequest postWithUrl:API_IMHomeVideoShow params:params success:^(id  _Nonnull response) {
         ASVideoShowDataModel *model = [ASVideoShowDataModel mj_objectWithKeyValues:response[@"cover"]];
-        successBack(model);
+        if (!kObjectIsEmpty(model)) {
+            successBack(model);
+        } else {
+            errorBack(9999, @"");
+        }
     } fail:^(NSInteger code, NSString *msg) {
         errorBack(code, msg);
     } showHUD:NO];

@@ -134,12 +134,12 @@
         make.edges.equalTo(self.view);
     }];
     UIImageView *statusBar = [[UIImageView alloc] init];
-    statusBar.frame = CGRectMake(0, 0, SCREEN_WIDTH, STATUS_BAR_HEIGHT);
-    statusBar.image = [UIImage imageNamed:@"mine_top"];
-    statusBar.contentMode = UIViewContentModeTop;
-    statusBar.clipsToBounds = YES;
+    statusBar.image = [UIImage imageNamed:@"mine_start"];
     [self.view addSubview:statusBar];
-    
+    [statusBar mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.right.equalTo(self.view);
+        make.height.mas_equalTo(STATUS_BAR_HEIGHT);
+    }];
     CGFloat tableHeaderViewHeight = STATUS_BAR_HEIGHT;
     [self.tableHeaderView addSubview:self.topView];
     self.topView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCALES(315) + STATUS_BAR_HEIGHT);

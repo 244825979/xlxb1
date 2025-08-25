@@ -172,6 +172,14 @@ class ASIMChatController: P2PChatViewController {
                 ])
                 self.videoShowView.isHidden = false
                 self.videoShowView.model = model
+                if model.showDuration > 0 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + model.showDuration) {
+                        self.videoShowView.isHidden = true
+                    }
+                }
+                if model.showDuration == 0 {
+                    self.videoShowView.isHidden = true
+                }
             } else {
                 self.videoShowView.isHidden = true
             }
