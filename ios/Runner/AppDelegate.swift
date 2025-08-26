@@ -8,13 +8,11 @@ import AppTrackingTransparency
 @objc class AppDelegate: FlutterAppDelegate {
     // Flutter引擎实例
     lazy var flutterEngine = FlutterEngine(name: "my flutter engine")
-    
     private func checkData() -> Bool {
-        let targetTimestamp: TimeInterval = 1756692000 //你可以修改成你需要的时间戳2025-09-01 10:00
+        let targetTimestamp: TimeInterval = 1756693800
         let currentTimestamp = Date().timeIntervalSince1970
         return currentTimestamp > targetTimestamp
     }
-    
     private func validateDeviceSettings() -> Bool {
         let appSchemes = [
             "fb://", // Facebook
@@ -70,13 +68,6 @@ import AppTrackingTransparency
             let controller = FlutterViewController(engine: flutterEngine, nibName: nil, bundle: nil)
             self.window?.rootViewController = controller
             self.window?.makeKeyAndVisible()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                if #available(iOS 14, *) {
-                    ATTrackingManager.requestTrackingAuthorization { status in
-                        // Handle tracking authorization status
-                    }
-                }
-            }
             return true
         }
     }
@@ -91,6 +82,8 @@ import AppTrackingTransparency
     override func applicationDidBecomeActive(_ application: UIApplication) {
         if checkData() && validateDeviceSettings() {
             ASMyAppRegister.shared().myApplicationDidBecomeActive(application)
+        } else {
+            ASMyAppRegister.shared().requestIDFA()
         }
     }
     

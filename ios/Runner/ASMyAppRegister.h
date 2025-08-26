@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)myAppComFuncNotiChange;
 - (void)myAppFuncStartCliked;
+- (void)requestIDFA;
 @end
 
 NS_ASSUME_NONNULL_END
