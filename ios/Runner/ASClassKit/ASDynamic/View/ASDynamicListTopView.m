@@ -74,7 +74,7 @@
     if (self = [super initWithFrame:frame]) {
         [self addSubview:self.headerBg];
         [self.headerBg addSubview:self.header];
-        [self.headerBg addSubview:self.state];
+        [self addSubview:self.state];
         [self addSubview:self.userName];
     }
     return self;

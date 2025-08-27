@@ -62,6 +62,15 @@
     [self.webView addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
+- (void)popVC {
+    [self.view endEditing:YES];
+    if (self.webView.canGoBack) {
+        [self.webView goBack];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 - (void)setWebUrl:(NSString *)webUrl {
     _webUrl = webUrl;
 }
@@ -85,7 +94,12 @@
         UIButton *back = [UIButton buttonWithType: UIButtonTypeCustom];
         [back setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
         [[back rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-            [wself.navigationController popViewControllerAnimated:YES];
+            [wself.view endEditing:YES];
+            if (wself.webView.canGoBack) {
+                [wself.webView goBack];
+            } else {
+                [wself.navigationController popViewControllerAnimated:YES];
+            }
         }];
         [self.view addSubview:back];
         back.frame = CGRectMake(12, STATUS_BAR_HEIGHT, 44, 44);

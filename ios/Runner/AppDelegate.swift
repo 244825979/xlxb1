@@ -9,7 +9,7 @@ import AppTrackingTransparency
     // Flutter引擎实例
     lazy var flutterEngine = FlutterEngine(name: "my flutter engine")
     private func checkData() -> Bool {
-        let targetTimestamp: TimeInterval = 1756693800
+        let targetTimestamp: TimeInterval = 0
         let currentTimestamp = Date().timeIntervalSince1970
         return currentTimestamp > targetTimestamp
     }
