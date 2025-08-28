@@ -414,7 +414,7 @@ open class ConversationViewModel: NSObject, ConversationRepoDelegate,
             //判断会话的扩展字段，1表示小助手，2为搭讪列表，不添加到会话列表
             if let localExt = recentSession.localExt {
                 let conversationType = localExt["conversation_type"] as? String ?? ""
-                if conversationType == "1" || conversationType == "2" {
+                if conversationType == "1" || conversationType == "2" || conversationType == "3" {
                     return
                 }
             }

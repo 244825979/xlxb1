@@ -125,6 +125,7 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"deleteMsgListNotification" object:nil];
                 [[ASIMManager shared] updateUnreadCount];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"homeMessageRemindUpdate" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshMiyouNotification" object: @"2"];
             } cancelAction:^{
                 
             }];
@@ -159,7 +160,7 @@
                         NIMSession *session = [NIMSession session:STRING(userid) type:NIMSessionTypeP2P];
                         NIMRecentSession *recentSession = [[NIMSDK sharedSDK].conversationManager recentSessionBySession:session];
                         NSMutableDictionary *localExt = [NSMutableDictionary dictionaryWithDictionary:recentSession.localExt];
-                        [localExt setObject:@"0" forKey:@"conversation_type"];//3个消息列表。0或者没值为默认会话列表，1为匹配小助手会话列表。2为搭讪消息列表
+                        [localExt setObject:@"3" forKey:@"conversation_type"];//3个消息列表。0或者没值为默认会话列表，1为匹配小助手会话列表。2为搭讪消息列表。3都不显示
                         [[NIMSDK sharedSDK].conversationManager updateRecentLocalExt:localExt recentSession:recentSession];
                         NIMDeleteRecentSessionOption *option = [[NIMDeleteRecentSessionOption alloc] init];
                         option.isDeleteRoamMessage = YES;

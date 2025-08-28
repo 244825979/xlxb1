@@ -515,7 +515,7 @@
     NSDictionary *localExt = recentSession.localExt;
     NSString *conversationType = localExt[@"conversation_type"];
     //判断conversationType为0，代表会话列表进行UI更新，就不再执行会话的小助手和搭讪逻辑
-    if (!kStringIsEmpty(conversationType) && [conversationType isEqualToString:@"0"]){
+    if (!kStringIsEmpty(conversationType) && ([conversationType isEqualToString:@"0"] || [conversationType isEqualToString:@"3"])){
         return;
     }
     [self recentSessionChange:recentSession];
@@ -555,7 +555,7 @@
                         //删除会话
                         NIMRecentSession *delRecentSession = [self findEarliestEventInArray:dashanList];
                         NSMutableDictionary *delLocalExt = [NSMutableDictionary dictionaryWithDictionary:delRecentSession.localExt];
-                        [delLocalExt setObject:@"0" forKey:@"conversation_type"];//3个消息列表。0或者没值为默认会话列表，1为匹配小助手会话列表。2为搭讪消息列表
+                        [delLocalExt setObject:@"3" forKey:@"conversation_type"];//3个消息列表。0或者没值为默认会话列表，1为匹配小助手会话列表。2为搭讪消息列表。3为删除会话
                         [[NIMSDK sharedSDK].conversationManager updateRecentLocalExt:delLocalExt recentSession:delRecentSession];
                         NIMDeleteRecentSessionOption *option = [[NIMDeleteRecentSessionOption alloc] init];
                         option.isDeleteRoamMessage = YES;

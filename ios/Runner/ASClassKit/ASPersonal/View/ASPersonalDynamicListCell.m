@@ -174,42 +174,26 @@
     [self.collectionView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
     }];
-    switch (self.model.mediaType) {
-        case kDynamicMediaImageOne:
-        {
-            [self.image1 mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.left.top.bottom.equalTo(self);
-                make.width.mas_equalTo(SCALES(175));
-            }];
-        }
-            break;
-        case kDynamicMediaImageTwo:
-        {
-            CGFloat itemW = floor((SCREEN_WIDTH - SCALES(32) - SCALES(10))/2);
-            [self.image1 mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.left.top.bottom.equalTo(self);
-                make.width.mas_equalTo(itemW);
-            }];
-            [self.image2 mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.top.bottom.right.equalTo(self);
-                make.width.equalTo(self.image1);
-            }];
-        }
-            break;
-        case kDynamicMediaVideo:
-        {
-            [self.image1 mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.left.top.bottom.equalTo(self);
-                make.width.mas_equalTo(SCALES(175));
-            }];
-            [self.videoIcon mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.centerX.centerY.equalTo(self.image1);
-                make.width.height.mas_equalTo(SCALES(42));
-            }];
-        }
-            break;
-        default:
-            break;
+    
+    if (self.model.mediaType == kDynamicMediaImageTwo) {
+        CGFloat itemW = floor((SCREEN_WIDTH - SCALES(32) - SCALES(10))/2);
+        [self.image1 mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.top.bottom.equalTo(self);
+            make.width.mas_equalTo(itemW);
+        }];
+        [self.image2 mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.bottom.right.equalTo(self);
+            make.width.equalTo(self.image1);
+        }];
+    } else {
+        [self.image1 mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.top.bottom.equalTo(self);
+            make.width.mas_equalTo(SCALES(175));
+        }];
+        [self.videoIcon mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.centerY.equalTo(self.image1);
+            make.width.height.mas_equalTo(SCALES(42));
+        }];
     }
 }
 

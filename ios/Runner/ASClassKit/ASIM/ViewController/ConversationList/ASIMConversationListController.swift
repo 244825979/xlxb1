@@ -131,7 +131,7 @@ class ASIMConversationListController: ConversationController, JXCategoryListCont
                     if let rs = recentSession, Int(timeStr) - Int(rs.lastMessage?.timestamp ?? 0.0) > 43200 {
                         //刷新一下本地保存的状态
                         if var localExt = rs.localExt {
-                            localExt["conversation_type"] = "0"
+                            localExt["conversation_type"] = "3"
                             NIMSDK.shared().conversationManager.updateRecentLocalExt(localExt, recentSession: rs)
                         }
                         //清空聊天内容，删除会话消息

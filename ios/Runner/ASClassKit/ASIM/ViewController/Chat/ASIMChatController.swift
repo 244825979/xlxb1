@@ -211,6 +211,9 @@ class ASIMChatController: P2PChatViewController {
                         UserDefaults.standard.set(dict, forKey: key)
                         NotificationCenter.default.post(name: Notification.Name("updataIntimateValueNitification"), object: nil)
                     }
+                    if model.grade > 0 {
+                        NotificationCenter.default.post(name: Notification.Name("refreshMiyouNotification"), object: "2")
+                    }
                 }
             }
         } errorBack: { code, msg in }
@@ -226,7 +229,7 @@ class ASIMChatController: P2PChatViewController {
                     self.unreadSessions = sessions.filter { recentSession in
                         if let localExt = recentSession.localExt {
                             let conversationType = localExt["conversation_type"] as? String ?? ""
-                            if conversationType == "1" || conversationType == "2" {
+                            if conversationType == "1" || conversationType == "2" || conversationType == "3" {
                                 return false
                             }
                         }
